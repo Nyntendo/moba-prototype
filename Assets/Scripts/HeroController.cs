@@ -5,20 +5,23 @@ public class HeroController : MonoBehaviour {
     public float speed = 6.0F;
     public float jumpSpeed = 10F;
     public float gravity = 20.0F;
-    public Vector3 lastPosition;
 
-    public GameObject redFlag;
-    public GameObject blueFlag;
-    public GameObject gameController;
-
-    public Vector3 target = Vector3.zero;
-    public Vector3 movement = Vector3.zero;
-    public Vector3 serverPos = Vector3.zero;
-    public Quaternion serverRot = Quaternion.identity;
     public float posErrorThreshold = 0.2f;
     public float targetReachedThreshold = 0.5f;
-    public bool jump = false;
-    public bool carryingFlag = false;
+    public float moveAnimationThreshold = 0.3f;
+
+    public Vector3 target = Vector3.zero;
+    public Vector3 serverPos = Vector3.zero;
+    public Quaternion serverRot = Quaternion.identity;
+
+    private GameObject redFlag;
+    private GameObject blueFlag;
+    private GameObject gameController;
+
+    private Vector3 lastPosition;
+    private Vector3 movement = Vector3.zero;
+    private bool jump = false;
+    private bool carryingFlag = false;
 
     private CharacterController charController;
     private NetworkPlayer owner;
@@ -58,7 +61,8 @@ public class HeroController : MonoBehaviour {
 
         if (distance >= posErrorThreshold)
         {
-            var lerp = ((1 / distance) * speed) / 100;
+            // var lerp = ((1 / distance) * speed) / 100;
+            var lerp = Time.deltaTime;
 
             transform.position = Vector3.Lerp(transform.position, serverPos, lerp);
             transform.rotation = Quaternion.Slerp(transform.rotation, serverRot, lerp);
@@ -79,23 +83,13 @@ public class HeroController : MonoBehaviour {
                 FindTarget();
                 if (Network.isClient)
                 {
-                    networkView.RPC("Jump", RPCMode.Server);
+                    networkView.RPC("TryJump", RPCMode.Server);
                 }
                 else
                 {
-                    Jump();
+                    TryJump();
                 }
             }
-        }
-
-
-        if (lastPosition != transform.position) {
-            animation.CrossFade ("Running", 0.2f);
-            lastPosition = transform.position;
-        } 
-        else 
-        {
-            animation.CrossFade("Idle", 0.1f);
         }
 
         if (charController.isGrounded)
@@ -123,14 +117,27 @@ public class HeroController : MonoBehaviour {
         if (jump)
         {
             jump = false;
-            if (charController.isGrounded)
-            {
-                movement.y = jumpSpeed;
-            }
+            movement.y = jumpSpeed;
         }
 
         movement.y -= gravity * Time.deltaTime;
         charController.Move(movement * Time.deltaTime);
+
+        if (Network.isClient)
+        {
+            LerpToServerPos();
+        }
+        
+        var movedSinceLast = Vector3.Distance(lastPosition, transform.position);
+
+        if (movedSinceLast > moveAnimationThreshold) {
+            animation.CrossFade ("Running", 0.2f);
+            lastPosition = transform.position;
+        } 
+        else 
+        {
+            animation.CrossFade("Idle", 0.1f);
+        }
     }
 
     [RPC]
@@ -143,6 +150,15 @@ public class HeroController : MonoBehaviour {
     public void Jump()
     {
         jump = true;
+    }
+
+    [RPC]
+    public void TryJump()
+    {
+        if (charController.isGrounded)
+        {
+            networkView.RPC("Jump", RPCMode.AllBuffered);
+        }
     }
 
     [RPC]
