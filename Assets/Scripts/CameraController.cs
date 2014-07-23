@@ -4,30 +4,37 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 
     public Transform target;
+    private Vector3 currentLookAt = Vector3.zero;
     public float lerpSpeed = 1f;
     public Vector3 offset;
     public float xMax;
     public float xMin;
     public float zMax;
     public float zMin;
+    public float offsetYMin = 10f;
+    public float offsetYMax = 100f;
+    public float zoomSpeed = 10f;
 
     public Vector3 standbyPos;
 
     void Update () {
         if (target != null)
         {
-            var newPos = target.position + offset;
+            offset.y -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+            offset.y = Mathf.Clamp(offset.y, offsetYMin, offsetYMax);
 
-            newPos = Vector3.Min(newPos, new Vector3(xMax, newPos.y, zMax));
-            newPos = Vector3.Max(newPos, new Vector3(xMin, newPos.y, zMin));
+            var desiredLookAt = new Vector3(
+                Mathf.Clamp(target.position.x, xMin, xMax),
+                target.position.y,
+                Mathf.Clamp(target.position.z, zMin, zMax));
 
-            if (newPos != transform.position)
+            if (currentLookAt != desiredLookAt)
             {
-                newPos = Vector3.Lerp(transform.position, newPos, Time.deltaTime * lerpSpeed);
+                currentLookAt = Vector3.Lerp(currentLookAt, desiredLookAt, Time.deltaTime * lerpSpeed);
             }
 
-            transform.position = newPos;
-            transform.LookAt(newPos - offset);
+            transform.position = currentLookAt + offset;
+            transform.LookAt(currentLookAt);
         }
         else
         {

@@ -11,22 +11,31 @@ public class NetworkHeroController : MonoBehaviour
         var pos = observedTransform.position;
         var rot = observedTransform.rotation;
         var target = heroController.target;
+        var serverIsAttacking = heroController.serverIsAttacking;
+        var health = heroController.health;
 
         if (stream.isWriting)
         {
+            serverIsAttacking = heroController.baseAttack.IsAttacking;
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
             stream.Serialize(ref target);
+            stream.Serialize(ref serverIsAttacking);
+            stream.Serialize(ref health);
         }
         else
         {
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
             stream.Serialize(ref target);
+            stream.Serialize(ref serverIsAttacking);
+            stream.Serialize(ref health);
 
             heroController.serverPos = pos;
             heroController.serverRot = rot;
             heroController.target = target;
+            heroController.serverIsAttacking = serverIsAttacking;
+            heroController.health = health;
         }
     }
 }

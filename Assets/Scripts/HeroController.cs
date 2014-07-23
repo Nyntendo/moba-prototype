@@ -7,12 +7,35 @@ public class HeroController : MonoBehaviour {
     public float gravity = 20.0F;
 
     public float posErrorThreshold = 0.2f;
+    public float rotErrorThreshold = 2f;
     public float targetReachedThreshold = 0.5f;
     public float moveAnimationThreshold = 0.3f;
+    public float respawnTimer = 0f;
+
+    public float triggerImuneTime = 5f;
+    private float triggerImuneTimer = 0f;
+    private bool triggerImune = false;
 
     public Vector3 target = Vector3.zero;
+    public GameObject targetGameObject;
     public Vector3 serverPos = Vector3.zero;
     public Quaternion serverRot = Quaternion.identity;
+
+    public float idleAnimationFade = 0.2f;
+    public float runAnimationFade = 0.2f;
+    public float attackAnimationFade = 0.2f;
+
+    public BaseAttack baseAttack;
+
+    public Texture2D healthbarBG;
+    public Texture2D healthbarFG;
+
+    public Vector3 healthbarOffset;
+    public Vector2 healthbarSize;
+    public float heathbarFrameSize;
+
+    public float maxHealth;
+    public float health;
 
     private GameObject redFlag;
     private GameObject blueFlag;
@@ -21,18 +44,38 @@ public class HeroController : MonoBehaviour {
     private Vector3 lastPosition;
     private Vector3 movement = Vector3.zero;
     private bool jump = false;
-    private bool carryingFlag = false;
+    public bool carryingFlag = false;
+    public bool serverIsAttacking = false;
 
     private CharacterController charController;
     private NetworkPlayer owner;
-    private Team team;
+    public Team team;
+    public bool dead = false;
 
     void Start()
     {
         charController = GetComponent<CharacterController>();
+
         redFlag = GameObject.FindWithTag("RedFlag");
         blueFlag = GameObject.FindWithTag("BlueFlag");
         gameController = GameObject.FindWithTag("GameController");
+    }
+
+    public void OnGUI()
+    {
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + healthbarOffset);
+        screenPos.y = Screen.height - screenPos.y;
+        screenPos.x -= healthbarSize.x / 2;
+
+        GUI.BeginGroup(new Rect(screenPos.x, screenPos.y,
+                                healthbarSize.x, healthbarSize.y));
+        GUI.DrawTexture(new Rect(0, 0, healthbarSize.x, healthbarSize.y), healthbarBG, ScaleMode.StretchToFill);
+
+        var healthPercent = health / maxHealth;
+
+        GUI.DrawTexture(new Rect(heathbarFrameSize, heathbarFrameSize, (healthbarSize.x - 2 * heathbarFrameSize) * healthPercent, healthbarSize.y - 2 * heathbarFrameSize), healthbarFG, ScaleMode.ScaleAndCrop);
+
+        GUI.EndGroup();
     }
 
     private void FindTarget()
@@ -41,15 +84,16 @@ public class HeroController : MonoBehaviour {
         var hit = new RaycastHit();
         if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f))
         {
+            Debug.Log(hit.collider.name);
             if (hit.collider.name != transform.name)
             {
                 if (Network.isClient)
                 {
-                    networkView.RPC("SetTarget", RPCMode.Server, hit.point);
+                    networkView.RPC("SetTarget", RPCMode.Server, hit.point, hit.collider.name);
                 }
                 else
                 {
-                    SetTarget(hit.point);
+                    SetTarget(hit.point, hit.collider.name);
                 }
             }
         }
@@ -58,27 +102,47 @@ public class HeroController : MonoBehaviour {
     public void LerpToServerPos()
     {
         var distance = Vector3.Distance(transform.position, serverPos);
+        var angle = Quaternion.Angle(transform.rotation, serverRot);
 
+        var lerp = Time.deltaTime;
+        
         if (distance >= posErrorThreshold)
         {
-            // var lerp = ((1 / distance) * speed) / 100;
-            var lerp = Time.deltaTime;
-
             transform.position = Vector3.Lerp(transform.position, serverPos, lerp);
+        }
+
+        if (angle >= rotErrorThreshold)
+        {
             transform.rotation = Quaternion.Slerp(transform.rotation, serverRot, lerp);
         }
     }
 
     void Update()
     {
+        if (dead)
+        {
+            return;
+        }
+
+        if (triggerImuneTimer > 0f)
+        {
+            triggerImune = true;
+            triggerImuneTimer -= Time.deltaTime;
+
+            if (triggerImuneTimer <= 0f)
+            {
+                triggerImune = false;
+            }
+        }
+
         if (Network.player == owner && owner != null)
         {
-            if (Input.GetButton("Fire1") && GUIUtility.hotControl==0)
+            if (Input.GetButton("Move") && GUIUtility.hotControl == 0)
             {
                 FindTarget();
             }
 
-            if (Input.GetButton("Fire2") && GUIUtility.hotControl==0)
+            if (Input.GetButton("Jump") && GUIUtility.hotControl == 0)
             {
                 FindTarget();
                 if (Network.isClient)
@@ -92,11 +156,48 @@ public class HeroController : MonoBehaviour {
             }
         }
 
+        if (targetGameObject != null)
+        {
+            if (targetGameObject.tag == "Hero")
+            {
+                var heroCtrl = targetGameObject.GetComponent<HeroController>();
+
+                if (heroCtrl.dead)
+                {
+                    targetGameObject = null;
+                    target = Vector3.zero;
+                }
+            }
+        }
+
+        if (targetGameObject != null)
+        {
+            var distance = Vector3.Distance(targetGameObject.transform.position, transform.position);
+
+            if (distance <= baseAttack.Range)
+            {
+                var lookAt = new Vector3(targetGameObject.transform.position.x, transform.position.y, targetGameObject.transform.position.z);
+                transform.LookAt(lookAt);
+
+                if (!baseAttack.IsAttacking && !baseAttack.IsOnCooldown)
+                {
+                    baseAttack.Attack(targetGameObject);
+                }
+
+                target = Vector2.zero;
+            }
+            else
+            {
+                target = targetGameObject.transform.position;
+            }
+        }
+
         if (charController.isGrounded)
         {
             if (target != Vector3.zero)
             {
-                var distance = (target - transform.position).magnitude;
+                var distance = Vector3.Distance(target, transform.position);
+
                 if (distance > targetReachedThreshold)
                 {
                     var lookAt = new Vector3(target.x, transform.position.y, target.z);
@@ -127,23 +228,84 @@ public class HeroController : MonoBehaviour {
         {
             LerpToServerPos();
         }
-        
+
         var movedSinceLast = Vector3.Distance(lastPosition, transform.position);
 
-        if (movedSinceLast > moveAnimationThreshold) {
-            animation.CrossFade ("Running", 0.2f);
+        if (baseAttack.IsAttacking || serverIsAttacking)
+        {
+            animation.CrossFade ("RangedAttack1", attackAnimationFade);
+        }
+        else if (movedSinceLast > moveAnimationThreshold) {
+            animation.CrossFade ("Running", runAnimationFade);
             lastPosition = transform.position;
         } 
         else 
         {
-            animation.CrossFade("Idle", 0.1f);
+            animation.CrossFade("Idle", idleAnimationFade);
+        }
+    }
+
+    public void Hit(float damage)
+    {
+        if (dead)
+            return;
+
+        health -= damage;
+
+        if (health <= 0f)
+        {
+            health = 0f;
+            networkView.RPC("Kill", RPCMode.AllBuffered, transform.position);
+            gameController.GetComponent<GameController>().ScheduleForRespawn(owner);
         }
     }
 
     [RPC]
-    public void SetTarget(Vector3 target)
+    public void Respawn(Vector3 position, Quaternion rotation)
     {
+        transform.position = position;
+        serverPos = position;
+        transform.rotation = rotation;
+        serverRot = rotation;
+        health = maxHealth;
+        dead = false;
+        triggerImuneTimer = triggerImuneTime;
+        animation.CrossFade("Idle", idleAnimationFade);
+    }
+
+    [RPC]
+    public void Kill(Vector3 position)
+    {
+        transform.rotation = Quaternion.LookRotation(Vector3.down, Vector3.forward);
+        animation.Play("TPose");
+        dead = true;
+        targetGameObject = null;
+        target = Vector3.zero;
+        if (carryingFlag)
+        {
+            DropFlag(position);
+        }
+    }
+
+    [RPC]
+    public void SetTarget(Vector3 target, string targetName)
+    {
+        baseAttack.CancelAttack();
+
         this.target = target;
+
+        if (targetName != "terrain")
+        {
+            var targetGO = GameObject.Find(targetName);
+
+            if (targetGO != null && (targetGO.tag == "Hero" || targetGO.tag == "Creep"))
+            {
+                this.targetGameObject = targetGO;
+                return;
+            }
+        }
+
+        this.targetGameObject = null;
     }
 
     [RPC]
@@ -165,6 +327,7 @@ public class HeroController : MonoBehaviour {
     public void SetOwner(NetworkPlayer player)
     {
         this.owner = player;
+        this.name = "Hero" + player.ToString();
 
         if (Network.player == player)
         {
@@ -181,6 +344,8 @@ public class HeroController : MonoBehaviour {
     [RPC]
     public void PickUpFlag()
     {
+        Debug.Log(name + " of team " + team + " picked up flag " + Time.realtimeSinceStartup);
+
         if (team == Team.Blue)
         {
             transform.Find("RedFlagModel").gameObject.SetActive(true);
@@ -210,29 +375,69 @@ public class HeroController : MonoBehaviour {
         carryingFlag = false;
     }
 
+    public void DropFlag(Vector3 position)
+    {
+        if (team == Team.Blue)
+        {
+            transform.Find("RedFlagModel").gameObject.SetActive(false);
+            redFlag.transform.position = position;
+            redFlag.SetActive(true);
+        }
+        else
+        {
+            transform.Find("BlueFlagModel").gameObject.SetActive(false);
+            blueFlag.transform.position = position;
+            blueFlag.SetActive(true);
+        }
+        carryingFlag = false;
+    }
+
 	void OnTriggerEnter(Collider other)
     {
-        if (Network.isServer)
+        if (Network.isServer && !dead && !triggerImune)
         {
-            if (other.gameObject.tag == "RedFlag" && team == Team.Blue)
+            var gc = gameController.GetComponent<GameController>();
+
+            if (other.gameObject.tag == "RedFlag")
             {
-                networkView.RPC("PickUpFlag", RPCMode.AllBuffered);
+                if (team == Team.Blue)
+                {
+                    networkView.RPC("PickUpFlag", RPCMode.AllBuffered);
+                    gc.redFlagIsMissing = true;
+                }
+                else if(team == Team.Red && gc.redFlagIsMissing)
+                {
+                    gameController.networkView.RPC("ReturnRedFlagToBase", RPCMode.AllBuffered);
+                    gc.redFlagIsMissing = false;
+                }
             }
-            if (other.gameObject.tag == "BlueFlag" && team == Team.Red)
+            if (other.gameObject.tag == "BlueFlag")
             {
-                networkView.RPC("PickUpFlag", RPCMode.AllBuffered);
+                if (team == Team.Red)
+                {
+                    networkView.RPC("PickUpFlag", RPCMode.AllBuffered);
+                    gc.blueFlagIsMissing = true;
+                }
+                else if(team == Team.Blue && gc.blueFlagIsMissing)
+                {
+                    gameController.networkView.RPC("ReturnBlueFlagToBase", RPCMode.AllBuffered);
+                    gc.blueFlagIsMissing = false;
+                }
             }
-            if (other.gameObject.tag == "BlueBase" && team == Team.Blue && carryingFlag)
+            if (other.gameObject.tag == "BlueBase" && team == Team.Blue && carryingFlag && !gc.blueFlagIsMissing)
             {
+                Debug.Log(name + ", team: " + team + ", carryingFlag: " + carryingFlag);
                 networkView.RPC("ReturnFlag", RPCMode.AllBuffered);
+                gc.redFlagIsMissing = false;
                 gameController.networkView.RPC("Score", RPCMode.AllBuffered, (int)team);
             }
-            if (other.gameObject.tag == "RedBase" && team == Team.Red && carryingFlag)
+            if (other.gameObject.tag == "RedBase" && team == Team.Red && carryingFlag && !gc.redFlagIsMissing)
             {
+                Debug.Log(name + ", team: " + team + ", carryingFlag: " + carryingFlag);
                 networkView.RPC("ReturnFlag", RPCMode.AllBuffered);
+                gc.blueFlagIsMissing = false;
                 gameController.networkView.RPC("Score", RPCMode.AllBuffered, (int)team);
             }
         }
     }
-
 }

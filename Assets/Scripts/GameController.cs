@@ -24,6 +24,14 @@ public class GameController : MonoBehaviour
     public GameObject redFlag;
     public GameObject blueFlag;
 
+    public Transform redBase;
+    public Transform blueBase;
+
+    public bool redFlagIsMissing = false;
+    public bool blueFlagIsMissing = false;
+
+    public float respawnTime = 5f;
+
     const string registeredGameName = "MobaOfDeathAndDestruction_v0.0.1";
     private string gameName = "Game name";
     private List<HostData> hostList;
@@ -36,6 +44,7 @@ public class GameController : MonoBehaviour
     private List<string> redTeam;
     private List<string> blueTeam;
     private Dictionary<string, string> playerNames;
+    private Dictionary<string, float> respawnTimers;
 
     private int redTeamScore = 0;
     private int blueTeamScore = 0;
@@ -49,6 +58,7 @@ public class GameController : MonoBehaviour
         heroes = new Dictionary<string, GameObject>();
         redTeam = new List<string>();
         blueTeam = new List<string>();
+        respawnTimers = new Dictionary<string, float>();
     }
 
     public void OnGUI()
@@ -161,6 +171,18 @@ public class GameController : MonoBehaviour
         blueFlag.SetActive(true);
     }
 
+    [RPC]
+    public void ReturnRedFlagToBase()
+    {
+        redFlag.transform.position = redBase.position;
+    }
+
+    [RPC]
+    public void ReturnBlueFlagToBase()
+    {
+        blueFlag.transform.position = blueBase.position;
+    }
+
     public void Update()
     {
         if (Network.peerType == NetworkPeerType.Disconnected)
@@ -178,6 +200,30 @@ public class GameController : MonoBehaviour
                 }
 
                 MasterServer.ClearHostList();
+            }
+        }
+
+        if (Network.isServer)
+        {
+            foreach (GameObject hero in heroes.Values)
+            {
+                var heroCtrl = hero.GetComponent<HeroController>();
+
+                if (heroCtrl.dead)
+                {
+                    heroCtrl.respawnTimer -= Time.deltaTime;
+                    
+                    if (heroCtrl.respawnTimer <= 0f)
+                    {
+                        Vector3 spawnPoint = Vector3.zero;
+                        if (heroCtrl.team == Team.Red)
+                            spawnPoint = spawnPointRed.position;
+                        else
+                            spawnPoint = spawnPointBlue.position;
+
+                        hero.networkView.RPC("Respawn", RPCMode.AllBuffered, spawnPoint, Quaternion.identity);
+                    }
+                }
             }
         }
     }
@@ -237,6 +283,12 @@ public class GameController : MonoBehaviour
             var heroNetworkView = hero.GetComponent<NetworkView>();
             heroNetworkView.RPC("SetTeam", RPCMode.AllBuffered, (int)team);
         }
+    }
+
+    public void ScheduleForRespawn(NetworkPlayer player)
+    {
+        var heroCtrl = heroes[player.guid].GetComponent<HeroController>();
+        heroCtrl.respawnTimer = respawnTime;
     }
 
     private void StartGame()
