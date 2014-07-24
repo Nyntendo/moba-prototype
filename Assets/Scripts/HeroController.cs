@@ -52,6 +52,7 @@ public class HeroController : MonoBehaviour {
     private NetworkPlayer owner;
     public Team team;
     public bool dead = false;
+    public bool following = false;
 
     void Start()
     {
@@ -178,8 +179,9 @@ public class HeroController : MonoBehaviour {
         {
             var distance = Vector3.Distance(targetGameObject.transform.position, transform.position);
 
-            if (distance <= baseAttack.Range)
+            if ((following && distance <= baseAttack.Range / 2) || (!following && distance <= baseAttack.Range))
             {
+                following = false;
                 var lookAt = new Vector3(targetGameObject.transform.position.x, transform.position.y, targetGameObject.transform.position.z);
                 transform.LookAt(lookAt);
 
@@ -192,8 +194,13 @@ public class HeroController : MonoBehaviour {
             }
             else
             {
+                following = true;
                 target = targetGameObject.transform.position;
             }
+        }
+        else
+        {
+            following = false;
         }
 
         if (charController.isGrounded)
