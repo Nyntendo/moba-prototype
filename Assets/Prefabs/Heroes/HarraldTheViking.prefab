@@ -749,7 +749,7 @@ MonoBehaviour:
   castTime: .5
   cooldown: 1
   damage: 10
-  range: 10
+  range: 15
   animationName: MeleeAttack1
 --- !u!114 &11400002
 MonoBehaviour:
@@ -804,6 +804,7 @@ MonoBehaviour:
   serverIsAttacking: 0
   team: 0
   dead: 0
+  following: 0
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
