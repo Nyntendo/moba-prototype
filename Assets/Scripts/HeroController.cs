@@ -237,7 +237,7 @@ public class HeroController : MonoBehaviour {
 
         if (baseAttack.IsAttacking || serverIsAttacking)
         {
-            animation.CrossFade ("RangedAttack1", attackAnimationFade);
+            animation.CrossFade (baseAttack.Animation, attackAnimationFade);
         }
         else if (movedSinceLast > moveAnimationThreshold) {
             animation.CrossFade ("Running", runAnimationFade);
@@ -336,6 +336,7 @@ public class HeroController : MonoBehaviour {
         if (Network.player == player)
         {
             Camera.main.GetComponent<CameraController>().target = transform;
+            GetComponent<AudioListener>().enabled = true;
         }
     }
 

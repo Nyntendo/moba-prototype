@@ -21,4 +21,9 @@ public abstract class BaseAttack : MonoBehaviour
     {
         get;
     }
+
+    public abstract string Animation
+    {
+        get;
+    }
 }
