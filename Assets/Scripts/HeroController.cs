@@ -63,19 +63,22 @@ public class HeroController : MonoBehaviour {
 
     public void OnGUI()
     {
-        var screenPos = Camera.main.WorldToScreenPoint(transform.position + healthbarOffset);
-        screenPos.y = Screen.height - screenPos.y;
-        screenPos.x -= healthbarSize.x / 2;
+        if (!dead)
+        {
+            var screenPos = Camera.main.WorldToScreenPoint(transform.position + healthbarOffset);
+            screenPos.y = Screen.height - screenPos.y;
+            screenPos.x -= healthbarSize.x / 2;
 
-        GUI.BeginGroup(new Rect(screenPos.x, screenPos.y,
-                                healthbarSize.x, healthbarSize.y));
-        GUI.DrawTexture(new Rect(0, 0, healthbarSize.x, healthbarSize.y), healthbarBG, ScaleMode.StretchToFill);
+            GUI.BeginGroup(new Rect(screenPos.x, screenPos.y,
+                                    healthbarSize.x, healthbarSize.y));
+            GUI.DrawTexture(new Rect(0, 0, healthbarSize.x, healthbarSize.y), healthbarBG, ScaleMode.StretchToFill);
 
-        var healthPercent = health / maxHealth;
+            var healthPercent = health / maxHealth;
 
-        GUI.DrawTexture(new Rect(heathbarFrameSize, heathbarFrameSize, (healthbarSize.x - 2 * heathbarFrameSize) * healthPercent, healthbarSize.y - 2 * heathbarFrameSize), healthbarFG, ScaleMode.ScaleAndCrop);
+            GUI.DrawTexture(new Rect(heathbarFrameSize, heathbarFrameSize, (healthbarSize.x - 2 * heathbarFrameSize) * healthPercent, healthbarSize.y - 2 * heathbarFrameSize), healthbarFG, ScaleMode.ScaleAndCrop);
 
-        GUI.EndGroup();
+            GUI.EndGroup();
+        }
     }
 
     private void FindTarget()
@@ -276,6 +279,7 @@ public class HeroController : MonoBehaviour {
     [RPC]
     public void Kill(Vector3 position)
     {
+        baseAttack.CancelAttack();
         transform.rotation = Quaternion.LookRotation(Vector3.down, Vector3.forward);
         animation.Play("TPose");
         dead = true;
