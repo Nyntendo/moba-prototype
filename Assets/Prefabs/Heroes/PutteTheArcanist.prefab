@@ -507,6 +507,7 @@ GameObject:
   - 114: {fileID: 11400006}
   - 114: {fileID: 11400008}
   - 136: {fileID: 13600000}
+  - 81: {fileID: 8100000}
   m_Layer: 0
   m_Name: PutteTheArcanist
   m_TagString: Hero
@@ -1021,6 +1022,13 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100054}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!81 &8100000
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100064}
+  m_Enabled: 0
 --- !u!108 &10800000
 Light:
   m_ObjectHideFlags: 1
@@ -1144,6 +1152,7 @@ MonoBehaviour:
   damage: 10
   range: 50
   projectileSpeed: 100
+  animationName: RangedAttack1
   projectileSpawnOffset: {x: 2, y: 7, z: 4}
   projectile: {fileID: 100006, guid: b07668335d60ed34ca15d30649daf8e3, type: 2}
 --- !u!136 &13600000
