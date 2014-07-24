@@ -24,6 +24,7 @@ public class HeroController : MonoBehaviour {
     public float idleAnimationFade = 0.2f;
     public float runAnimationFade = 0.2f;
     public float attackAnimationFade = 0.2f;
+    public float deathAnimationFade = 0.2f;
 
     public BaseAttack baseAttack;
 
@@ -280,8 +281,7 @@ public class HeroController : MonoBehaviour {
     public void Kill(Vector3 position)
     {
         baseAttack.CancelAttack();
-        transform.rotation = Quaternion.LookRotation(Vector3.down, Vector3.forward);
-        animation.Play("TPose");
+        animation.CrossFade("Death", deathAnimationFade);
         dead = true;
         targetGameObject = null;
         target = Vector3.zero;
