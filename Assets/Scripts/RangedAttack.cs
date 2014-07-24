@@ -81,6 +81,7 @@ public class RangedAttack : BaseAttack {
                 projCtrl.targetGameObject = target;
                 projObj.networkView.RPC("SetSpeed", RPCMode.AllBuffered, projectileSpeed);
                 projObj.networkView.RPC("SetDamage", RPCMode.AllBuffered, damage);
+                projCtrl.attacker = gameObject;
             }
         }
 
