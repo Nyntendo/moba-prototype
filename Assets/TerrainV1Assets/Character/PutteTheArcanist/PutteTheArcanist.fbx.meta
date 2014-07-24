@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b80acc066298f4743930972a86ab96cf
+guid: 302cf4c8e5ec13246a0a229a1c126381
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -54,10 +54,11 @@ ModelImporter:
     400046: v17Animating:PantsBaseV1:joint8
     400048: v17Animating:PantsBaseV1:joint9
     4300000: polySurface34
-    7400000: TPose
-    7400002: Running
-    7400004: Idle
-    7400006: RangedAttack1
+    7400000: Death
+    7400002: TPose
+    7400004: Running
+    7400006: Idle
+    7400008: RangedAttack1
     9500000: //RootNode
     11100000: //RootNode
     13700000: polySurface34
@@ -76,6 +77,82 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations:
+    - serializedVersion: 16
+      name: Death
+      takeName: Take 001
+      firstFrame: 130
+      lastFrame: 160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polySurface34
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint2
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint2/v17Animating:PantsBaseV1:joint3
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint2/v17Animating:PantsBaseV1:joint3/v17Animating:PantsBaseV1:joint4
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint2/v17Animating:PantsBaseV1:joint3/v17Animating:PantsBaseV1:joint4/v17Animating:PantsBaseV1:joint5
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7/v17Animating:PantsBaseV1:joint8
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7/v17Animating:PantsBaseV1:joint8/v17Animating:PantsBaseV1:joint9
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14/v17Animating:PantsBaseV1:joint15
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14/v17Animating:PantsBaseV1:joint15/v17Animating:PantsBaseV1:joint16
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19/v17Animating:PantsBaseV1:joint20
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19/v17Animating:PantsBaseV1:joint20/v17Animating:PantsBaseV1:joint21
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/v17Animating:PantsBaseV1:joint23
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     - serializedVersion: 16
       name: TPose
       takeName: Take 001
@@ -309,7 +386,7 @@ ModelImporter:
       takeName: Take 001
       firstFrame: 90
       lastFrame: 110
-      wrapMode: 2
+      wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
