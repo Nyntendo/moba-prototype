@@ -8,6 +8,7 @@ public class ProjectileController : MonoBehaviour {
     public Vector3 target = Vector3.zero;
     public Vector3 hitOffset = Vector3.zero;
     public GameObject targetGameObject;
+    public GameObject attacker;
     private Vector3 movement = Vector3.zero;
 
 	void Start () {
@@ -55,6 +56,11 @@ public class ProjectileController : MonoBehaviour {
                 {
                     var heroCtrl = other.gameObject.GetComponent<HeroController>();
                     heroCtrl.Hit(damage);
+                }
+                else if (other.gameObject.tag == "Creep")
+                {
+                    var creepCtrl = other.gameObject.GetComponent<CreepController>();
+                    creepCtrl.Hit(damage, attacker);
                 }
                 Network.Destroy(networkView.viewID);
             }

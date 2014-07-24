@@ -153,8 +153,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0, z: 0}
-  hitOffset: {x: 0, y: 7, z: 0}
+  hitOffset: {x: 0, y: 3, z: 0}
   targetGameObject: {fileID: 0}
+  attacker: {fileID: 0}
 --- !u!122 &12200000
 Halo:
   m_ObjectHideFlags: 1
