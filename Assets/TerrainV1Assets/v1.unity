@@ -25861,7 +25861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPointRed: {fileID: 1066019374}
   spawnPointBlue: {fileID: 1317729684}
-  heroPrefab: {fileID: 100064, guid: e9e37c7e08980b44f82c8f6585adcaa9, type: 2}
+  heroPrefab: {fileID: 100060, guid: a56146bb58f854f469c36fac6f6f4f71, type: 2}
   redFlag: {fileID: 1061338040}
   blueFlag: {fileID: 1280308714}
   redBase: {fileID: 607980775}
