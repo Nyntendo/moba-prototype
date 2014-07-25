@@ -9,29 +9,33 @@ public enum Team
     Blue = 1
 }
 
-enum NetworkGroups
+public enum Hero
 {
-    Server = 0,
-    Player = 1
+    Putte = 0,
+    Harrald = 1
+}
+
+public enum GameState
+{
+    SelectingName = 0,
+    CreatingGame = 1,
+    SelectingHero = 2,
+    LoadingLevel = 3,
+    PlayingGame = 4
+}
+
+public class PlayerData
+{
+    public string name;
+    public NetworkPlayer player;
+    public Hero hero;
+    public Team team;
+    public bool ready;
+    public bool hasLoadedLevel;
 }
 
 public class GameController : MonoBehaviour
 { 
-    public Transform spawnPointRed;
-    public Transform spawnPointBlue;
-    public Object heroPrefab;
-
-    public GameObject redFlag;
-    public GameObject blueFlag;
-
-    public Transform redBase;
-    public Transform blueBase;
-
-    public bool redFlagIsMissing = false;
-    public bool blueFlagIsMissing = false;
-
-    public float respawnTime = 5f;
-
     const string registeredGameName = "MobaOfDeathAndDestruction_v0.0.1";
     private string gameName = "Game name";
     private List<HostData> hostList;
@@ -39,31 +43,47 @@ public class GameController : MonoBehaviour
     private int port = 25002;
     private bool useNAT = false;
 
-    private List<NetworkPlayer> players;
-    private Dictionary<string, GameObject> heroes;
-    private List<string> redTeam;
-    private List<string> blueTeam;
-    private Dictionary<string, string> playerNames;
-    private Dictionary<string, float> respawnTimers;
+    private string playerName = "Sven";
 
-    private int redTeamScore = 0;
-    private int blueTeamScore = 0;
+    private Dictionary<string, PlayerData> players;
 
-    private bool gameStarted = false;
+    public GameState currentGameState = GameState.SelectingName;
+    private int level = 1;
+
+    public IEnumerable<PlayerData> Players
+    {
+        get
+        {
+            return players.Values;
+        }
+    }
 
     public void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         hostList = new List<HostData>();
-        players = new List<NetworkPlayer>();
-        heroes = new Dictionary<string, GameObject>();
-        redTeam = new List<string>();
-        blueTeam = new List<string>();
-        respawnTimers = new Dictionary<string, float>();
+        players = new Dictionary<string, PlayerData>();
     }
 
     public void OnGUI()
     {
-        if (Network.peerType == NetworkPeerType.Disconnected)
+        if (currentGameState == GameState.SelectingName)
+        {
+            // Set player name dialog
+            GUI.BeginGroup(new Rect(Screen.width/2 - 150, Screen.height/2 - 150, 300, 300));
+
+            GUI.Box(new Rect(0, 0, 300, 300), "Player name");
+
+            GUI.Label(new Rect(50, 40, 100, 30), "Enter your name");
+            playerName = GUI.TextField(new Rect(50, 80, 100, 30), playerName);
+            if (GUI.Button(new Rect(175, 80, 75, 30), "Ok"))
+            {
+                currentGameState = GameState.CreatingGame;
+            }
+            GUI.EndGroup();
+        }
+        else if (currentGameState == GameState.CreatingGame)
         {
             GUI.BeginGroup(new Rect(Screen.width/2 - 150, Screen.height/2 - 150, 300, 300));
 
@@ -102,86 +122,77 @@ public class GameController : MonoBehaviour
 
             GUI.EndGroup();
         }
-        else if (Network.isClient)
+        else if (currentGameState == GameState.SelectingHero)
         {
-            GUI.Label(new Rect(10, 10, 300, 30), "Connected as client");
-            if (GUI.Button(new Rect(10, 40, 200, 30), "Disconnect"))
-            {
-                Network.Disconnect(200);
-            }
-        }
-        else if (Network.isServer)
-        {
-            GUI.Label(new Rect(10, 10, 300, 30), "Connected as server");
-            if (GUI.Button(new Rect(10, 40, 200, 30), "Disconnect"))
-            {
-                Network.Disconnect(200);
-                Reset();
-            }
 
-            if (!gameStarted)
+            GUI.BeginGroup(new Rect(Screen.width/2 - 150, Screen.height/2 - 150, 300, 300));
+
+            GUI.Box(new Rect(0, 0, 300, 300), "Menu");
+
+            if (Network.isServer)
             {
-                GUI.BeginGroup(new Rect(Screen.width/2 - 150, Screen.height/2 - 150, 300, 300));
-
-                GUI.Box(new Rect(0, 0, 300, 300), "Menu");
-
                 if (GUI.Button(new Rect(50, 40, 200, 30), "Start"))
                 {
                     StartGame();
                 }
+            }
 
-                GUI.Label(new Rect(25, 80, 100, 30), "Red Team");
-                foreach (string guid in redTeam)
+            if (Network.isClient)
+            {
+                if (GUI.Button(new Rect(50, 40, 200, 30), "Ready"))
                 {
-                    var y = 120 + redTeam.IndexOf(guid) * 40;
-                    GUI.Label(new Rect(25, y, 100, 30), guid);
+                    networkView.RPC("SetPlayerReady", RPCMode.Server, Network.player.guid, true);
                 }
+            }
 
-                GUI.Label(new Rect(175, 80, 100, 30), "Blue Team");
-                foreach (string guid in blueTeam)
+            GUI.Label(new Rect(25, 80, 100, 30), "Red Team");
+
+            var redTeamIndex = 0;
+            var blueTeamIndex = 0;
+            foreach (PlayerData playerData in players.Values.Where(pd => pd.team == Team.Red))
+            {
+                var y = 120 + redTeamIndex * 40;
+                GUI.Label(new Rect(25, y, 100, 30), playerData.name);
+                redTeamIndex++;
+            }
+
+            GUI.Label(new Rect(175, 80, 100, 30), "Blue Team");
+            foreach (PlayerData playerData in players.Values.Where(pd => pd.team == Team.Blue))
+            {
+                var y = 120 + blueTeamIndex * 40;
+                GUI.Label(new Rect(175, y, 100, 30), playerData.name);
+                blueTeamIndex++;
+            }
+
+            GUI.EndGroup();
+        }
+        else if (currentGameState == GameState.PlayingGame)
+        {
+            if (Network.isClient)
+            {
+                GUI.Label(new Rect(10, 10, 300, 30), "Connected as client");
+                if (GUI.Button(new Rect(10, 40, 200, 30), "Disconnect"))
                 {
-                    var y = 120 + blueTeam.IndexOf(guid) * 40;
-                    GUI.Label(new Rect(175, y, 100, 30), guid);
+                    Network.Disconnect(200);
                 }
-
-                GUI.EndGroup();
+            }
+            else if (Network.isServer)
+            {
+                GUI.Label(new Rect(10, 10, 300, 30), "Connected as server");
+                if (GUI.Button(new Rect(10, 40, 200, 30), "Disconnect"))
+                {
+                    Network.Disconnect(200);
+                    Reset();
+                }
             }
         }
-
-        GUI.Label(new Rect(Screen.width / 2 - 100, 10, 200, 30), string.Format("Red Team: {0} - Blue Team: {1}", redTeamScore, blueTeamScore));
     }
 
     private void Reset()
     {
-        foreach (GameObject hero in heroes.Values)
-        {
-            var heroNetworkView = hero.GetComponent<NetworkView>();
-            Network.RemoveRPCs(heroNetworkView.viewID);
-            Network.Destroy(hero);
-        }
-
         players.Clear();
-        heroes.Clear();
-        redTeam.Clear();
-        blueTeam.Clear();
-        redTeamScore = 0;
-        blueTeamScore = 0;
-        gameStarted = false;
-        redFlag.SetActive(true);
-        blueFlag.SetActive(true);
     }
 
-    [RPC]
-    public void ReturnRedFlagToBase()
-    {
-        redFlag.transform.position = redBase.position;
-    }
-
-    [RPC]
-    public void ReturnBlueFlagToBase()
-    {
-        blueFlag.transform.position = blueBase.position;
-    }
 
     public void Update()
     {
@@ -194,8 +205,7 @@ public class GameController : MonoBehaviour
                 var i = 0;
                 while (i < hostData.Length)
                 {
-                    hostList.Add(hostData[i]);
-                    Debug.Log("Game: " + hostData[i].gameName + ", guid: " + hostData[i].guid);
+                    hostList.Add(hostData[i]); Debug.Log("Game: " + hostData[i].gameName + ", guid: " + hostData[i].guid);
                     i++;
                 }
 
@@ -203,27 +213,23 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (Network.isServer)
+        if (currentGameState == GameState.LoadingLevel && Network.isServer)
         {
-            foreach (GameObject hero in heroes.Values)
+            var allReady = true;
+            foreach (PlayerData player in players.Values)
             {
-                var heroCtrl = hero.GetComponent<HeroController>();
-
-                if (heroCtrl.dead)
+                if (!player.hasLoadedLevel)
                 {
-                    heroCtrl.respawnTimer -= Time.deltaTime;
-                    
-                    if (heroCtrl.respawnTimer <= 0f)
-                    {
-                        Vector3 spawnPoint = Vector3.zero;
-                        if (heroCtrl.team == Team.Red)
-                            spawnPoint = spawnPointRed.position;
-                        else
-                            spawnPoint = spawnPointBlue.position;
-
-                        hero.networkView.RPC("Respawn", RPCMode.AllBuffered, spawnPoint, Quaternion.identity);
-                    }
+                    allReady = false;
+                    break;
                 }
+            }
+
+            if (allReady)
+            {
+                networkView.RPC("SetGameState", RPCMode.AllBuffered, (int)GameState.PlayingGame);
+                var levelController = GameObject.FindWithTag("LevelController").GetComponent<LevelController>();
+                levelController.StartLevel();
             }
         }
     }
@@ -232,83 +238,110 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Server initialized!");
         MasterServer.RegisterHost(registeredGameName, gameName, "5v5 Capture the Flag");
-        players.Add(Network.player);
-        redTeam.Add(Network.player.guid);
-        Spawn(Network.player);
+
+        players[Network.player.guid] = new PlayerData {
+            name = playerName,
+            player = Network.player,
+            hero = Hero.Putte,
+            team = Team.Red,
+            ready = true,
+            hasLoadedLevel = false
+        };
+        OnPlayerDataUpdated(Network.player.guid);
+        currentGameState = GameState.SelectingHero;
+    }
+
+    private void OnPlayerDataUpdated(string guid)
+    {
+        networkView.RPC("PlayerDataUpdated", RPCMode.AllBuffered, guid, players[guid].name, players[guid].player, (int)players[guid].hero, (int)players[guid].team, players[guid].ready, players[guid].hasLoadedLevel);
     }
 
     public void OnPlayerConnected(NetworkPlayer player)
     {
         Debug.Log("Player connected!");
-        players.Add(player);
 
-        if (players.Count % 2 == 0)
+        var team = Team.Red;
+
+        if (players.Count % 2 == 1)
         {
-            blueTeam.Add(player.guid);
+            team = Team.Blue;
         }
-        else
-        {
-            redTeam.Add(player.guid);
-        }
+
+        players[player.guid] = new PlayerData {
+            name = null,
+            player = player,
+            hero = Hero.Putte,
+            team = team,
+            ready = false,
+            hasLoadedLevel = false
+        };
+        OnPlayerDataUpdated(Network.player.guid);
     }
 
     [RPC]
-    public void Score(int team)
+    public void PlayerDataUpdated(string guid, string name, NetworkPlayer player, int hero, int team, bool ready, bool hasLoadedLevel)
     {
-        if ((Team)team == Team.Red)
-            redTeamScore++;
-        else
-            blueTeamScore++;
+        players[guid] = new PlayerData {
+            name = name,
+            player = player,
+            hero = (Hero)hero,
+            team = (Team)team,
+            ready = ready,
+            hasLoadedLevel = hasLoadedLevel
+            };
     }
 
     [RPC]
-    public void Spawn(NetworkPlayer player)
+    public void SetPlayerName(string guid, string name)
     {
-        if (!heroes.ContainsKey(player.guid) && !gameStarted)
-        {
-            Vector3 spawnPoint = Vector3.zero;
-            Team team;
-            if (redTeam.Contains(player.guid))
-            {
-                spawnPoint = spawnPointRed.position;
-                team = Team.Red;
-            }
-            else
-            {
-                spawnPoint = spawnPointBlue.position;
-                team = Team.Blue;
-            }
-            var hero = (GameObject)Network.Instantiate(heroPrefab, spawnPoint, Quaternion.identity, (int)NetworkGroups.Player);
-            heroes.Add(player.guid, hero);
-            var heroNetworkView = hero.GetComponent<NetworkView>();
-            heroNetworkView.RPC("SetTeam", RPCMode.AllBuffered, (int)team);
-        }
+        players[guid].name = name;
+        OnPlayerDataUpdated(guid);
     }
 
-    public void ScheduleForRespawn(NetworkPlayer player)
+    [RPC]
+    public void SetPlayerHero(string guid, int hero)
     {
-        var heroCtrl = heroes[player.guid].GetComponent<HeroController>();
-        heroCtrl.respawnTimer = respawnTime;
+        players[guid].hero = (Hero)hero;
+        OnPlayerDataUpdated(guid);
+    }
+
+    [RPC]
+    public void SetPlayerReady(string guid, bool ready)
+    {
+        players[guid].ready = ready;
+        OnPlayerDataUpdated(guid);
+    }
+
+    [RPC]
+    public void SetPlayerHasLoadedLevel(string guid, bool hasLoadedLevel)
+    {
+        Debug.Log(string.Format("Player: {0} sent loaded level: {1}", guid, hasLoadedLevel));
+        players[guid].hasLoadedLevel = hasLoadedLevel;
+        OnPlayerDataUpdated(guid);
+    }
+
+    [RPC]
+    public void LoadLevel(int level)
+    {
+        currentGameState = GameState.LoadingLevel;
+        this.level = level;
+        Application.LoadLevel(level);
+    }
+
+    [RPC]
+    public void SetGameState(int gameState)
+    {
+        currentGameState = (GameState)gameState;
     }
 
     private void StartGame()
     {
-        foreach (NetworkPlayer player in players)
+        foreach (PlayerData player in players.Values)
         {
-            if (!heroes.ContainsKey(player.guid))
-            {
+            if (!player.ready)
                 return;
-            }
         }
-
-        foreach (KeyValuePair<string, GameObject> pair in heroes) 
-        {
-            var heroNetworkView =  pair.Value.GetComponent<NetworkView>();
-            var player = players.First(p => p.guid == pair.Key);
-            heroNetworkView.RPC("SetOwner", RPCMode.AllBuffered, player);
-        }
-
-        gameStarted = true;
+        networkView.RPC("LoadLevel", RPCMode.AllBuffered, level);
     }
 
     public void OnMasterServerEvent(MasterServerEvent evt)
@@ -322,16 +355,19 @@ public class GameController : MonoBehaviour
     public void OnConnectedToServer()
     {
         Debug.Log("Connected to server...");
-        Network.isMessageQueueRunning = false;
-        Application.LoadLevel(0);
+
+        networkView.RPC("SetPlayerName", RPCMode.Server, Network.player.guid, playerName);
+        currentGameState = GameState.SelectingHero;
     }
 
     public void OnLevelWasLoaded(int level)
     {
-        if (level == 0 && Network.isClient)
+        if (level == this.level)
         {
-            Network.isMessageQueueRunning = true;
-            networkView.RPC("Spawn", RPCMode.Server, Network.player);
+            if (Network.isClient)
+                networkView.RPC("SetPlayerHasLoadedLevel", RPCMode.Server, Network.player.guid, true);
+            else if (Network.isServer)
+                SetPlayerHasLoadedLevel(Network.player.guid, true);
         }
     }
 
@@ -353,19 +389,13 @@ public class GameController : MonoBehaviour
             else
                 Debug.Log("Successfully diconnected from the server");
         }
+
+        Reset();
+        currentGameState = GameState.CreatingGame;
     }
 
     public void OnPlayerDisconnected(NetworkPlayer player)
     {
-        var hero = heroes[player.guid];
-        if (hero != null)
-        {
-            var heroNetworkView = hero.GetComponent<NetworkView>();
-            Network.RemoveRPCs(heroNetworkView.viewID);
-            Network.Destroy(hero);
-        }
-
-        heroes.Remove(player.guid);
-        players.Remove(player);
+        players.Remove(player.guid);
     }
 }

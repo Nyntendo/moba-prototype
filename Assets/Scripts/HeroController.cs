@@ -2,14 +2,14 @@
 using System.Collections;
 
 public class HeroController : MonoBehaviour {
-    public float speed = 6.0F;
-    public float jumpSpeed = 10F;
-    public float gravity = 20.0F;
+    public float speed = 30.0F;
+    public float jumpSpeed = 60F;
+    public float gravity = 80.0F;
 
-    public float posErrorThreshold = 0.2f;
+    public float posErrorThreshold = 2f;
     public float rotErrorThreshold = 2f;
-    public float targetReachedThreshold = 0.5f;
-    public float moveAnimationThreshold = 0.3f;
+    public float targetReachedThreshold = 2f;
+    public float moveAnimationThreshold = 0.1f;
     public float respawnTimer = 0f;
 
     public float triggerImuneTime = 5f;
@@ -40,7 +40,9 @@ public class HeroController : MonoBehaviour {
 
     private GameObject redFlag;
     private GameObject blueFlag;
-    private GameObject gameController;
+    private GameController gameController;
+    private ScoreController scoreController;
+    private LevelController levelController;
 
     private Vector3 lastPosition;
     private Vector3 movement = Vector3.zero;
@@ -60,7 +62,13 @@ public class HeroController : MonoBehaviour {
 
         redFlag = GameObject.FindWithTag("RedFlag");
         blueFlag = GameObject.FindWithTag("BlueFlag");
-        gameController = GameObject.FindWithTag("GameController");
+
+        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        scoreController = GameObject.FindWithTag("ScoreController").GetComponent<ScoreController>();
+        levelController = GameObject.FindWithTag("LevelController").GetComponent<LevelController>();
+
+        serverPos = transform.position;
+        serverRot = transform.rotation;
     }
 
     public void OnGUI()
@@ -267,7 +275,7 @@ public class HeroController : MonoBehaviour {
         {
             health = 0f;
             networkView.RPC("Kill", RPCMode.AllBuffered, transform.position);
-            gameController.GetComponent<GameController>().ScheduleForRespawn(owner);
+            // gameController.GetComponent<GameController>().ScheduleForRespawn(owner);
         }
     }
 
@@ -408,19 +416,17 @@ public class HeroController : MonoBehaviour {
     {
         if (Network.isServer && !dead && !triggerImune)
         {
-            var gc = gameController.GetComponent<GameController>();
-
             if (other.gameObject.tag == "RedFlag")
             {
                 if (team == Team.Blue)
                 {
                     networkView.RPC("PickUpFlag", RPCMode.AllBuffered);
-                    gc.redFlagIsMissing = true;
+                    levelController.redFlagIsMissing = true;
                 }
-                else if(team == Team.Red && gc.redFlagIsMissing)
+                else if(team == Team.Red && levelController.redFlagIsMissing)
                 {
-                    gameController.networkView.RPC("ReturnRedFlagToBase", RPCMode.AllBuffered);
-                    gc.redFlagIsMissing = false;
+                    levelController.networkView.RPC("ReturnRedFlagToBase", RPCMode.AllBuffered);
+                    levelController.redFlagIsMissing = false;
                 }
             }
             if (other.gameObject.tag == "BlueFlag")
@@ -428,27 +434,27 @@ public class HeroController : MonoBehaviour {
                 if (team == Team.Red)
                 {
                     networkView.RPC("PickUpFlag", RPCMode.AllBuffered);
-                    gc.blueFlagIsMissing = true;
+                    levelController.blueFlagIsMissing = true;
                 }
-                else if(team == Team.Blue && gc.blueFlagIsMissing)
+                else if(team == Team.Blue && levelController.blueFlagIsMissing)
                 {
-                    gameController.networkView.RPC("ReturnBlueFlagToBase", RPCMode.AllBuffered);
-                    gc.blueFlagIsMissing = false;
+                    levelController.networkView.RPC("ReturnBlueFlagToBase", RPCMode.AllBuffered);
+                    levelController.blueFlagIsMissing = false;
                 }
             }
-            if (other.gameObject.tag == "BlueBase" && team == Team.Blue && carryingFlag && !gc.blueFlagIsMissing)
+            if (other.gameObject.tag == "BlueBase" && team == Team.Blue && carryingFlag && !levelController.blueFlagIsMissing)
             {
                 Debug.Log(name + ", team: " + team + ", carryingFlag: " + carryingFlag);
                 networkView.RPC("ReturnFlag", RPCMode.AllBuffered);
-                gc.redFlagIsMissing = false;
-                gameController.networkView.RPC("Score", RPCMode.AllBuffered, (int)team);
+                levelController.redFlagIsMissing = false;
+                scoreController.networkView.RPC("Score", RPCMode.AllBuffered, (int)team);
             }
-            if (other.gameObject.tag == "RedBase" && team == Team.Red && carryingFlag && !gc.redFlagIsMissing)
+            if (other.gameObject.tag == "RedBase" && team == Team.Red && carryingFlag && !levelController.redFlagIsMissing)
             {
                 Debug.Log(name + ", team: " + team + ", carryingFlag: " + carryingFlag);
                 networkView.RPC("ReturnFlag", RPCMode.AllBuffered);
-                gc.blueFlagIsMissing = false;
-                gameController.networkView.RPC("Score", RPCMode.AllBuffered, (int)team);
+                levelController.blueFlagIsMissing = false;
+                scoreController.networkView.RPC("Score", RPCMode.AllBuffered, (int)team);
             }
         }
     }
