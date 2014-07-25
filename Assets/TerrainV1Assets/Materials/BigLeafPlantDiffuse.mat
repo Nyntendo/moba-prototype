@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: BigLeafPlantDiffuse
-  m_Shader: {fileID: 52, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10511, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,7 +17,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 0d42ed2b9e3508747a47a896c7b85a0c, type: 3}
+          m_Texture: {fileID: 2800000, guid: cb496abaa416aa54aaabfbe6dd022395, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -31,9 +31,29 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: .482142836
+        second: 1
+      data:
+        first:
+          name: _BaseLight
+        second: .349999994
+      data:
+        first:
+          name: _AO
+        second: 10
+      data:
+        first:
+          name: _Occlusion
+        second: 0
+      data:
+        first:
+          name: _SquashAmount
+        second: 1
     m_Colors:
       data:
         first:
           name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _Scale
         second: {r: 1, g: 1, b: 1, a: 1}
