@@ -1190,7 +1190,7 @@ CharacterController:
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: .0109999999, z: 0}
+  m_Center: {x: 0, y: .0107000005, z: 0}
 --- !u!148 &14800000
 NetworkView:
   m_ObjectHideFlags: 1
