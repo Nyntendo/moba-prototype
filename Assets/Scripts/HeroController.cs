@@ -220,6 +220,12 @@ public class HeroController : UnitSuperController {
     public void SetTeam(int team)
     {
         this.team = (Team)team;
+
+        var minimap = GameObject.FindWithTag("Minimap").GetComponent<MinimapController>();
+        if (this.team == Team.Red)
+            minimap.Track(transform, MinimapIconType.RedPlayer);
+        else
+            minimap.Track(transform, MinimapIconType.BluePlayer);
     }
 
     [RPC]

@@ -40,6 +40,10 @@ public class LevelController : MonoBehaviour {
 
         heroes = new Dictionary<string, GameObject>();
         creepSpawnPoints = GameObject.FindGameObjectsWithTag("CreepSpawner");
+
+        var minimap = GameObject.FindWithTag("Minimap").GetComponent<MinimapController>();
+        minimap.Track(redFlag.transform, MinimapIconType.RedFlag);
+        minimap.Track(blueFlag.transform, MinimapIconType.BlueFlag);
 	}
 	
     [RPC]
