@@ -29,38 +29,19 @@ public class LevelController : MonoBehaviour {
 
 	void Start ()
     {
-        creepSpawnPoints = GameObject.FindGameObjectsWithTag("CreepSpawner");
-        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        var gameControllerObj = GameObject.FindWithTag("GameController");
+        if (gameControllerObj == null)
+        {
+            Application.LoadLevel(0);
+            return;
+        }
+        gameController = gameControllerObj.GetComponent<GameController>();
         scoreController = GameObject.FindWithTag("ScoreController").GetComponent<ScoreController>();
+
         heroes = new Dictionary<string, GameObject>();
+        creepSpawnPoints = GameObject.FindGameObjectsWithTag("CreepSpawner");
 	}
 	
-	void Update () {
-        // if (Network.isServer)
-        // {
-        //     foreach (GameObject hero in heroes.Values)
-        //     {
-        //         var heroCtrl = hero.GetComponent<HeroController>();
-
-        //         if (heroCtrl.dead)
-        //         {
-        //             heroCtrl.respawnTimer -= Time.deltaTime;
-                    
-        //             if (heroCtrl.respawnTimer <= 0f)
-        //             {
-        //                 Vector3 spawnPoint = Vector3.zero;
-        //                 if (heroCtrl.team == Team.Red)
-        //                     spawnPoint = spawnPointRed.position;
-        //                 else
-        //                     spawnPoint = spawnPointBlue.position;
-
-        //                 hero.networkView.RPC("Respawn", RPCMode.AllBuffered, spawnPoint, Quaternion.identity);
-        //             }
-        //         }
-        //     }
-        // }
-	}
-
     [RPC]
     public void ReturnRedFlagToBase()
     {

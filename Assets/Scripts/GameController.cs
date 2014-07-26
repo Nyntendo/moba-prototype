@@ -187,6 +187,8 @@ public class GameController : MonoBehaviour
                     }
                 }
             }
+
+            GUI.EndGroup();
         }
         else if (currentGameState == GameState.PlayingGame)
         {
