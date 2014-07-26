@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class LevelController : MonoBehaviour {
 
+    public GameObject[] creepSpawnPoints;
+
     public Transform spawnPointRed;
     public Transform spawnPointBlue;
 
@@ -25,7 +27,9 @@ public class LevelController : MonoBehaviour {
     private GameController gameController;
     private ScoreController scoreController;
 
-	void Start () {
+	void Start ()
+    {
+        creepSpawnPoints = GameObject.FindGameObjectsWithTag("CreepSpawner");
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         scoreController = GameObject.FindWithTag("ScoreController").GetComponent<ScoreController>();
         heroes = new Dictionary<string, GameObject>();
@@ -77,6 +81,14 @@ public class LevelController : MonoBehaviour {
 
     public void StartLevel()
     {
+        for (int i = 0; i < creepSpawnPoints.Length; i++)
+        {
+            var spawner = creepSpawnPoints[i].GetComponent<CreepSpawnPoint>();
+            var creep = (GameObject)Network.Instantiate(spawner.creepPrefab, spawner.transform.position, spawner.transform.rotation, 1);
+            var creepNetworkView = creep.GetComponent<NetworkView>();
+            creepNetworkView.RPC("SetName", RPCMode.AllBuffered, creep.name + i);
+        }
+
         foreach (PlayerData player in gameController.Players)
         {
             var spawnPoint = spawnPointBlue.position;
@@ -87,6 +99,8 @@ public class LevelController : MonoBehaviour {
             var hero = (GameObject)Network.Instantiate(heroPrefabs[(int)player.hero], spawnPoint, Quaternion.identity, 1);
 
             var heroNetworkView = hero.GetComponent<NetworkView>();
+
+            heroNetworkView.RPC("SetName", RPCMode.AllBuffered, player.name);
             heroNetworkView.RPC("SetTeam", RPCMode.AllBuffered, (int)player.team);
             heroNetworkView.RPC("SetOwner", RPCMode.AllBuffered, player.player);
         }

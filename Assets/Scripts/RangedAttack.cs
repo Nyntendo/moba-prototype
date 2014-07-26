@@ -8,18 +8,12 @@ public class RangedAttack : BaseAttack {
     public float damage = 10f;
     public float range = 50f;
     public float projectileSpeed = 100f;
-    public string animationName = "RangedAttack1";
     public Vector3 projectileSpawnOffset = Vector3.zero;
     public GameObject projectile;
 
     private float castTimer = 0f;
     private float cooldownTimer = 0f;
     private GameObject target;
-
-    public void Start()
-    {
-        animation[animationName].wrapMode = WrapMode.PingPong;
-    }
 
     public override float Range
     {
@@ -29,11 +23,11 @@ public class RangedAttack : BaseAttack {
         }
     }
 
-    public override string Animation
+    public override float CastTime
     {
         get
         {
-            return animationName;
+            return castTime;
         }
     }
 
@@ -66,7 +60,6 @@ public class RangedAttack : BaseAttack {
 	
 	void Update ()
     {
-        animation[animationName].speed = animation[animationName].length / castTime;
 
         if (castTimer > 0f)
         {

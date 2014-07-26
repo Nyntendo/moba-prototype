@@ -10,9 +10,9 @@ TagManager:
   - Hero
   - Projectile
   - Creep
-  - GameController
   - LevelController
   - ScoreController
+  - CreepSpawner
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX

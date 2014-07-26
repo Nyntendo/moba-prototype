@@ -508,6 +508,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 81: {fileID: 8100000}
   - 136: {fileID: 13600000}
+  - 114: {fileID: 11400006}
   m_Layer: 0
   m_Name: PutteTheArcanist 1
   m_TagString: Hero
@@ -1132,7 +1133,6 @@ MonoBehaviour:
   damage: 10
   range: 50
   projectileSpeed: 100
-  animationName: RangedAttack1
   projectileSpawnOffset: {x: 0, y: 0, z: 0}
   projectile: {fileID: 100006, guid: b07668335d60ed34ca15d30649daf8e3, type: 2}
 --- !u!114 &11400002
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   observedTransform: {fileID: 400064}
-  heroController: {fileID: 11400004}
+  unitController: {fileID: 11400006}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1159,36 +1159,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4294809d6fd084a4798eec2b22dba7fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnTimer: 0
+  triggerImuneTime: 5
+  animationFade: .200000003
+  attackAnimation: RangedAttack1
+  unitController: {fileID: 11400006}
+  carryingFlag: 0
+  team: 0
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb775481729d383468e4c6fddb77294d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   speed: 30
   jumpSpeed: 60
   gravity: 80
+  maxHealth: 100
+  health: 100
+  dead: 0
+  following: 0
+  jump: 0
+  jumping: 0
+  lastAnimationState: 8
+  animationState: 0
   posErrorThreshold: 2
   rotErrorThreshold: 2
   targetReachedThreshold: 2
   moveAnimationThreshold: .100000001
-  respawnTimer: 0
-  triggerImuneTime: 5
+  fallAnimationThreshold: 1
   target: {x: 0, y: 0, z: 0}
   targetGameObject: {fileID: 0}
   serverPos: {x: 0, y: 0, z: 0}
   serverRot: {x: 0, y: 0, z: 0, w: 1}
-  idleAnimationFade: .200000003
-  runAnimationFade: .200000003
-  attackAnimationFade: .200000003
-  deathAnimationFade: .200000003
+  serverIsAttacking: 0
   baseAttack: {fileID: 11400000}
   healthbarBG: {fileID: 2800000, guid: 454963b401c8db343bdf55219c97a8e1, type: 3}
   healthbarFG: {fileID: 2800000, guid: 660b5e9df3fb48e4bb154b0211eeeab1, type: 3}
-  healthbarOffset: {x: 0, y: 13, z: 5}
-  healthbarSize: {x: 80, y: 15}
+  healthbarOffset: {x: 0, y: 12, z: 8}
+  healthbarSize: {x: 80, y: 20}
   heathbarFrameSize: 3
-  maxHealth: 100
-  health: 100
-  carryingFlag: 0
-  serverIsAttacking: 0
-  team: 0
-  dead: 0
-  following: 0
+  superController: {fileID: 11400004}
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

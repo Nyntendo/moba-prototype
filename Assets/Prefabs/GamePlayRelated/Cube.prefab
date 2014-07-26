@@ -13,6 +13,10 @@ GameObject:
   - 143: {fileID: 14300000}
   - 114: {fileID: 11400000}
   - 135: {fileID: 13500000}
+  - 114: {fileID: 11400002}
+  - 148: {fileID: 14800000}
+  - 114: {fileID: 11400004}
+  - 114: {fileID: 11400006}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Creep
@@ -72,9 +76,71 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitSound: {fileID: 8300000, guid: 284d1ce02f224cd44b1439dc8fa84d1a, type: 3}
   volume: 2
+  unitController: {fileID: 11400002}
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb775481729d383468e4c6fddb77294d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  jumpSpeed: 60
+  gravity: 80
+  maxHealth: 50
+  health: 50
+  dead: 0
+  following: 0
+  jump: 0
+  animationState: 0
+  posErrorThreshold: 2
+  rotErrorThreshold: 2
+  targetReachedThreshold: 2
+  moveAnimationThreshold: .100000001
   target: {x: 0, y: 0, z: 0}
-  gravity: 40
-  speed: -5
+  targetGameObject: {fileID: 0}
+  serverPos: {x: 0, y: 0, z: 0}
+  serverRot: {x: 0, y: 0, z: 0, w: 1}
+  serverIsAttacking: 0
+  baseAttack: {fileID: 11400006}
+  healthbarBG: {fileID: 2800000, guid: 454963b401c8db343bdf55219c97a8e1, type: 3}
+  healthbarFG: {fileID: 2800000, guid: 660b5e9df3fb48e4bb154b0211eeeab1, type: 3}
+  healthbarOffset: {x: 0, y: 12, z: 8}
+  healthbarSize: {x: 80, y: 20}
+  heathbarFrameSize: 3
+  superController: {fileID: 11400000}
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14702dc893e2af147817e2d676626b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  observedTransform: {fileID: 400000}
+  unitController: {fileID: 11400002}
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d42c8b9060ab2c4a941102c2b66c09f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castTime: .5
+  cooldown: 1
+  damage: 10
+  range: 15
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -101,6 +167,18 @@ CharacterController:
   m_SkinWidth: .0799999982
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!148 &14800000
+NetworkView:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_StateSynchronization: 1
+  m_Observed: {fileID: 11400004}
+  m_ViewID:
+    m_ID: 0
+    m_Type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

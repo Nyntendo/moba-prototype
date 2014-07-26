@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NetworkHeroController : MonoBehaviour
+public class NetworkUnitController : MonoBehaviour
 {
     public Transform observedTransform;
-    public HeroController heroController;
+    public UnitController unitController;
 
     void OnSerializeNetworkView (BitStream stream, NetworkMessageInfo info)
     {
         var pos = observedTransform.position;
         var rot = observedTransform.rotation;
-        var target = heroController.target;
-        var serverIsAttacking = heroController.serverIsAttacking;
-        var health = heroController.health;
+        var target = unitController.target;
+        var serverIsAttacking = unitController.serverIsAttacking;
+        var health = unitController.health;
 
         if (stream.isWriting)
         {
-            serverIsAttacking = heroController.baseAttack.IsAttacking;
+            serverIsAttacking = unitController.baseAttack.IsAttacking;
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
             stream.Serialize(ref target);
@@ -31,11 +31,11 @@ public class NetworkHeroController : MonoBehaviour
             stream.Serialize(ref serverIsAttacking);
             stream.Serialize(ref health);
 
-            heroController.serverPos = pos;
-            heroController.serverRot = rot;
-            heroController.target = target;
-            heroController.serverIsAttacking = serverIsAttacking;
-            heroController.health = health;
+            unitController.serverPos = pos;
+            unitController.serverRot = rot;
+            unitController.target = target;
+            unitController.serverIsAttacking = serverIsAttacking;
+            unitController.health = health;
         }
     }
 }

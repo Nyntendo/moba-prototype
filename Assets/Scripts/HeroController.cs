@@ -1,65 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HeroController : MonoBehaviour {
-    public float speed = 30.0F;
-    public float jumpSpeed = 60F;
-    public float gravity = 80.0F;
-
-    public float posErrorThreshold = 2f;
-    public float rotErrorThreshold = 2f;
-    public float targetReachedThreshold = 2f;
-    public float moveAnimationThreshold = 0.1f;
+public class HeroController : UnitSuperController {
     public float respawnTimer = 0f;
 
     public float triggerImuneTime = 5f;
     private float triggerImuneTimer = 0f;
     private bool triggerImune = false;
 
-    public Vector3 target = Vector3.zero;
-    public GameObject targetGameObject;
-    public Vector3 serverPos = Vector3.zero;
-    public Quaternion serverRot = Quaternion.identity;
+    public float animationFade = 0.2f;
+    private bool queueNextAnimation = false;
 
-    public float idleAnimationFade = 0.2f;
-    public float runAnimationFade = 0.2f;
-    public float attackAnimationFade = 0.2f;
-    public float deathAnimationFade = 0.2f;
-
-    public BaseAttack baseAttack;
-
-    public Texture2D healthbarBG;
-    public Texture2D healthbarFG;
-
-    public Vector3 healthbarOffset;
-    public Vector2 healthbarSize;
-    public float heathbarFrameSize;
-
-    public float maxHealth;
-    public float health;
+    public string attackAnimation;
 
     private GameObject redFlag;
     private GameObject blueFlag;
+
     private GameController gameController;
     private ScoreController scoreController;
     private LevelController levelController;
+    public UnitController unitController;
 
-    private Vector3 lastPosition;
-    private Vector3 movement = Vector3.zero;
-    private bool jump = false;
     public bool carryingFlag = false;
-    public bool serverIsAttacking = false;
 
-    private CharacterController charController;
     private NetworkPlayer owner;
     public Team team;
-    public bool dead = false;
-    public bool following = false;
 
     void Start()
     {
-        charController = GetComponent<CharacterController>();
-
         redFlag = GameObject.FindWithTag("RedFlag");
         blueFlag = GameObject.FindWithTag("BlueFlag");
 
@@ -67,27 +35,31 @@ public class HeroController : MonoBehaviour {
         scoreController = GameObject.FindWithTag("ScoreController").GetComponent<ScoreController>();
         levelController = GameObject.FindWithTag("LevelController").GetComponent<LevelController>();
 
-        serverPos = transform.position;
-        serverRot = transform.rotation;
+        animation[attackAnimation].wrapMode = WrapMode.PingPong;
+        animation["Death"].wrapMode = WrapMode.Once;
+        animation["JumpStart"].wrapMode = WrapMode.Once;
+        animation["Landing"].wrapMode = WrapMode.Once;
+        animation["Landing"].speed = 2f;
     }
 
-    public void OnGUI()
+    public override void OnHitServer(GameObject attacker)
     {
-        if (!dead)
+    }
+
+    public override void OnHitClient()
+    {
+    }
+
+    public override void OnDeathServer(GameObject attacker)
+    {
+        respawnTimer = levelController.respawnTime;
+    }
+
+    public override void OnDeathClient(Vector3 position)
+    {
+        if (carryingFlag)
         {
-            var screenPos = Camera.main.WorldToScreenPoint(transform.position + healthbarOffset);
-            screenPos.y = Screen.height - screenPos.y;
-            screenPos.x -= healthbarSize.x / 2;
-
-            GUI.BeginGroup(new Rect(screenPos.x, screenPos.y,
-                                    healthbarSize.x, healthbarSize.y));
-            GUI.DrawTexture(new Rect(0, 0, healthbarSize.x, healthbarSize.y), healthbarBG, ScaleMode.StretchToFill);
-
-            var healthPercent = health / maxHealth;
-
-            GUI.DrawTexture(new Rect(heathbarFrameSize, heathbarFrameSize, (healthbarSize.x - 2 * heathbarFrameSize) * healthPercent, healthbarSize.y - 2 * heathbarFrameSize), healthbarFG, ScaleMode.ScaleAndCrop);
-
-            GUI.EndGroup();
+            DropFlag(position);
         }
     }
 
@@ -106,36 +78,32 @@ public class HeroController : MonoBehaviour {
                 }
                 else
                 {
-                    SetTarget(hit.point, hit.collider.name);
+                    unitController.SetTarget(hit.point, hit.collider.name);
                 }
             }
         }
     }
 
-    public void LerpToServerPos()
-    {
-        var distance = Vector3.Distance(transform.position, serverPos);
-        var angle = Quaternion.Angle(transform.rotation, serverRot);
-
-        var lerp = Time.deltaTime;
-        
-        if (distance >= posErrorThreshold)
-        {
-            transform.position = Vector3.Lerp(transform.position, serverPos, lerp);
-        }
-
-        if (angle >= rotErrorThreshold)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, serverRot, lerp);
-        }
-    }
 
     void Update()
     {
-        if (dead)
+        if (Network.isServer && unitController.dead)
         {
-            return;
+            respawnTimer -= Time.deltaTime;
+            
+            if (respawnTimer <= 0f)
+            {
+                Vector3 spawnPoint = Vector3.zero;
+                if (team == Team.Red)
+                    spawnPoint = levelController.spawnPointRed.position;
+                else
+                    spawnPoint = levelController.spawnPointBlue.position;
+
+                networkView.RPC("Respawn", RPCMode.AllBuffered, spawnPoint, Quaternion.identity);
+            }
         }
+
+        animation[attackAnimation].speed = animation[attackAnimation].length / unitController.baseAttack.CastTime;
 
         if (triggerImuneTimer > 0f)
         {
@@ -164,118 +132,62 @@ public class HeroController : MonoBehaviour {
                 }
                 else
                 {
-                    TryJump();
+                    unitController.TryJump();
                 }
             }
-        }
-
-        if (targetGameObject != null)
-        {
-            if (targetGameObject.tag == "Hero")
-            {
-                var heroCtrl = targetGameObject.GetComponent<HeroController>();
-
-                if (heroCtrl.dead)
-                {
-                    targetGameObject = null;
-                    target = Vector3.zero;
-                }
-            }
-        }
-
-        if (targetGameObject != null)
-        {
-            var distance = Vector3.Distance(targetGameObject.transform.position, transform.position);
-
-            if ((following && distance <= baseAttack.Range / 2) || (!following && distance <= baseAttack.Range))
-            {
-                following = false;
-                var lookAt = new Vector3(targetGameObject.transform.position.x, transform.position.y, targetGameObject.transform.position.z);
-                transform.LookAt(lookAt);
-
-                if (!baseAttack.IsAttacking && !baseAttack.IsOnCooldown)
-                {
-                    baseAttack.Attack(targetGameObject);
-                }
-
-                target = Vector2.zero;
-            }
-            else
-            {
-                following = true;
-                target = targetGameObject.transform.position;
-            }
-        }
-        else
-        {
-            following = false;
-        }
-
-        if (charController.isGrounded)
-        {
-            if (target != Vector3.zero)
-            {
-                var distance = Vector3.Distance(target, transform.position);
-
-                if (distance > targetReachedThreshold)
-                {
-                    var lookAt = new Vector3(target.x, transform.position.y, target.z);
-                    transform.LookAt(lookAt);
-                    movement = transform.TransformDirection(Vector3.forward) * speed;
-                }
-                else
-                {
-                    target = Vector3.zero;
-                }
-            }
-            else
-            {
-                movement = Vector3.zero;
-            }
-        }
-
-        if (jump)
-        {
-            jump = false;
-            movement.y = jumpSpeed;
-        }
-
-        movement.y -= gravity * Time.deltaTime;
-        charController.Move(movement * Time.deltaTime);
-
-        if (Network.isClient)
-        {
-            LerpToServerPos();
-        }
-
-        var movedSinceLast = Vector3.Distance(lastPosition, transform.position);
-
-        if (baseAttack.IsAttacking || serverIsAttacking)
-        {
-            animation.CrossFade (baseAttack.Animation, attackAnimationFade);
-        }
-        else if (movedSinceLast > moveAnimationThreshold) {
-            animation.CrossFade ("Running", runAnimationFade);
-            lastPosition = transform.position;
-        } 
-        else 
-        {
-            animation.CrossFade("Idle", idleAnimationFade);
         }
     }
 
-    public void Hit(float damage)
+    public void LateUpdate()
     {
-        if (dead)
-            return;
-
-        health -= damage;
-
-        if (health <= 0f)
+        if (unitController.lastAnimationState != unitController.animationState)
         {
-            health = 0f;
-            networkView.RPC("Kill", RPCMode.AllBuffered, transform.position);
-            // gameController.GetComponent<GameController>().ScheduleForRespawn(owner);
+            switch (unitController.animationState)
+            {
+                case UnitAnimationState.Attacking:
+                    FadeOrQueue(attackAnimation);
+                    break;
+                case UnitAnimationState.BeginJump:
+                    Debug.Log("BeginJump");
+                    FadeOrQueue("JumpStart");
+                    queueNextAnimation = true;
+                    break;
+                case UnitAnimationState.Landing:
+                    Debug.Log("Landed");
+                    FadeOrQueue("Landing");
+                    queueNextAnimation = true;
+                    break;
+                case UnitAnimationState.Jumping:
+                    FadeOrQueue("Upwards");
+                    break;
+                case UnitAnimationState.Falling:
+                    FadeOrQueue("Falling");
+                    break;
+                case UnitAnimationState.Running:
+                    FadeOrQueue("Running");
+                    break;
+                case UnitAnimationState.Dead:
+                    unitController.lastAnimationState = UnitAnimationState.Dead;
+                    FadeOrQueue("Death");
+                    break;
+                case UnitAnimationState.Idle:
+                default:
+                    FadeOrQueue("Idle");
+                    break;
+            }
+        }
+    }
+
+    private void FadeOrQueue(string animationName)
+    {
+        if (queueNextAnimation)
+        {
+            animation.CrossFadeQueued(animationName, animationFade);
+            queueNextAnimation = false;
+        }
+        else
+        {
+            animation.CrossFade(animationName, animationFade);
         }
     }
 
@@ -283,70 +195,19 @@ public class HeroController : MonoBehaviour {
     public void Respawn(Vector3 position, Quaternion rotation)
     {
         transform.position = position;
-        serverPos = position;
+        unitController.serverPos = position;
         transform.rotation = rotation;
-        serverRot = rotation;
-        health = maxHealth;
-        dead = false;
+        unitController.serverRot = rotation;
+        unitController.health = unitController.maxHealth;
+        unitController.dead = false;
         triggerImuneTimer = triggerImuneTime;
-        animation.CrossFade("Idle", idleAnimationFade);
-    }
-
-    [RPC]
-    public void Kill(Vector3 position)
-    {
-        baseAttack.CancelAttack();
-        animation.CrossFade("Death", deathAnimationFade);
-        dead = true;
-        targetGameObject = null;
-        target = Vector3.zero;
-        if (carryingFlag)
-        {
-            DropFlag(position);
-        }
-    }
-
-    [RPC]
-    public void SetTarget(Vector3 target, string targetName)
-    {
-        baseAttack.CancelAttack();
-
-        this.target = target;
-
-        if (targetName != "terrain")
-        {
-            var targetGO = GameObject.Find(targetName);
-
-            if (targetGO != null && (targetGO.tag == "Hero" || targetGO.tag == "Creep"))
-            {
-                this.targetGameObject = targetGO;
-                return;
-            }
-        }
-
-        this.targetGameObject = null;
-    }
-
-    [RPC]
-    public void Jump()
-    {
-        jump = true;
-    }
-
-    [RPC]
-    public void TryJump()
-    {
-        if (charController.isGrounded)
-        {
-            networkView.RPC("Jump", RPCMode.AllBuffered);
-        }
+        unitController.animationState = UnitAnimationState.Idle;
     }
 
     [RPC]
     public void SetOwner(NetworkPlayer player)
     {
         this.owner = player;
-        this.name = "Hero" + player.ToString();
 
         if (Network.player == player)
         {
@@ -414,7 +275,7 @@ public class HeroController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
     {
-        if (Network.isServer && !dead && !triggerImune)
+        if (Network.isServer && !unitController.dead && !triggerImune)
         {
             if (other.gameObject.tag == "RedFlag")
             {

@@ -7,15 +7,9 @@ public class MeleeAttack : BaseAttack {
     public float cooldown = 1f;
     public float damage = 10f;
     public float range = 10f;
-    public string animationName = "MeleeAttack1";
     private float castTimer = 0f;
     private float cooldownTimer = 0f;
     private GameObject target;
-
-    public void Start()
-    {
-        animation[animationName].wrapMode = WrapMode.PingPong;
-    }
 
     public override float Range
     {
@@ -25,11 +19,11 @@ public class MeleeAttack : BaseAttack {
         }
     }
 
-    public override string Animation
+    public override float CastTime
     {
         get
         {
-            return animationName;
+            return castTime;
         }
     }
 
@@ -62,7 +56,6 @@ public class MeleeAttack : BaseAttack {
     
     void Update ()
     {
-        animation[animationName].speed = animation[animationName].length / castTime;
 
         if (castTimer > 0f)
         {
@@ -71,16 +64,8 @@ public class MeleeAttack : BaseAttack {
             if (castTimer <= 0f)
             {
                 cooldownTimer = cooldown;
-                if (target.tag == "Hero")
-                {
-                    var heroCtrl = target.GetComponent<HeroController>();
-                    heroCtrl.Hit(damage);
-                }
-                else if (target.tag == "Creep")
-                {
-                    var creepCtrl = target.GetComponent<CreepController>();
-                    creepCtrl.Hit(damage, gameObject);
-                }
+                var targetUnitController = target.GetComponent<UnitController>();
+                targetUnitController.Hit(damage, gameObject);
             }
         }
 

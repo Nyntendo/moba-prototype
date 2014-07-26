@@ -52,16 +52,8 @@ public class ProjectileController : MonoBehaviour {
         {
             if (other.gameObject == targetGameObject)
             {
-                if (other.gameObject.tag == "Hero")
-                {
-                    var heroCtrl = other.gameObject.GetComponent<HeroController>();
-                    heroCtrl.Hit(damage);
-                }
-                else if (other.gameObject.tag == "Creep")
-                {
-                    var creepCtrl = other.gameObject.GetComponent<CreepController>();
-                    creepCtrl.Hit(damage, attacker);
-                }
+                var targetUnitController = targetGameObject.GetComponent<UnitController>();
+                targetUnitController.Hit(damage, attacker);
                 Network.Destroy(networkView.viewID);
             }
         }
