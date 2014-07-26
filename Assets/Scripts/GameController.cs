@@ -13,7 +13,8 @@ public enum Team
 public enum Hero
 {
     Putte = 0,
-    Harrald = 1
+    Harrald = 1,
+	Bella = 2
 }
 
 public enum GameState
