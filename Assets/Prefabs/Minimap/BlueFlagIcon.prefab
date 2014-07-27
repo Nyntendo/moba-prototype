@@ -27,7 +27,6 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
 --- !u!131 &13100000
 GUITexture:
   m_ObjectHideFlags: 1
@@ -35,14 +34,14 @@ GUITexture:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
-  m_Texture: {fileID: 2800000, guid: ac1c3ed3faf34a447a034e6ba5de9da3, type: 3}
+  m_Texture: {fileID: 2800000, guid: 57efc3d08899c49459e2d67d7ca10005, type: 3}
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
     x: -5
     y: -5
-    width: 10
-    height: 10
+    width: 25
+    height: 25
   m_LeftBorder: 0
   m_RightBorder: 0
   m_TopBorder: 0
