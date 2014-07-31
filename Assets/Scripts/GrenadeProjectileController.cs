@@ -9,6 +9,7 @@ public class GrenadeProjectileController : MonoBehaviour {
 
     private float damage = 0f;
     private GameObject attacker;
+    private Team team;
 
     public float posErrorThreshold = 2f;
     public float rotErrorThreshold = 2f;
@@ -37,6 +38,8 @@ public class GrenadeProjectileController : MonoBehaviour {
     public void SetAttacker(GameObject attacker)
     {
         this.attacker = attacker;
+        var attackerUnitController = attacker.GetComponent<UnitController>();
+        team = attackerUnitController.team;
     }
 
     void Start()
@@ -98,12 +101,13 @@ public class GrenadeProjectileController : MonoBehaviour {
     {
         if (Network.isServer)
         {
-            if (other.gameObject.tag == "Hero" || other.gameObject.tag == "Creep")
+            if ((other.gameObject.tag == "Hero" || other.gameObject.tag == "Creep") && !hitList.Contains(other.gameObject))
             {
-                hitList.Add(other.gameObject);
-                // var targetUnitController = targetGameObject.GetComponent<UnitController>();
-                // targetUnitController.Hit(damage, attacker);
-                // Network.Destroy(networkView.viewID);
+                var goUnitController = other.gameObject.GetComponent<UnitController>();
+                if (goUnitController.team != team)
+                {
+                    hitList.Add(other.gameObject);
+                }
             }
         }
     }
@@ -112,12 +116,9 @@ public class GrenadeProjectileController : MonoBehaviour {
     {
         if (Network.isServer)
         {
-            if (other.gameObject.tag == "Hero" || other.gameObject.tag == "Creep")
+            if ((other.gameObject.tag == "Hero" || other.gameObject.tag == "Creep") && hitList.Contains(other.gameObject))
             {
-                if (hitList.Contains(other.gameObject))
-                {
-                    hitList.Remove(other.gameObject);
-                }
+                hitList.Remove(other.gameObject);
             }
         }
     }

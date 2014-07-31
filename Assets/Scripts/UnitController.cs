@@ -26,6 +26,7 @@ public class UnitController : MonoBehaviour {
     public bool following = false;
     public bool jump = false;
     public bool jumping = false;
+    public Team team;
 
     public UnitAnimationState lastAnimationState = UnitAnimationState.TPose;
     public UnitAnimationState animationState = UnitAnimationState.Idle;
@@ -49,6 +50,7 @@ public class UnitController : MonoBehaviour {
 
     public BaseAbility[] abilities;
     public int activatedAbility = -1;
+    public bool isCastingAbility = false;
 
     public Texture2D healthbarBG;
     public Texture2D healthbarFG;
@@ -131,6 +133,18 @@ public class UnitController : MonoBehaviour {
     }
 
     [RPC]
+    public void SetTeam(int team)
+    {
+        this.team = (Team)team;
+
+        var minimap = GameObject.FindWithTag("Minimap").GetComponent<MinimapController>();
+        if (this.team == Team.Red)
+            minimap.Track(transform, MinimapIconType.RedPlayer);
+        else if (this.team == Team.Blue)
+            minimap.Track(transform, MinimapIconType.BluePlayer);
+    }
+
+    [RPC]
     public void GotHit()
     {
         superController.OnHitClient();
@@ -196,7 +210,7 @@ public class UnitController : MonoBehaviour {
     [RPC]
     public void TryActivateAbility(int ability)
     {
-        if (!abilities[ability].IsOnCooldown)
+        if (!abilities[ability].IsOnCooldown && !dead)
         {
             networkView.RPC("ActivateAbility", RPCMode.AllBuffered, ability);
         }
@@ -217,7 +231,8 @@ public class UnitController : MonoBehaviour {
             }
         }
 
-        transform.LookAt(target);
+        var lookAt = new Vector3(target.x, transform.position.y, target.z);
+        transform.LookAt(lookAt);
         abilities[activatedAbility].CastAtTarget(target, abilityTargetGO);
         activatedAbility = -1;
     }
@@ -254,6 +269,16 @@ public class UnitController : MonoBehaviour {
             return;
         }
 
+        isCastingAbility = false;
+        for (int i = 0; i < abilities.Length; i++)
+        {
+            if (abilities[i].IsCasting)
+            {
+                isCastingAbility = true;
+                break;
+            }
+        }
+
         if (targetGameObject != null)
         {
             var targetUnitCtrl = targetGameObject.GetComponent<UnitController>();
@@ -265,7 +290,7 @@ public class UnitController : MonoBehaviour {
             }
         }
 
-        if (targetGameObject != null)
+        if (targetGameObject != null && !isCastingAbility)
         {
             var distance = Vector3.Distance(targetGameObject.transform.position, transform.position);
 
@@ -295,7 +320,7 @@ public class UnitController : MonoBehaviour {
 
         if (charController.isGrounded)
         {
-            if (target != Vector3.zero)
+            if (target != Vector3.zero && !isCastingAbility)
             {
                 var distance = Vector3.Distance(target, transform.position);
 
@@ -322,7 +347,7 @@ public class UnitController : MonoBehaviour {
         }
 
 
-        if (jump)
+        if (jump && !isCastingAbility)
         {
             jump = false;
             jumping = true;
@@ -341,15 +366,6 @@ public class UnitController : MonoBehaviour {
         var movedYSinceLast = transform.position.y - lastPosition.y;
         lastAnimationState = animationState;
 
-        var isCastingAbility = false;
-        for (int i = 0; i < abilities.Length; i++)
-        {
-            if (abilities[i].IsCasting)
-            {
-                isCastingAbility = true;
-                break;
-            }
-        }
 
         if (isCastingAbility)
         {

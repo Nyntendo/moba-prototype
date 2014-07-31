@@ -184,7 +184,7 @@ MonoBehaviour:
   serverRot: {x: 0, y: 0, z: 0, w: 1}
   posErrorThreshold: 2
   rotErrorThreshold: 2
-  detonateTime: 3
+  detonateTime: 2
   explodeTime: .100000001
   timer: 0
   explodeLightRange: 2000
