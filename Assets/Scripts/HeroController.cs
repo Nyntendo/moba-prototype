@@ -84,6 +84,22 @@ public class HeroController : UnitSuperController {
         }
     }
 
+    private void FindAbilityTarget()
+    {
+        var point = Input.mousePosition;
+        var hit = new RaycastHit();
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f))
+        {
+            if (Network.isClient)
+            {
+                networkView.RPC("TryCastAbilityAtTarget", RPCMode.Server, hit.point, hit.collider.name);
+            }
+            else
+            {
+                unitController.TryCastAbilityAtTarget(hit.point, hit.collider.name);
+            }
+        }
+    }
 
     void Update()
     {
@@ -123,16 +139,35 @@ public class HeroController : UnitSuperController {
                 FindTarget();
             }
 
-            if (Input.GetButton("Jump") && GUIUtility.hotControl == 0)
+            if (Input.GetButtonUp("Jump") && GUIUtility.hotControl == 0)
             {
-                FindTarget();
-                if (Network.isClient)
+                if (unitController.activatedAbility == -1)
                 {
-                    networkView.RPC("TryJump", RPCMode.Server);
+                    FindTarget();
+                    if (Network.isClient)
+                    {
+                        networkView.RPC("TryJump", RPCMode.Server);
+                    }
+                    else
+                    {
+                        unitController.TryJump();
+                    }
                 }
                 else
                 {
-                    unitController.TryJump();
+                    FindAbilityTarget();
+                }
+            }
+
+            if (Input.GetButtonUp("Q Ability"))
+            {
+                if (Network.isClient)
+                {
+                    networkView.RPC("TryActivateAbility", RPCMode.Server, 0);
+                }
+                else
+                {
+                    unitController.TryActivateAbility(0);
                 }
             }
         }
@@ -144,16 +179,17 @@ public class HeroController : UnitSuperController {
         {
             switch (unitController.animationState)
             {
+                case UnitAnimationState.CastingAbility:
+                    FadeOrQueue(attackAnimation);
+                    break;
                 case UnitAnimationState.Attacking:
                     FadeOrQueue(attackAnimation);
                     break;
                 case UnitAnimationState.BeginJump:
-                    Debug.Log("BeginJump");
                     FadeOrQueue("JumpStart");
                     queueNextAnimation = true;
                     break;
                 case UnitAnimationState.Landing:
-                    Debug.Log("Landed");
                     FadeOrQueue("Landing");
                     queueNextAnimation = true;
                     break;
@@ -190,6 +226,7 @@ public class HeroController : UnitSuperController {
             animation.CrossFade(animationName, animationFade);
         }
     }
+
 
     [RPC]
     public void Respawn(Vector3 position, Quaternion rotation)

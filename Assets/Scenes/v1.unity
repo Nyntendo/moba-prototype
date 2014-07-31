@@ -3216,6 +3216,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4009e26dfd3da794fb38401572b88bbf, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4009e26dfd3da794fb38401572b88bbf, type: 2}
   m_RootGameObject: {fileID: 1889228483}
@@ -11428,7 +11432,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 529316027}
   - 114: {fileID: 529316026}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PigSpawner
   m_TagString: CreepSpawner
   m_Icon: {fileID: 0}
@@ -12667,7 +12671,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 574432010}
   - 114: {fileID: 574432009}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PigSpawner
   m_TagString: CreepSpawner
   m_Icon: {fileID: 0}
@@ -22901,7 +22905,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1066019374}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SpawnPointRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28078,7 +28082,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1317729684}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SpawnPointBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32270,6 +32274,10 @@ Prefab:
     - target: {fileID: 400000, guid: 4009e26dfd3da794fb38401572b88bbf, type: 2}
       propertyPath: m_RootOrder
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4009e26dfd3da794fb38401572b88bbf, type: 2}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4009e26dfd3da794fb38401572b88bbf, type: 2}
@@ -39429,6 +39437,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4009e26dfd3da794fb38401572b88bbf, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4009e26dfd3da794fb38401572b88bbf, type: 2}
   m_RootGameObject: {fileID: 529316025}
@@ -41252,7 +41264,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1889228485}
   - 114: {fileID: 1889228484}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PigSpawner
   m_TagString: CreepSpawner
   m_Icon: {fileID: 0}

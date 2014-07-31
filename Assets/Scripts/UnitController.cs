@@ -11,7 +11,8 @@ public enum UnitAnimationState
     Falling = 5,
     Landing = 6,
     Dead = 7,
-    TPose = 8
+    TPose = 8,
+    CastingAbility = 9
 }
 
 public class UnitController : MonoBehaviour {
@@ -45,6 +46,9 @@ public class UnitController : MonoBehaviour {
     public bool serverIsAttacking = false;
 
     public BaseAttack baseAttack;
+
+    public BaseAbility[] abilities;
+    public int activatedAbility = -1;
 
     public Texture2D healthbarBG;
     public Texture2D healthbarFG;
@@ -180,6 +184,69 @@ public class UnitController : MonoBehaviour {
         }
     }
 
+    [RPC]
+    public void ActivateAbility(int ability)
+    {
+        if (abilities[ability].Activate())
+        {
+            activatedAbility = ability;
+        }
+    }
+
+    [RPC]
+    public void TryActivateAbility(int ability)
+    {
+        if (!abilities[ability].IsOnCooldown)
+        {
+            networkView.RPC("ActivateAbility", RPCMode.AllBuffered, ability);
+        }
+    }
+
+    [RPC]
+    public void CastAbilityAtTarget(Vector3 target, string targetName)
+    {
+        GameObject abilityTargetGO = null;
+
+        if (Network.isServer && targetName != "terrain")
+        {
+            var targetGO = GameObject.Find(targetName);
+
+            if (targetGO != null && (targetGO.tag == "Hero" || targetGO.tag == "Creep"))
+            {
+                abilityTargetGO = targetGO;
+            }
+        }
+
+        transform.LookAt(target);
+        abilities[activatedAbility].CastAtTarget(target, abilityTargetGO);
+        activatedAbility = -1;
+    }
+
+    [RPC]
+    public void TryCastAbilityAtTarget(Vector3 target, string targetName)
+    {
+        var distance = Vector3.Distance(transform.position, target);
+
+        if (distance <= abilities[activatedAbility].Range)
+        {
+            networkView.RPC("CastAbilityAtTarget", RPCMode.AllBuffered, target, targetName);
+        }
+        else
+        {
+            networkView.RPC("CancelAbility", RPCMode.AllBuffered);
+        }
+    }
+
+    [RPC]
+    public void CancelAbility()
+    {
+        for (int i= 0; i < abilities.Length; i++)
+        {
+            abilities[i].Cancel();
+        }
+        activatedAbility = -1;
+    }
+
 	void Update () {
 	
         if (dead)
@@ -274,7 +341,21 @@ public class UnitController : MonoBehaviour {
         var movedYSinceLast = transform.position.y - lastPosition.y;
         lastAnimationState = animationState;
 
-        if (baseAttack.IsAttacking || serverIsAttacking)
+        var isCastingAbility = false;
+        for (int i = 0; i < abilities.Length; i++)
+        {
+            if (abilities[i].IsCasting)
+            {
+                isCastingAbility = true;
+                break;
+            }
+        }
+
+        if (isCastingAbility)
+        {
+            animationState = UnitAnimationState.CastingAbility;
+        }
+        else if (baseAttack.IsAttacking || serverIsAttacking)
         {
             animationState = UnitAnimationState.Attacking;
         }

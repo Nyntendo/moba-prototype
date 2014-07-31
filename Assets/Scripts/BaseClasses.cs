@@ -4,28 +4,24 @@ using System.Collections;
 public abstract class BaseAttack : MonoBehaviour
 {
     public abstract void Attack(GameObject target);
-
     public abstract void CancelAttack();
 
-    public abstract float Range
-    {
-        get;
-    }
+    public abstract float Range {get;}
+    public abstract float CastTime {get;}
+    public abstract bool IsOnCooldown {get;}
+    public abstract bool IsAttacking {get;}
+}
 
-    public abstract float CastTime
-    {
-        get;
-    }
+public abstract class BaseAbility : MonoBehaviour
+{
+    public abstract bool Activate();
+    public abstract void CastAtTarget(Vector3 targetPosition, GameObject targetGameObject);
+    public abstract void Cancel();
 
-    public abstract bool IsOnCooldown
-    {
-        get;
-    }
-
-    public abstract bool IsAttacking
-    {
-        get;
-    }
+    public abstract float Range {get;}
+    public abstract float CastTime {get;}
+    public abstract bool IsOnCooldown {get;}
+    public abstract bool IsCasting {get;}
 }
 
 public abstract class UnitSuperController : MonoBehaviour
