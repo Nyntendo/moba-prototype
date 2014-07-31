@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\CreepController.cs" />
      <Compile Include="Assets\Scripts\CreepSpawnPoint.cs" />
+     <Compile Include="Assets\Scripts\FlickeringPointlight.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\HUDFPS.cs" />
      <Compile Include="Assets\Scripts\HeroController.cs" />
@@ -62,7 +63,6 @@
      <Compile Include="Assets\Scripts\ScoreController.cs" />
      <Compile Include="Assets\Scripts\UnitController.cs" />
      <Compile Include="Assets\TerrainV1Assets\Standard Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
-     <Compile Include="Assets\TerrainV1Assets\TerrainModels\FlickeringPointlight.cs" />
      <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\FollowingCamera.cs" />
      <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\PlayerScript.cs" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
