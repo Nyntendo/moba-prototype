@@ -96,17 +96,23 @@ MonoBehaviour:
   dead: 0
   following: 0
   jump: 0
+  jumping: 0
+  team: 2
+  lastAnimationState: 8
   animationState: 0
   posErrorThreshold: 2
   rotErrorThreshold: 2
   targetReachedThreshold: 2
   moveAnimationThreshold: .100000001
+  fallAnimationThreshold: .100000001
   target: {x: 0, y: 0, z: 0}
   targetGameObject: {fileID: 0}
   serverPos: {x: 0, y: 0, z: 0}
   serverRot: {x: 0, y: 0, z: 0, w: 1}
   serverIsAttacking: 0
   baseAttack: {fileID: 11400006}
+  abilities: []
+  activatedAbility: -1
   healthbarBG: {fileID: 2800000, guid: 454963b401c8db343bdf55219c97a8e1, type: 3}
   healthbarFG: {fileID: 2800000, guid: 660b5e9df3fb48e4bb154b0211eeeab1, type: 3}
   healthbarOffset: {x: 0, y: 12, z: 8}

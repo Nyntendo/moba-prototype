@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 108: {fileID: 10800000}
   - 122: {fileID: 12200000}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Point light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 400002}
   - 198: {fileID: 19800000}
   - 199: {fileID: 19900000}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PTAParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - 148: {fileID: 14800000}
   - 135: {fileID: 13500002}
   - 54: {fileID: 5400000}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MagicProjectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}

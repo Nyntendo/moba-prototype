@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{7E2CB341-2A14-81C3-815A-E2DB5FB9F9F8}</ProjectGuid>
+	<ProjectGuid>{EB63F527-0DFE-17CC-CAC9-D9976C790500}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-UnityScript-firstpass</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,28 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Abilities\Grenade.cs" />
-     <Compile Include="Assets\Scripts\BaseClasses.cs" />
-     <Compile Include="Assets\Scripts\CameraController.cs" />
-     <Compile Include="Assets\Scripts\CreepController.cs" />
-     <Compile Include="Assets\Scripts\CreepSpawnPoint.cs" />
-     <Compile Include="Assets\Scripts\FlickeringPointlight.cs" />
-     <Compile Include="Assets\Scripts\GameController.cs" />
-     <Compile Include="Assets\Scripts\GrenadeProjectileController.cs" />
-     <Compile Include="Assets\Scripts\HUDFPS.cs" />
-     <Compile Include="Assets\Scripts\HeroController.cs" />
-     <Compile Include="Assets\Scripts\LevelController.cs" />
-     <Compile Include="Assets\Scripts\MeleeAttack.cs" />
-     <Compile Include="Assets\Scripts\MinimapController.cs" />
-     <Compile Include="Assets\Scripts\NetworkUnitController.cs" />
-     <Compile Include="Assets\Scripts\ProjectileController.cs" />
-     <Compile Include="Assets\Scripts\RangedAttack.cs" />
-     <Compile Include="Assets\Scripts\ScoreController.cs" />
-     <Compile Include="Assets\Scripts\UnitController.cs" />
-     <Compile Include="Assets\TerrainV1Assets\Standard Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
-     <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\FollowingCamera.cs" />
-     <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\PlayerScript.cs" />
+     <Compile Include="Assets\Standard Assets\Particles\Legacy Particles\TimedObjectDestructor.js" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
+     <None Include="Assets\Standard Assets\Particles\Sources\Shaders\Particle Alpha Blend (Queue +100).shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
      <None Include="Assets\TerrainV1Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />

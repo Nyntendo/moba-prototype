@@ -18,10 +18,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 <<<<<<< HEAD
-																														GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																					GlobalSection(MonoDevelopProperties) = preSolution
 =======
-																															GlobalSection(MonoDevelopProperties) = preSolution
->>>>>>> Putte can now attack piggies
+																																																																																	GlobalSection(MonoDevelopProperties) = preSolution
+>>>>>>> 009d19f... Added a mana-grenade ability on Putte
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

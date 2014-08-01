@@ -7,7 +7,8 @@ using System;
 public enum Team
 {
     Red = 0,
-    Blue = 1
+    Blue = 1,
+    Creep = 2
 }
 
 public enum Hero
