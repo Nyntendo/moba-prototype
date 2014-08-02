@@ -57,7 +57,6 @@ public class HeroController : UnitSuperController {
     {
         if (Network.player == owner)
         {
-            skillshotController.gameObject.SetActive(true);
             skillshotController.SetTrackingTarget(transform);
         }
     }
@@ -66,7 +65,6 @@ public class HeroController : UnitSuperController {
     {
         if (Network.player == owner)
         {
-            skillshotController.gameObject.SetActive(false);
             skillshotController.SetTrackingTarget(null);
         }
     }
@@ -75,7 +73,6 @@ public class HeroController : UnitSuperController {
     {
         if (Network.player == owner)
         {
-            skillshotController.gameObject.SetActive(false);
             skillshotController.SetTrackingTarget(null);
         }
     }
