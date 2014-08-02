@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: fe18c02849d40184e9982e83dfac1a0a
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Cc_global_Boar
+    100002: EndHead
+    100004: group1
+    100006: HipJnt
+    100008: Jaw1
+    100010: Jaw2
+    100012: Left_Back_Foot
+    100014: Left_Back_FootEnd
+    100016: Left_Back_Knee
+    100018: Left_Back_Leg
+    100020: Left_forward_foot
+    100022: Left_forward_footEnd
+    100024: Left_forward_KneeLeg
+    100026: Left_forward_UperLeg
+    100028: MailJnt
+    100030: Neck
+    100032: pCube1
+    100034: Right_Back_Foot
+    100036: Right_Back_FootEnd
+    100038: Right_Back_Knee
+    100040: Right_Back_Leg
+    100042: Right_forward_foot
+    100044: Right_forward_footEnd
+    100046: Right_forward_KneeLeg
+    100048: Right_forward_UperLeg
+    100050: Spine1
+    100052: Spine2
+    100054: //RootNode
+    400000: Cc_global_Boar
+    400002: EndHead
+    400004: group1
+    400006: HipJnt
+    400008: Jaw1
+    400010: Jaw2
+    400012: Left_Back_Foot
+    400014: Left_Back_FootEnd
+    400016: Left_Back_Knee
+    400018: Left_Back_Leg
+    400020: Left_forward_foot
+    400022: Left_forward_footEnd
+    400024: Left_forward_KneeLeg
+    400026: Left_forward_UperLeg
+    400028: MailJnt
+    400030: Neck
+    400032: pCube1
+    400034: Right_Back_Foot
+    400036: Right_Back_FootEnd
+    400038: Right_Back_Knee
+    400040: Right_Back_Leg
+    400042: Right_forward_foot
+    400044: Right_forward_footEnd
+    400046: Right_forward_KneeLeg
+    400048: Right_forward_UperLeg
+    400050: Spine1
+    400052: Spine2
+    400054: //RootNode
+    4300000: pCube1
+    7400000: TPose
+    7400002: Walking
+    7400004: Idle
+    7400006: MeleeAttack
+    7400008: Dead
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: pCube1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: TPose
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: .100000001
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cc_global_Boar
+        weight: 1
+      - path: Cc_global_Boar/group1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot/Left_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot/Right_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot/Left_forward_footEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/EndHead
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1/Jaw2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot/Right_forward_footEnd
+        weight: 1
+      - path: pCube1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Walking
+      takeName: Take 001
+      firstFrame: 5
+      lastFrame: 35
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cc_global_Boar
+        weight: 1
+      - path: Cc_global_Boar/group1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot/Left_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot/Right_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot/Left_forward_footEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/EndHead
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1/Jaw2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot/Right_forward_footEnd
+        weight: 1
+      - path: pCube1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 40
+      lastFrame: 200
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cc_global_Boar
+        weight: 1
+      - path: Cc_global_Boar/group1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot/Left_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot/Right_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot/Left_forward_footEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/EndHead
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1/Jaw2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot/Right_forward_footEnd
+        weight: 1
+      - path: pCube1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: MeleeAttack
+      takeName: Take 001
+      firstFrame: 210
+      lastFrame: 220
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cc_global_Boar
+        weight: 1
+      - path: Cc_global_Boar/group1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot/Left_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot/Right_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot/Left_forward_footEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/EndHead
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1/Jaw2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot/Right_forward_footEnd
+        weight: 1
+      - path: pCube1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Dead
+      takeName: Take 001
+      firstFrame: 310
+      lastFrame: 330
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Cc_global_Boar
+        weight: 1
+      - path: Cc_global_Boar/group1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Left_Back_Leg/Left_Back_Knee/Left_Back_Foot/Left_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Right_Back_Leg/Right_Back_Knee/Right_Back_Foot/Right_Back_FootEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Left_forward_UperLeg/Left_forward_KneeLeg/Left_forward_foot/Left_forward_footEnd
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/EndHead
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Neck/Jaw1/Jaw2
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot
+        weight: 1
+      - path: Cc_global_Boar/group1/MailJnt/HipJnt/Spine1/Spine2/Right_forward_UperLeg/Right_forward_KneeLeg/Right_forward_foot/Right_forward_footEnd
+        weight: 1
+      - path: pCube1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 0
+  userData: 

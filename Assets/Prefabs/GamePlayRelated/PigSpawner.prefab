@@ -27,7 +27,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,7 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0df6663fa412942a4b97f37cc03541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creepPrefab: {fileID: 100000, guid: 3d6643c6cd2aefe4181e1ee541833a13, type: 2}
+  creepPrefab: {fileID: 100054, guid: 5e2a59333007ab44a90739ebae775946, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
