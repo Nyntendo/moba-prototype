@@ -19,6 +19,7 @@ public class HeroController : UnitSuperController {
     private GameController gameController;
     private ScoreController scoreController;
     private LevelController levelController;
+    private SkillshotMarkerController skillshotController;
     public UnitController unitController;
 
     public bool carryingFlag = false;
@@ -34,6 +35,9 @@ public class HeroController : UnitSuperController {
         scoreController = GameObject.FindWithTag("ScoreController").GetComponent<ScoreController>();
         levelController = GameObject.FindWithTag("LevelController").GetComponent<LevelController>();
 
+        var targetMarkers = GameObject.FindWithTag("TargetMarkers");
+        skillshotController = targetMarkers.transform.Find("SkillshotMarker").GetComponent<SkillshotMarkerController>();
+
         animation[attackAnimation].wrapMode = WrapMode.PingPong;
         animation["Death"].wrapMode = WrapMode.Once;
         animation["JumpStart"].wrapMode = WrapMode.Once;
@@ -47,6 +51,33 @@ public class HeroController : UnitSuperController {
 
     public override void OnHitClient()
     {
+    }
+
+    public override void OnAbilityActivate(int ability)
+    {
+        if (Network.player == owner)
+        {
+            skillshotController.gameObject.SetActive(true);
+            skillshotController.SetTrackingTarget(transform);
+        }
+    }
+
+    public override void OnAbilityCast(int ability)
+    {
+        if (Network.player == owner)
+        {
+            skillshotController.gameObject.SetActive(false);
+            skillshotController.SetTrackingTarget(null);
+        }
+    }
+
+    public override void OnAbilityCancel(int ability)
+    {
+        if (Network.player == owner)
+        {
+            skillshotController.gameObject.SetActive(false);
+            skillshotController.SetTrackingTarget(null);
+        }
     }
 
     public override void OnDeathServer(GameObject attacker)

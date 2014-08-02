@@ -213,6 +213,7 @@ public class UnitController : MonoBehaviour {
         if (!abilities[ability].IsOnCooldown && !dead)
         {
             networkView.RPC("ActivateAbility", RPCMode.AllBuffered, ability);
+            superController.OnAbilityActivate(ability);
         }
     }
 
@@ -245,10 +246,12 @@ public class UnitController : MonoBehaviour {
         if (distance <= abilities[activatedAbility].Range)
         {
             networkView.RPC("CastAbilityAtTarget", RPCMode.AllBuffered, target, targetName);
+            superController.OnAbilityCast(activatedAbility);
         }
         else
         {
             networkView.RPC("CancelAbility", RPCMode.AllBuffered);
+            superController.OnAbilityCancel(activatedAbility);
         }
     }
 

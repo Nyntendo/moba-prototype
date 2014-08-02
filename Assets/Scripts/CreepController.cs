@@ -26,4 +26,16 @@ public class CreepController : UnitSuperController {
     {
 
     }
+
+    public override void OnAbilityActivate(int ability)
+    {
+    }
+
+    public override void OnAbilityCast(int ability)
+    {
+    }
+
+    public override void OnAbilityCancel(int ability)
+    {
+    }
 }
