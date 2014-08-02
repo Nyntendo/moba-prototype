@@ -31,4 +31,8 @@ public abstract class UnitSuperController : MonoBehaviour
 
     public abstract void OnDeathServer(GameObject attacker);
     public abstract void OnDeathClient(Vector3 position);
+
+    public abstract void OnAbilityActivate(int ability);
+    public abstract void OnAbilityCast(int ability);
+    public abstract void OnAbilityCancel(int ability);
 }
