@@ -24,8 +24,12 @@ public class UnitController : MonoBehaviour {
     public float health;
     public bool dead = false;
     public bool following = false;
+
     public bool jump = false;
     public bool jumping = false;
+    public bool jumpActivated = false;
+    public Vector3 jumpTarget = Vector.zero;
+
     public Team team;
 
     public UnitAnimationState lastAnimationState = UnitAnimationState.TPose;
@@ -184,17 +188,28 @@ public class UnitController : MonoBehaviour {
     }
 
     [RPC]
-    public void Jump()
+    public void JumpToTarget(Vector3 target, string targetName)
     {
+        jumpTarget = target;
         jump = true;
     }
 
     [RPC]
-    public void TryJump()
+    public void TryJumpToTarget(Vector3 target, string targetName)
     {
         if (charController.isGrounded)
         {
-            networkView.RPC("Jump", RPCMode.AllBuffered);
+            networkView.RPC("JumpToTarget", RPCMode.AllBuffered, target, targetName);
+            superController.OnAbilityCast(1000);
+        }
+    }
+
+    [RPC]
+    public void ActivateJump()
+    {
+        if (charController.isGrounded)
+        {
+            jumpActivated = true;
         }
     }
 
