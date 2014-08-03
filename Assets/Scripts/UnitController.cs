@@ -194,32 +194,44 @@ public class UnitController : MonoBehaviour {
         movement = transform.TransformDirection(Vector3.forward) * speed;
         movement.y = jumpSpeed;
 
+        this.target = Vector3.zero;
+
         jumping = true;
+        jumpActivated = false;
+        superController.OnAbilityCast(-1);
     }
 
     [RPC]
     public void TryJumpToTarget(Vector3 target, string targetName)
     {
-        if (charController.isGrounded)
+        if (!dead && !jumping && charController.isGrounded)
         {
             networkView.RPC("JumpToTarget", RPCMode.AllBuffered, target, targetName);
-            superController.OnAbilityCast(1000);
+        }
+        else
+        {
+            networkView.RPC("CancelJump", RPCMode.AllBuffered);
         }
     }
 
     [RPC]
     public void ActivateJump()
     {
-        if (charController.isGrounded)
-        {
-            jumpActivated = true;
-        }
+        jumpActivated = true;
+        superController.OnAbilityActivate(-1);
+    }
+
+    [RPC]
+    public void CancelJump()
+    {
+        jumpActivated = false;
+        superController.OnAbilityCancel(-1);
     }
 
     [RPC]
     public void TryActivateJump()
     {
-        if (!dead)
+        if (!dead && !jumping && charController.isGrounded)
         {
             networkView.RPC("ActivateJump", RPCMode.AllBuffered);
         }
@@ -231,6 +243,7 @@ public class UnitController : MonoBehaviour {
         if (abilities[ability].Activate())
         {
             activatedAbility = ability;
+            superController.OnAbilityActivate(ability);
         }
     }
 
@@ -240,7 +253,6 @@ public class UnitController : MonoBehaviour {
         if (!abilities[ability].IsOnCooldown && !dead)
         {
             networkView.RPC("ActivateAbility", RPCMode.AllBuffered, ability);
-            superController.OnAbilityActivate(ability);
         }
     }
 
@@ -263,6 +275,7 @@ public class UnitController : MonoBehaviour {
         transform.LookAt(lookAt);
         abilities[activatedAbility].CastAtTarget(target, abilityTargetGO);
         activatedAbility = -1;
+        superController.OnAbilityCast(activatedAbility);
     }
 
     [RPC]
@@ -273,12 +286,10 @@ public class UnitController : MonoBehaviour {
         if (distance <= abilities[activatedAbility].Range)
         {
             networkView.RPC("CastAbilityAtTarget", RPCMode.AllBuffered, target, targetName);
-            superController.OnAbilityCast(activatedAbility);
         }
         else
         {
             networkView.RPC("CancelAbility", RPCMode.AllBuffered);
-            superController.OnAbilityCancel(activatedAbility);
         }
     }
 
@@ -290,6 +301,7 @@ public class UnitController : MonoBehaviour {
             abilities[i].Cancel();
         }
         activatedAbility = -1;
+        superController.OnAbilityCancel(activatedAbility);
     }
 
 	void Update () {
@@ -350,7 +362,7 @@ public class UnitController : MonoBehaviour {
 
         if (charController.isGrounded)
         {
-            if (target != Vector3.zero && !isCastingAbility)
+            if (target != Vector3.zero && !isCastingAbility && !jumping)
             {
                 var distance = Vector3.Distance(target, transform.position);
 
@@ -369,7 +381,11 @@ public class UnitController : MonoBehaviour {
 
         movement.y -= gravity * Time.deltaTime;
         charController.Move(movement * Time.deltaTime);
-        movement = Vector3.zero;
+
+        if (charController.isGrounded)
+        {
+            movement = Vector3.zero;
+        }
 
         if (Network.isClient)
         {

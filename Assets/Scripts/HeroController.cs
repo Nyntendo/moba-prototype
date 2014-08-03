@@ -195,7 +195,7 @@ public class HeroController : UnitSuperController {
                 }
             }
 
-            if (Input.Input.GetButtonUp("Jump"))
+            if (Input.GetButtonUp("Jump"))
             {
                 if (Network.isClient)
                 {
