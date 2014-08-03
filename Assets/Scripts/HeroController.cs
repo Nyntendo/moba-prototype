@@ -128,6 +128,23 @@ public class HeroController : UnitSuperController {
         }
     }
 
+    private void FindJumpTarget()
+    {
+        var point = Input.mousePosition;
+        var hit = new RaycastHit();
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f))
+        {
+            if (Network.isClient)
+            {
+                networkView.RPC("TryJumpToTarget", RPCMode.Server, hit.point, hit.collider.name);
+            }
+            else
+            {
+                unitController.TryJumpToTarget(hit.point, hit.collider.name);
+            }
+        }
+    }
+
     void Update()
     {
         if (Network.isServer && unitController.dead)
@@ -166,23 +183,27 @@ public class HeroController : UnitSuperController {
                 FindTarget();
             }
 
-            if (Input.GetButtonUp("Jump") && GUIUtility.hotControl == 0)
+            if (Input.GetButtonUp("Target") && GUIUtility.hotControl == 0)
             {
-                if (unitController.activatedAbility == -1)
+                if (unitController.jumpActivated)
                 {
-                    FindTarget();
-                    if (Network.isClient)
-                    {
-                        networkView.RPC("TryJump", RPCMode.Server);
-                    }
-                    else
-                    {
-                        unitController.TryJump();
-                    }
+                    FindJumpTarget();
+                }
+                else if (unitController.activatedAbility >= 0)
+                {
+                    FindAbilityTarget();
+                }
+            }
+
+            if (Input.Input.GetButtonUp("Jump"))
+            {
+                if (Network.isClient)
+                {
+                    networkView.RPC("TryActivateJump", RPCMode.Server);
                 }
                 else
                 {
-                    FindAbilityTarget();
+                    unitController.TryActivateJump();
                 }
             }
 

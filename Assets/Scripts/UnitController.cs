@@ -25,10 +25,8 @@ public class UnitController : MonoBehaviour {
     public bool dead = false;
     public bool following = false;
 
-    public bool jump = false;
     public bool jumping = false;
     public bool jumpActivated = false;
-    public Vector3 jumpTarget = Vector.zero;
 
     public Team team;
 
@@ -190,8 +188,13 @@ public class UnitController : MonoBehaviour {
     [RPC]
     public void JumpToTarget(Vector3 target, string targetName)
     {
-        jumpTarget = target;
-        jump = true;
+        var lookAt = new Vector3(target.x, transform.position.y, target.z);
+        transform.LookAt(lookAt);
+
+        movement = transform.TransformDirection(Vector3.forward) * speed;
+        movement.y = jumpSpeed;
+
+        jumping = true;
     }
 
     [RPC]
@@ -210,6 +213,15 @@ public class UnitController : MonoBehaviour {
         if (charController.isGrounded)
         {
             jumpActivated = true;
+        }
+    }
+
+    [RPC]
+    public void TryActivateJump()
+    {
+        if (!dead)
+        {
+            networkView.RPC("ActivateJump", RPCMode.AllBuffered);
         }
     }
 
@@ -353,31 +365,20 @@ public class UnitController : MonoBehaviour {
                     target = Vector3.zero;
                 }
             }
-            else
-            {
-                movement = Vector3.zero;
-            }
-            
-            if (jumping)
-            {
-                jumping = false;
-            }
-        }
-
-
-        if (jump && !isCastingAbility)
-        {
-            jump = false;
-            jumping = true;
-            movement.y = jumpSpeed;
         }
 
         movement.y -= gravity * Time.deltaTime;
         charController.Move(movement * Time.deltaTime);
+        movement = Vector3.zero;
 
         if (Network.isClient)
         {
             LerpToServerPos();
+        }
+
+        if (jumping && charController.isGrounded)
+        {
+            jumping = false;
         }
 
         var movedSinceLast = Vector3.Distance(lastPosition, transform.position);
