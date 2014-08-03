@@ -15,7 +15,8 @@ public enum Hero
 {
     Putte = 0,
     Harrald = 1,
-	Bella = 2
+	Bella = 2,
+	BigBadWolf = 3
 }
 
 public enum GameState
