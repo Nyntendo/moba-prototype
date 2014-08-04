@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3432532c018aa574d95bc07cc8e5d16a
+guid: b8756b5cfe02c514c88a0145d8807249
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -70,13 +70,15 @@ ModelImporter:
     4300000: BackToMayaobj:BigBadWolf
     7400000: TPose
     7400002: Running
-    7400004: Idle
+    7400004: OldIdle
     7400006: MeleeAttack1
     7400008: JumpStart
     7400010: Upwards
     7400012: Falling
     7400014: Landing
     7400016: Death
+    7400018: CombatIdle
+    7400020: Idle
     9500000: //RootNode
     11100000: //RootNode
     13700000: BackToMayaobj:BigBadWolf
@@ -188,8 +190,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Running
       takeName: Take 001
-      firstFrame: 11
-      lastFrame: 30
+      firstFrame: 10
+      lastFrame: 29
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -276,7 +278,7 @@ ModelImporter:
       maskType: 0
       maskSource: {instanceID: 0}
     - serializedVersion: 16
-      name: Idle
+      name: OldIdle
       takeName: Take 001
       firstFrame: 40
       lastFrame: 80
@@ -818,9 +820,189 @@ ModelImporter:
     - serializedVersion: 16
       name: Death
       takeName: Take 001
-      firstFrame: 120
+      firstFrame: 130
       lastFrame: 160
       wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: BackToMayaobj:BigBadWolf
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6/joint7
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6/joint7/joint8
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6/joint7/joint8/joint9
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint10
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint10/joint11
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint10/joint11/joint12
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7/v17Animating:PantsBaseV1:joint8
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7/v17Animating:PantsBaseV1:joint8/v17Animating:PantsBaseV1:joint9
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14/v17Animating:PantsBaseV1:joint15
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14/v17Animating:PantsBaseV1:joint15/v17Animating:PantsBaseV1:joint16
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19/v17Animating:PantsBaseV1:joint20
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19/v17Animating:PantsBaseV1:joint20/v17Animating:PantsBaseV1:joint21
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/joint14
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/joint14/joint15
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/joint16
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/v17Animating:PantsBaseV1:joint23
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/v17Animating:PantsBaseV1:joint23/joint13
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: CombatIdle
+      takeName: Take 001
+      firstFrame: 350
+      lastFrame: 390
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: BackToMayaobj:BigBadWolf
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6/joint7
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6/joint7/joint8
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint6/joint7/joint8/joint9
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint10
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint10/joint11
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/joint10/joint11/joint12
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7/v17Animating:PantsBaseV1:joint8
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint6/v17Animating:PantsBaseV1:joint7/v17Animating:PantsBaseV1:joint8/v17Animating:PantsBaseV1:joint9
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14/v17Animating:PantsBaseV1:joint15
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint12/v17Animating:PantsBaseV1:joint13/v17Animating:PantsBaseV1:joint14/v17Animating:PantsBaseV1:joint15/v17Animating:PantsBaseV1:joint16
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19/v17Animating:PantsBaseV1:joint20
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint17/v17Animating:PantsBaseV1:joint18/v17Animating:PantsBaseV1:joint19/v17Animating:PantsBaseV1:joint20/v17Animating:PantsBaseV1:joint21
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/joint14
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/joint14/joint15
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/joint16
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/v17Animating:PantsBaseV1:joint23
+        weight: 1
+      - path: v17Animating:PantsBaseV1:joint1/v17Animating:PantsBaseV1:joint10/v17Animating:PantsBaseV1:joint11/v17Animating:PantsBaseV1:joint22/v17Animating:PantsBaseV1:joint23/joint13
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 240
+      lastFrame: 340
+      wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
@@ -925,7 +1107,7 @@ ModelImporter:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 0
+    tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
