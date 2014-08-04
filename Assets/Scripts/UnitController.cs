@@ -31,7 +31,7 @@ public class UnitController : MonoBehaviour {
     public Team team;
 
     public UnitAnimationState lastAnimationState = UnitAnimationState.TPose;
-    public UnitAnimationState animationState = UnitAnimationState.Idle;
+    public UnitAnimationState animationState = UnitAnimationState.TPose;
 
     public float posErrorThreshold = 2f;
     public float rotErrorThreshold = 2f;
