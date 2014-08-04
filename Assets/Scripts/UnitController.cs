@@ -80,6 +80,11 @@ public class UnitController : MonoBehaviour {
             screenPos.y = Screen.height - screenPos.y;
             screenPos.x -= healthbarSize.x / 2;
 
+            if (gameObject.tag == "Hero")
+            {
+                GUI.Label(new Rect(screenPos.x, screenPos.y - 20, 100, 30), gameObject.name);
+            }
+
             GUI.BeginGroup(new Rect(screenPos.x, screenPos.y,
                                     healthbarSize.x, healthbarSize.y));
             GUI.DrawTexture(new Rect(0, 0, healthbarSize.x, healthbarSize.y), healthbarBG, ScaleMode.StretchToFill);
