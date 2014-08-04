@@ -80,6 +80,14 @@ public class HeroController : UnitSuperController {
     public override void OnDeathServer(GameObject attacker)
     {
         respawnTimer = levelController.respawnTime;
+        if (attacker.tag == "Hero")
+        {
+            scoreController.networkView.RPC("AddKill", RPCMode.AllBuffered, attacker.name, transform.name);
+        }
+        else
+        {
+            scoreController.networkView.RPC("AddDeath", RPCMode.AllBuffered, transform.name);
+        }
     }
 
     public override void OnDeathClient(Vector3 position)
@@ -366,6 +374,7 @@ public class HeroController : UnitSuperController {
                 {
                     levelController.networkView.RPC("ReturnRedFlagToBase", RPCMode.AllBuffered);
                     levelController.redFlagIsMissing = false;
+                    scoreController.networkView.RPC("AddReturn", RPCMode.AllBuffered, transform.name);
                 }
             }
             if (other.gameObject.tag == "BlueFlag")
@@ -379,6 +388,7 @@ public class HeroController : UnitSuperController {
                 {
                     levelController.networkView.RPC("ReturnBlueFlagToBase", RPCMode.AllBuffered);
                     levelController.blueFlagIsMissing = false;
+                    scoreController.networkView.RPC("AddReturn", RPCMode.AllBuffered, transform.name);
                 }
             }
             if (other.gameObject.tag == "BlueBase" && unitController.team == Team.Blue && carryingFlag && !levelController.blueFlagIsMissing)
@@ -386,14 +396,14 @@ public class HeroController : UnitSuperController {
                 Debug.Log(name + ", unitController.team: " + unitController.team + ", carryingFlag: " + carryingFlag);
                 networkView.RPC("ReturnFlag", RPCMode.AllBuffered);
                 levelController.redFlagIsMissing = false;
-                scoreController.networkView.RPC("Score", RPCMode.AllBuffered, (int)unitController.team);
+                scoreController.networkView.RPC("AddCapture", RPCMode.AllBuffered, transform.name);
             }
             if (other.gameObject.tag == "RedBase" && unitController.team == Team.Red && carryingFlag && !levelController.redFlagIsMissing)
             {
                 Debug.Log(name + ", unitController.team: " + unitController.team + ", carryingFlag: " + carryingFlag);
                 networkView.RPC("ReturnFlag", RPCMode.AllBuffered);
                 levelController.blueFlagIsMissing = false;
-                scoreController.networkView.RPC("Score", RPCMode.AllBuffered, (int)unitController.team);
+                scoreController.networkView.RPC("AddCapture", RPCMode.AllBuffered, transform.name);
             }
         }
     }
