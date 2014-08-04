@@ -23,7 +23,6 @@ public class Grenade : BaseAbility {
             if (castTimer <= 0f)
             {
                 cooldownTimer = cooldown;
-                Debug.Log("Launch ability");
                 if (Network.isServer)
                 {
                     var grenade = (GameObject)Network.Instantiate(projectile, transform.position + transform.TransformDirection(launchOffset), Quaternion.identity, 0);
