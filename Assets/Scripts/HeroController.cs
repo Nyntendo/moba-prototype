@@ -16,6 +16,8 @@ public class HeroController : UnitSuperController {
     private GameObject redFlag;
     private GameObject blueFlag;
 
+    public LayerMask clickRaycastLayerMask;
+
     private GameController gameController;
     private ScoreController scoreController;
     private LevelController levelController;
@@ -102,7 +104,7 @@ public class HeroController : UnitSuperController {
     {
         var point = Input.mousePosition;
         var hit = new RaycastHit();
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f, clickRaycastLayerMask))
         {
             Debug.Log(hit.collider.name);
             if (hit.collider.name != transform.name)
@@ -123,7 +125,7 @@ public class HeroController : UnitSuperController {
     {
         var point = Input.mousePosition;
         var hit = new RaycastHit();
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f, clickRaycastLayerMask))
         {
             if (Network.isClient)
             {
@@ -140,7 +142,7 @@ public class HeroController : UnitSuperController {
     {
         var point = Input.mousePosition;
         var hit = new RaycastHit();
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(point), out hit, 1000.0f, clickRaycastLayerMask))
         {
             if (Network.isClient)
             {
