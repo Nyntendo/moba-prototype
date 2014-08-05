@@ -1543,6 +1543,9 @@ MonoBehaviour:
   triggerImuneTime: 5
   animationFade: .200000003
   attackAnimation: RangedAttack1
+  clickRaycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
   unitController: {fileID: 11400002}
   carryingFlag: 0
 --- !u!136 &13600000
