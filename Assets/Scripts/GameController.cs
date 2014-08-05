@@ -15,7 +15,7 @@ public enum Hero
 {
     Putte = 0,
     Harrald = 1,
-	Bella = 2,
+	RedRidingHood = 2,
 	BigBadWolf = 3
 }
 
