@@ -1241,8 +1241,9 @@ MonoBehaviour:
   health: 100
   dead: 0
   following: 0
-  jump: 0
   jumping: 0
+  jumpActivated: 0
+  team: 0
   lastAnimationState: 8
   animationState: 0
   posErrorThreshold: 2
@@ -1256,6 +1257,9 @@ MonoBehaviour:
   serverRot: {x: 0, y: 0, z: 0, w: 1}
   serverIsAttacking: 0
   baseAttack: {fileID: 11400004}
+  abilities: []
+  activatedAbility: -1
+  isCastingAbility: 0
   healthbarBG: {fileID: 2800000, guid: 454963b401c8db343bdf55219c97a8e1, type: 3}
   healthbarFG: {fileID: 2800000, guid: 660b5e9df3fb48e4bb154b0211eeeab1, type: 3}
   healthbarOffset: {x: 0, y: 12, z: 8}
@@ -1305,9 +1309,11 @@ MonoBehaviour:
   triggerImuneTime: 5
   animationFade: .200000003
   attackAnimation: MeleeAttack1
+  clickRaycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
   unitController: {fileID: 11400000}
   carryingFlag: 0
-  team: 0
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
