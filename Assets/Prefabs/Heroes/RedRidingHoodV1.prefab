@@ -1611,10 +1611,8 @@ MonoBehaviour:
   landAnimation: Landing
   deathAnimation: Death
   attackAnimation: RangedAttack1
-  ability1Animation: 
-  ability2Animation: 
-  ability3Animation: 
-  ability4Animation: 
+  abilityAnimations:
+  - RangedAttack1
   speed: 0
   ySpeed: 0
   jump: 0
@@ -1622,10 +1620,7 @@ MonoBehaviour:
   die: 0
   revive: 0
   inCombat: 0
-  castAbility1: 0
-  castAbility2: 0
-  castAbility3: 0
-  castAbility4: 0
+  castAbility: -1
   runThreshold: .200000003
   flyThreshold: .200000003
   fallThreshold: -.200000003

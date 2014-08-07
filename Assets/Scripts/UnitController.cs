@@ -298,6 +298,7 @@ public class UnitController : MonoBehaviour {
         var lookAt = new Vector3(target.x, transform.position.y, target.z);
         transform.LookAt(lookAt);
         abilities[activatedAbility].CastAtTarget(target, abilityTargetGO);
+        animationController.castAbility = activatedAbility;
         activatedAbility = -1;
         superController.OnAbilityCast(activatedAbility);
     }

@@ -22,10 +22,7 @@ public class UnitAnimationController : MonoBehaviour
     public string landAnimation = "Landing";
     public string deathAnimation = "Death";
     public string attackAnimation;
-    public string ability1Animation;
-    public string ability2Animation;
-    public string ability3Animation;
-    public string ability4Animation;
+    public string[] abilityAnimations;
 
     public float speed = 0f;
     public float ySpeed = 0f;
@@ -35,10 +32,7 @@ public class UnitAnimationController : MonoBehaviour
     public bool revive = false;
     public bool inCombat = false;
 
-    public bool castAbility1 = false;
-    public bool castAbility2 = false;
-    public bool castAbility3 = false;
-    public bool castAbility4 = false;
+    public int castAbility = -1;
 
     public float runThreshold = 0.2f;
     public float flyThreshold = 0.2f;
@@ -84,25 +78,10 @@ public class UnitAnimationController : MonoBehaviour
         }
 
         // abilities
-        if (!string.IsNullOrEmpty(ability1Animation))
+        for (int i = 0; i < abilityAnimations.Length; i++)
         {
-            animation[ability1Animation].wrapMode = WrapMode.Once;
-            animation[ability1Animation].layer = 1;
-        }
-        if (!string.IsNullOrEmpty(ability2Animation))
-        {
-            animation[ability2Animation].wrapMode = WrapMode.Once;
-            animation[ability2Animation].layer = 1;
-        }
-        if (!string.IsNullOrEmpty(ability3Animation))
-        {
-            animation[ability3Animation].wrapMode = WrapMode.Once;
-            animation[ability3Animation].layer = 1;
-        }
-        if (!string.IsNullOrEmpty(ability4Animation))
-        {
-            animation[ability4Animation].wrapMode = WrapMode.Once;
-            animation[ability4Animation].layer = 1;
+            animation[abilityAnimations[i]].wrapMode = WrapMode.Once;
+            animation[abilityAnimations[i]].layer = 1;
         }
     }
 
@@ -193,25 +172,10 @@ public class UnitAnimationController : MonoBehaviour
             currentState = UnitAnimationState.Flying;
             animation.CrossFade(jumpAnimation, animationFadeTime);
         }
-        if (castAbility1)
+        if (castAbility >= 0)
         {
-            castAbility1 = false;
-            animation.CrossFade(ability1Animation, animationFadeTime);
-        }
-        if (castAbility2)
-        {
-            castAbility2 = false;
-            animation.CrossFade(ability2Animation, animationFadeTime);
-        }
-        if (castAbility3)
-        {
-            castAbility3 = false;
-            animation.CrossFade(ability3Animation, animationFadeTime);
-        }
-        if (castAbility4)
-        {
-            castAbility4 = false;
-            animation.CrossFade(ability4Animation, animationFadeTime);
+            animation.CrossFade(abilityAnimations[castAbility], animationFadeTime);
+            castAbility = -1;
         }
     }
 }
