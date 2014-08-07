@@ -156,7 +156,7 @@ public class GameController : MonoBehaviour
             foreach (PlayerData playerData in players.Values.Where(pd => pd.team == Team.Red))
             {
                 var y = 120 + redTeamIndex * 40;
-                GUI.Label(new Rect(25, y, 100, 30), string.Format("{0} ({1})", playerData.name, playerData.hero));
+                GUI.Label(new Rect(25, y, 150, 30), string.Format("{0} ({1})", playerData.name, playerData.hero));
                 redTeamIndex++;
             }
 
@@ -164,20 +164,20 @@ public class GameController : MonoBehaviour
             foreach (PlayerData playerData in players.Values.Where(pd => pd.team == Team.Blue))
             {
                 var y = 120 + blueTeamIndex * 40;
-                GUI.Label(new Rect(175, y, 100, 30), string.Format("{0} ({1})", playerData.name, playerData.hero));
+                GUI.Label(new Rect(175, y, 150, 30), string.Format("{0} ({1})", playerData.name, playerData.hero));
                 blueTeamIndex++;
             }
 
             GUI.EndGroup();
 
-            GUI.BeginGroup(new Rect(Screen.width/2 - 200, Screen.height/2 + 175, 400, 100));
+            GUI.BeginGroup(new Rect(Screen.width/2 - 300, Screen.height/2 + 175, 600, 100));
 
-            GUI.Box(new Rect(0, 0, 400, 100), "Choose Hero");
+            GUI.Box(new Rect(0, 0, 600, 100), "Choose Hero");
 
             for (int i = 0; i < Enum.GetValues(typeof(Hero)).Length; i++)
             {
                 var x = 40 + 115 * i;
-                if (GUI.Button(new Rect(x, 40, 75, 30), ((Hero)i).ToString()))
+                if (GUI.Button(new Rect(x, 40, 100, 30), ((Hero)i).ToString()))
                 {
                     if (Network.isClient)
                     {

@@ -8,11 +8,6 @@ public class HeroController : UnitSuperController {
     private float triggerImuneTimer = 0f;
     private bool triggerImune = false;
 
-    public float animationFade = 0.2f;
-    private bool queueNextAnimation = false;
-
-    public string attackAnimation;
-
     private GameObject redFlag;
     private GameObject blueFlag;
 
@@ -39,12 +34,6 @@ public class HeroController : UnitSuperController {
 
         var targetMarkers = GameObject.FindWithTag("TargetMarkers");
         skillshotController = targetMarkers.transform.Find("SkillshotMarker").GetComponent<SkillshotMarkerController>();
-
-        animation[attackAnimation].wrapMode = WrapMode.PingPong;
-        animation["Death"].wrapMode = WrapMode.Once;
-        animation["JumpStart"].wrapMode = WrapMode.Once;
-        animation["Landing"].wrapMode = WrapMode.Once;
-        animation["Landing"].speed = 2f;
     }
 
     public override void OnHitServer(GameObject attacker)
@@ -173,8 +162,6 @@ public class HeroController : UnitSuperController {
             }
         }
 
-        animation[attackAnimation].speed = animation[attackAnimation].length / unitController.baseAttack.CastTime;
-
         if (triggerImuneTimer > 0f)
         {
             triggerImune = true;
@@ -231,61 +218,6 @@ public class HeroController : UnitSuperController {
         }
     }
 
-    public void LateUpdate()
-    {
-        if (unitController.lastAnimationState != unitController.animationState)
-        {
-            switch (unitController.animationState)
-            {
-                case UnitAnimationState.CastingAbility:
-                    FadeOrQueue(attackAnimation);
-                    break;
-                case UnitAnimationState.Attacking:
-                    FadeOrQueue(attackAnimation);
-                    break;
-                case UnitAnimationState.BeginJump:
-                    FadeOrQueue("JumpStart");
-                    queueNextAnimation = true;
-                    break;
-                case UnitAnimationState.Landing:
-                    FadeOrQueue("Landing");
-                    queueNextAnimation = true;
-                    break;
-                case UnitAnimationState.Jumping:
-                    FadeOrQueue("Upwards");
-                    break;
-                case UnitAnimationState.Falling:
-                    FadeOrQueue("Falling");
-                    break;
-                case UnitAnimationState.Running:
-                    FadeOrQueue("Running");
-                    break;
-                case UnitAnimationState.Dead:
-                    unitController.lastAnimationState = UnitAnimationState.Dead;
-                    FadeOrQueue("Death");
-                    break;
-                case UnitAnimationState.Idle:
-                default:
-                    FadeOrQueue("Idle");
-                    break;
-            }
-        }
-    }
-
-    private void FadeOrQueue(string animationName)
-    {
-        if (queueNextAnimation)
-        {
-            animation.CrossFadeQueued(animationName, animationFade);
-            queueNextAnimation = false;
-        }
-        else
-        {
-            animation.CrossFade(animationName, animationFade);
-        }
-    }
-
-
     [RPC]
     public void Respawn(Vector3 position, Quaternion rotation)
     {
@@ -295,8 +227,10 @@ public class HeroController : UnitSuperController {
         unitController.serverRot = rotation;
         unitController.health = unitController.maxHealth;
         unitController.dead = false;
+        unitController.target = Vector3.zero;
+        unitController.targetGameObject = null;
+        unitController.animationController.revive = true;
         triggerImuneTimer = triggerImuneTime;
-        unitController.animationState = UnitAnimationState.Idle;
     }
 
     [RPC]
@@ -361,7 +295,7 @@ public class HeroController : UnitSuperController {
         carryingFlag = false;
     }
 
-	void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (Network.isServer && !unitController.dead && !triggerImune)
         {

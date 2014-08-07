@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum UnitAnimationState
+public enum OldUnitAnimationState
 {
     Idle = 0,
     Running = 1,
@@ -30,9 +30,6 @@ public class UnitController : MonoBehaviour {
 
     public Team team;
 
-    public UnitAnimationState lastAnimationState = UnitAnimationState.TPose;
-    public UnitAnimationState animationState = UnitAnimationState.TPose;
-
     public float posErrorThreshold = 2f;
     public float rotErrorThreshold = 2f;
     public float targetReachedThreshold = 2f;
@@ -46,7 +43,6 @@ public class UnitController : MonoBehaviour {
     public GameObject targetGameObject;
     public Vector3 serverPos = Vector3.zero;
     public Quaternion serverRot = Quaternion.identity;
-    public bool serverIsAttacking = false;
 
     public BaseAttack baseAttack;
 
@@ -63,15 +59,18 @@ public class UnitController : MonoBehaviour {
 
     private CharacterController charController;
     public UnitSuperController superController;
+    public UnitAnimationController animationController;
 
-	void Start ()
+    void Start ()
     {
         charController = GetComponent<CharacterController>();
         lastPosition = transform.position;
         serverPos = transform.position;
         serverRot = transform.rotation;
-	}
-	
+
+        animationController.SetAttackCastTime(baseAttack.CastTime);
+    }
+    
     public void OnGUI()
     {
         if (!dead)
@@ -152,6 +151,24 @@ public class UnitController : MonoBehaviour {
     }
 
     [RPC]
+    public void OnAttack()
+    {
+        animationController.attack = true;
+    }
+
+    [RPC]
+    public void OnGotTarget()
+    {
+        animationController.inCombat = true;
+    }
+
+    [RPC]
+    public void OnLostTarget()
+    {
+        animationController.inCombat = false;
+    }
+
+    [RPC]
     public void GotHit()
     {
         superController.OnHitClient();
@@ -161,8 +178,7 @@ public class UnitController : MonoBehaviour {
     public void Kill(Vector3 position)
     {
         baseAttack.CancelAttack();
-        lastAnimationState = animationState;
-        animationState = UnitAnimationState.Dead;
+        animationController.die = true;
         dead = true;
         targetGameObject = null;
         target = Vector3.zero;
@@ -183,11 +199,13 @@ public class UnitController : MonoBehaviour {
             if (targetGO != null && (targetGO.tag == "Hero" || targetGO.tag == "Creep"))
             {
                 this.targetGameObject = targetGO;
+                networkView.RPC("OnGotTarget", RPCMode.AllBuffered);
                 return;
             }
         }
 
         this.targetGameObject = null;
+        networkView.RPC("OnLostTarget", RPCMode.AllBuffered);
     }
 
     [RPC]
@@ -203,6 +221,7 @@ public class UnitController : MonoBehaviour {
 
         jumping = true;
         jumpActivated = false;
+        animationController.jump = true;
         superController.OnAbilityCast(-1);
     }
 
@@ -309,8 +328,8 @@ public class UnitController : MonoBehaviour {
         superController.OnAbilityCancel(activatedAbility);
     }
 
-	void Update () {
-	
+    void Update () {
+    
         if (dead)
         {
             return;
@@ -333,6 +352,7 @@ public class UnitController : MonoBehaviour {
             if (targetUnitCtrl.dead)
             {
                 targetGameObject = null;
+                networkView.RPC("OnLostTarget", RPCMode.AllBuffered);
                 target = Vector3.zero;
             }
         }
@@ -350,6 +370,7 @@ public class UnitController : MonoBehaviour {
                 if (!baseAttack.IsAttacking && !baseAttack.IsOnCooldown)
                 {
                     baseAttack.Attack(targetGameObject);
+                    networkView.RPC("OnAttack", RPCMode.AllBuffered);
                 }
 
                 target = Vector2.zero;
@@ -386,6 +407,9 @@ public class UnitController : MonoBehaviour {
 
         movement.y -= gravity * Time.deltaTime;
         charController.Move(movement * Time.deltaTime);
+        animationController.speed = new Vector2(movement.x, movement.z).magnitude;
+        var ySpeed = transform.position.y - lastPosition.y;
+        animationController.ySpeed = ySpeed;
 
         if (charController.isGrounded)
         {
@@ -402,45 +426,6 @@ public class UnitController : MonoBehaviour {
             jumping = false;
         }
 
-        var movedSinceLast = Vector3.Distance(lastPosition, transform.position);
-        var movedYSinceLast = transform.position.y - lastPosition.y;
-        lastAnimationState = animationState;
-
-
-        if (isCastingAbility)
-        {
-            animationState = UnitAnimationState.CastingAbility;
-        }
-        else if (baseAttack.IsAttacking || serverIsAttacking)
-        {
-            animationState = UnitAnimationState.Attacking;
-        }
-        else if (lastIsGrounded && !charController.isGrounded  && jumping)
-        {
-            animationState = UnitAnimationState.BeginJump;
-        }
-        else if (!lastIsGrounded && charController.isGrounded  && Mathf.Abs(movedYSinceLast) >= fallAnimationThreshold)
-        {
-            animationState = UnitAnimationState.Landing;
-        }
-        else if (!charController.isGrounded && movedYSinceLast > 0 && (jumping || Mathf.Abs(movedYSinceLast) >= fallAnimationThreshold))
-        {
-            animationState = UnitAnimationState.Jumping;
-        }
-        else if (!charController.isGrounded && movedYSinceLast <= 0 && (jumping || Mathf.Abs(movedYSinceLast) >= fallAnimationThreshold))
-        {
-            animationState = UnitAnimationState.Falling;
-        }
-        else if (movedSinceLast > moveAnimationThreshold)
-        {
-            animationState = UnitAnimationState.Running;
-        } 
-        else 
-        {
-            animationState = UnitAnimationState.Idle;
-        }
-
         lastPosition = transform.position;
-        lastIsGrounded = charController.isGrounded;
-	}
+    }
 }

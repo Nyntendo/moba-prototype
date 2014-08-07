@@ -483,6 +483,7 @@ GameObject:
   - 81: {fileID: 8100000}
   - 136: {fileID: 13600000}
   - 114: {fileID: 11400000}
+  - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: BigBadWolf
   m_TagString: Hero
@@ -1422,8 +1423,6 @@ MonoBehaviour:
   jumping: 0
   jumpActivated: 0
   team: 0
-  lastAnimationState: 8
-  animationState: 0
   posErrorThreshold: 2
   rotErrorThreshold: 2
   targetReachedThreshold: 2
@@ -1433,7 +1432,6 @@ MonoBehaviour:
   targetGameObject: {fileID: 0}
   serverPos: {x: 0, y: 0, z: 0}
   serverRot: {x: 0, y: 0, z: 0, w: 1}
-  serverIsAttacking: 0
   baseAttack: {fileID: 11400002}
   abilities: []
   activatedAbility: -1
@@ -1444,6 +1442,7 @@ MonoBehaviour:
   healthbarSize: {x: 80, y: 20}
   heathbarFrameSize: 3
   superController: {fileID: 11400006}
+  animationController: {fileID: 11400008}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1485,13 +1484,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   respawnTimer: 0
   triggerImuneTime: 5
-  animationFade: .200000003
-  attackAnimation: MeleeAttack1
   clickRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 1
   unitController: {fileID: 11400000}
   carryingFlag: 0
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00d1546d995e6845a4871937b2f4e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  idleAnimation: Idle
+  runAnimation: Running
+  combatIdleAnimation: CombatIdle
+  fallAnimation: Falling
+  flyAnimation: Upwards
+  jumpAnimation: JumpStart
+  landAnimation: Landing
+  deathAnimation: Death
+  attackAnimation: MeleeAttack1
+  ability1Animation: 
+  ability2Animation: 
+  ability3Animation: 
+  ability4Animation: 
+  speed: 0
+  ySpeed: 0
+  jump: 0
+  attack: 0
+  die: 0
+  revive: 0
+  inCombat: 0
+  castAbility1: 0
+  castAbility2: 0
+  castAbility3: 0
+  castAbility4: 0
+  runThreshold: .200000003
+  flyThreshold: .200000003
+  fallThreshold: -.200000003
+  animationFadeTime: .200000003
+  currentState: 0
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
