@@ -28,15 +28,15 @@ Material:
       data:
         first:
           name: _BaseLight
-        second: .528571427
+        second: .964285731
       data:
         first:
           name: _AO
-        second: 10
+        second: 5.89285707
       data:
         first:
           name: _Occlusion
-        second: 20
+        second: 7.14285707
       data:
         first:
           name: _SquashAmount
@@ -45,7 +45,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .808823526, g: .808823526, b: .808823526, a: 1}
       data:
         first:
           name: _Scale

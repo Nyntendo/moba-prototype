@@ -31,7 +31,7 @@ Material:
       data:
         first:
           name: _Cutoff
-        second: 1
+        second: .910714328
       data:
         first:
           name: _BaseLight
