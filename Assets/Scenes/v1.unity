@@ -21028,7 +21028,7 @@ TerrainCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 58cdd83d4f69f8b43b789658b6647e9e, type: 2}
-  m_CreateTreeColliders: 1
+  m_CreateTreeColliders: 0
 --- !u!114 &776177025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21046,7 +21046,7 @@ MonoBehaviour:
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 25
   m_DetailObjectDistance: 250
-  m_DetailObjectDensity: 0
+  m_DetailObjectDensity: .0500000007
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
