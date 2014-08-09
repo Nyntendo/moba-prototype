@@ -100,7 +100,7 @@ public class UnitAnimationController : MonoBehaviour
                 {
                     currentState = UnitAnimationState.Running;
                 }
-                if (inCombat)
+                else if (inCombat)
                 {
                     currentState = UnitAnimationState.CombatIdle; 
                 }
@@ -111,7 +111,7 @@ public class UnitAnimationController : MonoBehaviour
                 {
                     currentState = UnitAnimationState.Running;
                 }
-                if (!inCombat)
+                else if (!inCombat)
                 {
                     currentState = UnitAnimationState.Idle; 
                 }

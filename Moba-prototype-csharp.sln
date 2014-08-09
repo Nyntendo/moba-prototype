@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{CA98E531-591A-0B58-CC34-24E41EB6DE09}") = "moba-prototype", "Assembly-CSharp-vs.csproj", "{7E2CB341-2A14-81C3-815A-E2DB5FB9F9F8}"
 EndProject
+Project("{CA98E531-591A-0B58-CC34-24E41EB6DE09}") = "moba-prototype", "Assembly-CSharp-Editor-vs.csproj", "{E54E9012-C60A-A076-26CA-348F8A905B57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,11 +15,15 @@ Global
 		{7E2CB341-2A14-81C3-815A-E2DB5FB9F9F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E2CB341-2A14-81C3-815A-E2DB5FB9F9F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E2CB341-2A14-81C3-815A-E2DB5FB9F9F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E54E9012-C60A-A076-26CA-348F8A905B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E54E9012-C60A-A076-26CA-348F8A905B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E54E9012-C60A-A076-26CA-348F8A905B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E54E9012-C60A-A076-26CA-348F8A905B57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																															GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

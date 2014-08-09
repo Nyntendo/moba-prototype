@@ -175,7 +175,7 @@ public class HeroController : UnitSuperController {
 
         if (Network.player == owner && owner != null)
         {
-            if (Input.GetButton("Move") && GUIUtility.hotControl == 0)
+            if (Input.GetButtonUp("Move") && GUIUtility.hotControl == 0)
             {
                 FindTarget();
             }

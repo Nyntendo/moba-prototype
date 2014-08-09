@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Pathfinding;
 
 public enum OldUnitAnimationState
 {
@@ -43,6 +44,8 @@ public class UnitController : MonoBehaviour {
     public GameObject targetGameObject;
     public Vector3 serverPos = Vector3.zero;
     public Quaternion serverRot = Quaternion.identity;
+    public Path path;
+    private int currentWaypoint = 0;
 
     public BaseAttack baseAttack;
 
@@ -60,6 +63,7 @@ public class UnitController : MonoBehaviour {
     private CharacterController charController;
     public UnitSuperController superController;
     public UnitAnimationController animationController;
+    public Seeker seeker;
 
     void Start ()
     {
@@ -67,6 +71,11 @@ public class UnitController : MonoBehaviour {
         lastPosition = transform.position;
         serverPos = transform.position;
         serverRot = transform.rotation;
+
+        if (seeker != null)
+        {
+            seeker.pathCallback += OnPathComplete;
+        }
 
         animationController.SetAttackCastTime(baseAttack.CastTime);
     }
@@ -190,7 +199,15 @@ public class UnitController : MonoBehaviour {
     {
         baseAttack.CancelAttack();
 
-        this.target = target;
+        if (seeker != null && Network.isServer)
+        {
+            Debug.Log("Pathfinding...");
+            seeker.StartPath (transform.position, target);
+        }
+        else
+        {
+            this.target = target;
+        }
 
         if (targetName != "terrain")
         {
@@ -206,6 +223,15 @@ public class UnitController : MonoBehaviour {
 
         this.targetGameObject = null;
         networkView.RPC("OnLostTarget", RPCMode.AllBuffered);
+    }
+
+    public void OnPathComplete (Path p) {
+        Debug.Log ("Yay, we got a path back. Did it have an error? "+p.error);
+        if (!p.error) {
+            path = p;
+            //Reset the waypoint counter
+            currentWaypoint = 0;
+        }
     }
 
     [RPC]
@@ -346,6 +372,23 @@ public class UnitController : MonoBehaviour {
             }
         }
 
+        if (path != null)
+        {
+            var distance = Vector3.Distance(target, transform.position);
+
+            if (target == Vector3.zero || distance > targetReachedThreshold)
+            {
+                if (currentWaypoint >= path.vectorPath.Count) {
+                    Debug.Log ("End Of Path Reached");
+                    path = null;
+                }
+                else
+                {
+                    target = path.vectorPath[currentWaypoint++];
+                }
+            }
+        }
+
         if (targetGameObject != null)
         {
             var targetUnitCtrl = targetGameObject.GetComponent<UnitController>();
@@ -408,9 +451,9 @@ public class UnitController : MonoBehaviour {
 
         movement.y -= gravity * Time.deltaTime;
         charController.Move(movement * Time.deltaTime);
-        animationController.speed = new Vector2(movement.x, movement.z).magnitude;
-        var ySpeed = transform.position.y - lastPosition.y;
-        animationController.ySpeed = ySpeed;
+        var actualMovement = transform.position - lastPosition;
+        animationController.speed = new Vector2(actualMovement.x, actualMovement.z).magnitude;
+        animationController.ySpeed = actualMovement.y;
 
         if (charController.isGrounded)
         {
