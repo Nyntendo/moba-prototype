@@ -11,6 +11,7 @@ public class NetworkUnitController : MonoBehaviour
         var pos = observedTransform.position;
         var rot = observedTransform.rotation;
         var target = unitController.target;
+        var targetWaypoint = unitController.targetWaypoint;
         var health = unitController.health;
 
         if (stream.isWriting)
@@ -18,6 +19,7 @@ public class NetworkUnitController : MonoBehaviour
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
             stream.Serialize(ref target);
+            stream.Serialize(ref targetWaypoint);
             stream.Serialize(ref health);
         }
         else
@@ -25,11 +27,13 @@ public class NetworkUnitController : MonoBehaviour
             stream.Serialize(ref pos);
             stream.Serialize(ref rot);
             stream.Serialize(ref target);
+            stream.Serialize(ref targetWaypoint);
             stream.Serialize(ref health);
 
             unitController.serverPos = pos;
             unitController.serverRot = rot;
             unitController.target = target;
+            unitController.targetWaypoint = targetWaypoint;
             unitController.health = health;
         }
     }

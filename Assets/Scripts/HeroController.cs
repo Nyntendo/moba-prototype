@@ -144,11 +144,11 @@ public class HeroController : UnitSuperController {
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Network.isServer && unitController.dead)
         {
-            respawnTimer -= Time.deltaTime;
+            respawnTimer -= Time.fixedDeltaTime;
             
             if (respawnTimer <= 0f)
             {
@@ -165,7 +165,7 @@ public class HeroController : UnitSuperController {
         if (triggerImuneTimer > 0f)
         {
             triggerImune = true;
-            triggerImuneTimer -= Time.deltaTime;
+            triggerImuneTimer -= Time.fixedDeltaTime;
 
             if (triggerImuneTimer <= 0f)
             {

@@ -34,13 +34,12 @@ public class UnitController : MonoBehaviour {
     public float posErrorThreshold = 2f;
     public float rotErrorThreshold = 2f;
     public float targetReachedThreshold = 2f;
-    public float moveAnimationThreshold = 0.1f;
-    public float fallAnimationThreshold = 0.1f;
 
     private bool lastIsGrounded = true;
     private Vector3 lastPosition;
     private Vector3 movement = Vector3.zero;
     public Vector3 target = Vector3.zero;
+    public Vector3 targetWaypoint = Vector3.zero;
     public GameObject targetGameObject;
     public Vector3 serverPos = Vector3.zero;
     public Quaternion serverRot = Quaternion.identity;
@@ -64,6 +63,7 @@ public class UnitController : MonoBehaviour {
     public UnitSuperController superController;
     public UnitAnimationController animationController;
     public Seeker seeker;
+    public LayerMask pathfindingRaycastMask;
 
     void Start ()
     {
@@ -201,15 +201,21 @@ public class UnitController : MonoBehaviour {
 
         if (seeker != null && Network.isServer)
         {
-            Debug.Log("Pathfinding...");
-            seeker.StartPath (transform.position, target);
-        }
-        else
-        {
+            var direction = target - transform.position;
+
+            if (Physics.Raycast(transform.position, direction, direction.magnitude, pathfindingRaycastMask))
+            {
+                seeker.StartPath(transform.position, target);
+            }
+            else
+            {
+                path = null;
+            }
+
             this.target = target;
         }
 
-        if (targetName != "terrain")
+        if (targetName != "Terrain")
         {
             var targetGO = GameObject.Find(targetName);
 
@@ -226,10 +232,8 @@ public class UnitController : MonoBehaviour {
     }
 
     public void OnPathComplete (Path p) {
-        Debug.Log ("Yay, we got a path back. Did it have an error? "+p.error);
         if (!p.error) {
             path = p;
-            //Reset the waypoint counter
             currentWaypoint = 0;
         }
     }
@@ -355,8 +359,8 @@ public class UnitController : MonoBehaviour {
         superController.OnAbilityCancel(activatedAbility);
     }
 
-    void Update () {
-    
+    void Update()
+    {
         if (dead)
         {
             return;
@@ -372,20 +376,27 @@ public class UnitController : MonoBehaviour {
             }
         }
 
-        if (path != null)
+        if (Network.isServer)
         {
-            var distance = Vector3.Distance(target, transform.position);
-
-            if (target == Vector3.zero || distance > targetReachedThreshold)
+            if (path != null)
             {
-                if (currentWaypoint >= path.vectorPath.Count) {
-                    Debug.Log ("End Of Path Reached");
-                    path = null;
-                }
-                else
+                var distance = Vector3.Distance(targetWaypoint, transform.position);
+
+                if (targetWaypoint == Vector3.zero || distance < targetReachedThreshold)
                 {
-                    target = path.vectorPath[currentWaypoint++];
+                    if (currentWaypoint >= path.vectorPath.Count) {
+                        path = null;
+                        targetWaypoint = Vector3.zero;
+                    }
+                    else
+                    {
+                        targetWaypoint = path.vectorPath[currentWaypoint++];
+                    }
                 }
+            }
+            else
+            {
+                targetWaypoint = Vector3.zero;
             }
         }
 
@@ -432,7 +443,18 @@ public class UnitController : MonoBehaviour {
 
         if (charController.isGrounded)
         {
-            if (target != Vector3.zero && !isCastingAbility && !jumping)
+            if (targetWaypoint != Vector3.zero && !isCastingAbility && !jumping)
+            {
+                var distance = Vector3.Distance(targetWaypoint, transform.position);
+
+                if (distance > targetReachedThreshold)
+                {
+                    var lookAt = new Vector3(targetWaypoint.x, transform.position.y, targetWaypoint.z);
+                    transform.LookAt(lookAt);
+                    movement = transform.TransformDirection(Vector3.forward) * speed;
+                }
+            }
+            else if (target != Vector3.zero && !isCastingAbility && !jumping)
             {
                 var distance = Vector3.Distance(target, transform.position);
 
@@ -441,10 +463,6 @@ public class UnitController : MonoBehaviour {
                     var lookAt = new Vector3(target.x, transform.position.y, target.z);
                     transform.LookAt(lookAt);
                     movement = transform.TransformDirection(Vector3.forward) * speed;
-                }
-                else
-                {
-                    target = Vector3.zero;
                 }
             }
         }
