@@ -17,14 +17,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: 4fc9a7c1be4d48843954d0fd9a438ce8, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Ramp
-        second:
-          m_Texture: {fileID: 2800000, guid: c8c82c22049f39c46922c313e00ec79d, type: 3}
+          m_Texture: {fileID: 2800000, guid: 38c54d86ae92d114a8b10ff2f831126c, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -32,6 +25,13 @@ Material:
           name: _FogTex
         second:
           m_Texture: {fileID: 2800000, guid: bca21d6300dacc74196282893640321c, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Ramp
+        second:
+          m_Texture: {fileID: 2800000, guid: c8c82c22049f39c46922c313e00ec79d, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
