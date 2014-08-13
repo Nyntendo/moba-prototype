@@ -60,12 +60,18 @@
      <Compile Include="Assets\AstarPathfindingProject\Editor\ModifierEditors\RaycastModifierEditor.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Editor\ModifierEditors\SmoothModifierEditor.cs" />
      <Compile Include="Assets\AstarPathfindingProject\Editor\SeekerEditor.cs" />
+     <None Include="Assets\Shaders\SH_Vertex.cginc" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\AstarPathfindingProject\Editor\EditorAssets\Materials\Navmesh2.shader" />
      <None Include="Assets\TerrainV1Assets\Watershader\water_flowmap2.shader" />
+     <None Include="Assets\Shaders\Terrain-Fogged_addPass.shader" />
      <None Include="Assets\AstarPathfindingProject\Plugins\DotNetZip\License.txt" />
+     <None Include="Assets\Shaders\Toony-Lighted_Fogged-Outlined.shader" />
      <None Include="Assets\AstarPathfindingProject\Plugins\dependencies.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
+     <None Include="Assets\Shaders\Leafs - Fogged.shader" />
+     <None Include="Assets\Shaders\Terrrain-Fogged.shader" />
+     <None Include="Assets\Shaders\Leafs - Fogged -Rendertex.shader" />
      <None Include="Assets\TerrainV1Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\AstarPathfindingProject\Readme_upgrading.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
@@ -73,6 +79,7 @@
      <None Include="Assets\AstarPathfindingProject\Readme.txt" />
      <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\License.txt" />
      <None Include="Assets\AstarPathfindingProject\Plugins\JsonFx\Readme.txt" />
+     <None Include="Assets\Shaders\Toony-Lighted-Fogged.shader" />
      <None Include="Assets\AstarPathfindingProject\link.xml" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Lighted Bumped Outline.shader" />
  <Reference Include="Pathfinding.Ionic.Zip.Reduced">

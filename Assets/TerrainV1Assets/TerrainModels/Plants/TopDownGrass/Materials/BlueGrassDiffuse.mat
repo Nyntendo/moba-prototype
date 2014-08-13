@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: BlueGrassDiffuse
-  m_Shader: {fileID: 10511, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: e140be47c9e6efc43a89dc3412949b8a, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -18,6 +18,13 @@ Material:
           name: _MainTex
         second:
           m_Texture: {fileID: 2800000, guid: 3656bf1ebe223c94c928e227cbbcbed9, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _FogTex
+        second:
+          m_Texture: {fileID: 2800000, guid: bca21d6300dacc74196282893640321c, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -36,7 +43,7 @@ Material:
       data:
         first:
           name: _Occlusion
-        second: 7.5
+        second: 0
       data:
         first:
           name: _SquashAmount
