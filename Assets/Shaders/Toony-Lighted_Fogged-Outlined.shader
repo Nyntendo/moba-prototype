@@ -5,7 +5,6 @@
 		_Outline ("Outline width", Range (.002, 0.03)) = .005
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 		_Ramp ("Toon Ramp (RGB)", 2D) = "gray" {} 
-		_FogTex ("Fog (RGB)", 2D) = "gray" {} 
 	}
 
 	SubShader {
