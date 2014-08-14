@@ -1,0 +1,124 @@
+fileFormatVersion: 2
+guid: 6574915b074e6e8429be2a16fb71cc3c
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: LandscapeJoint1
+    100002: LandscapeJoint2
+    100004: MountainJoint1
+    100006: MountainJoint2
+    100008: PlantationJoint
+    100010: polySurface15
+    100012: pPlane1
+    100014: //RootNode
+    400000: LandscapeJoint1
+    400002: LandscapeJoint2
+    400004: MountainJoint1
+    400006: MountainJoint2
+    400008: PlantationJoint
+    400010: polySurface15
+    400012: pPlane1
+    400014: //RootNode
+    4300000: pPlane1
+    4300002: polySurface15
+    7400000: TinyWorldAnimation
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: polySurface15
+    13700002: pPlane1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: TinyWorldAnimation
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 600
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: LandscapeJoint1
+        weight: 1
+      - path: LandscapeJoint1/LandscapeJoint2
+        weight: 1
+      - path: MountainJoint1
+        weight: 1
+      - path: MountainJoint1/MountainJoint2
+        weight: 1
+      - path: PlantationJoint
+        weight: 1
+      - path: polySurface15
+        weight: 1
+      - path: pPlane1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 0
+  userData: 
