@@ -36,6 +36,7 @@ public class FogController : MonoBehaviour
         var fog = fogTexture.GetPixels(0, 0, 128, 128);
 
         texture.SetPixels(fog);
+        var texturePixels = texture.GetPixels();
 
         for (int i = 0; i < visions.Length; i++)
         {
@@ -49,11 +50,26 @@ public class FogController : MonoBehaviour
             int x = Mathf.FloorToInt(Mathf.Clamp(texturePos.x, 0, 96));
             int y = Mathf.FloorToInt(Mathf.Clamp(texturePos.y, 0, 96));
             Debug.Log("Visionn in fog coords " + x + "," + y);
-            texture.SetPixels(x, y, 32, 32, visionPixels);
+            // texture.SetPixels(x, y, 32, 32, visionPixels);
+            AddPixels(texturePixels, visionPixels, x, y);
         }
+        texture.SetPixels(texturePixels);
 
         texture.Apply();
 
         Shader.SetGlobalTexture("_FogTex", texture);
+    }
+
+    private void AddPixels(Color[] bg, Color[] fg, int xOffset, int yOffset)
+    {
+        for (int y = 0; y < 32; y++)
+        {
+            for (int x = 0; x < 32; x++)
+            {
+                var bgIndex = (y + yOffset) * 128 + x + xOffset;
+                var fgIndex = y * 32 + x;
+                bg[bgIndex] += fg[fgIndex] * fg[fgIndex].a;
+            }
+        }
     }
 }
