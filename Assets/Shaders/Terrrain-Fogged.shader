@@ -8,7 +8,6 @@ Properties {
 	// used in fallback on old cards & base map
 	[HideInInspector] _MainTex ("BaseMap (RGB)", 2D) = "white" {}
 	[HideInInspector] _Color ("Main Color", Color) = (1,1,1,1)
-	_FogTex ("Fog (RGB)", 2D) = "gray" {} 
 }
 	
 SubShader {

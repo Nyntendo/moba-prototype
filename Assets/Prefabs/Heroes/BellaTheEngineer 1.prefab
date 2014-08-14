@@ -619,6 +619,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &100080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400080}
+  m_Layer: 0
+  m_Name: Vision
+  m_TagString: Vision
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400000
 Transform:
   m_ObjectHideFlags: 1
@@ -1129,15 +1144,28 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -944.803894, y: 39.9926758, z: -907.895508}
+  m_LocalPosition: {x: -849.122925, y: 160, z: -936.617371}
   m_LocalScale: {x: 534.370972, y: 534.370972, z: 534.370972}
   m_Children:
   - {fileID: 400000}
   - {fileID: 400014}
   - {fileID: 400076}
   - {fileID: 400074}
+  - {fileID: 400080}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &400080
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100080}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 400078}
+  m_RootOrder: 4
 --- !u!23 &2300000
 Renderer:
   m_ObjectHideFlags: 1
@@ -1276,9 +1304,8 @@ MonoBehaviour:
   posErrorThreshold: 2
   rotErrorThreshold: 2
   targetReachedThreshold: 2
-  moveAnimationThreshold: .100000001
-  fallAnimationThreshold: 1
   target: {x: 0, y: 0, z: 0}
+  targetWaypoint: {x: 0, y: 0, z: 0}
   targetGameObject: {fileID: 0}
   serverPos: {x: 0, y: 0, z: 0}
   serverRot: {x: 0, y: 0, z: 0, w: 1}
@@ -1293,6 +1320,10 @@ MonoBehaviour:
   heathbarFrameSize: 3
   superController: {fileID: 11400006}
   animationController: {fileID: 11400008}
+  seeker: {fileID: 0}
+  pathfindingRaycastMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1359,10 +1390,7 @@ MonoBehaviour:
   landAnimation: Landing
   deathAnimation: Death
   attackAnimation: MeleeAttack1
-  ability1Animation: 
-  ability2Animation: 
-  ability3Animation: 
-  ability4Animation: 
+  abilityAnimations: []
   speed: 0
   ySpeed: 0
   jump: 0
@@ -1370,10 +1398,7 @@ MonoBehaviour:
   die: 0
   revive: 0
   inCombat: 0
-  castAbility1: 0
-  castAbility2: 0
-  castAbility3: 0
-  castAbility4: 0
+  castAbility: -1
   runThreshold: .200000003
   flyThreshold: .200000003
   fallThreshold: -.200000003

@@ -10,7 +10,6 @@
 		// These are here only to provide default values
 		_Scale ("Scale", Vector) = (1,1,1,1)
 		_SquashAmount ("Squash", Float) = 1
-		_FogTex ("Fog (RGB)", 2D) = "gray" {} 
 	}
 	
 	SubShader {

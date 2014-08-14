@@ -5,7 +5,6 @@ Properties {
 	_Splat2 ("Layer 2 (B)", 2D) = "white" {}
 	_Splat1 ("Layer 1 (G)", 2D) = "white" {}
 	_Splat0 ("Layer 0 (R)", 2D) = "white" {}
-	_FogTex ("Fog (RGB)", 2D) = "gray" {} 
 }
 	
 SubShader {
