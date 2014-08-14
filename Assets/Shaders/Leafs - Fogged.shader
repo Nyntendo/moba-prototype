@@ -33,7 +33,7 @@
 			sampler2D _MainTex;
 			fixed _Cutoff;
 			sampler2D _FogTex;
-			
+
 			fixed4 frag(v2f input) : SV_Target
 			{
 				fixed4 c = tex2D( _MainTex, input.uv.xy);
