@@ -6,6 +6,7 @@ public class FogController : MonoBehaviour
     public Vector3 visionOffset;
     public float mapSize = 1000f;
     public float fogSize = 128f;
+    public float visionExpand = 10f;
     public Vector2 mapOffset = new Vector2(1009.906f, 1001.565f);
     public Texture2D visionTexture;
     private Color[] visionPixels;
@@ -102,11 +103,11 @@ public class FogController : MonoBehaviour
             var relPos = Vector3.zero;
             if (Physics.Raycast(pos + visionOffset, direction, out hit, 300f))
             {
-                relPos = hit.point - pos;
+                relPos = hit.point + direction * visionExpand - pos;
             }
             else
             {
-                relPos = direction * 300f;
+                relPos = direction * (300f + visionExpand);
             }
 
             var texPos = new Vector2(relPos.x, relPos.z);
