@@ -33,6 +33,8 @@
 			sampler2D _MainTex;
 			fixed _Cutoff;
 			sampler2D _FogTex;
+sampler2D _LastFogTex;
+float _FogBlend;
 
 			fixed4 frag(v2f input) : SV_Target
 			{
@@ -42,7 +44,7 @@
 				float2 fogUV = input.worldPos.xz;
 				fogUV += float2(1009.906, 1001.565);
 				fogUV /= 1000;
-				half4 fc = tex2D(_FogTex, fogUV);
+				half4 fc = lerp(tex2D(_LastFogTex, fogUV), tex2D(_FogTex, fogUV), _FogBlend);
 				col.rgb *= fc.rgb;
 				clip(col.a - _Cutoff);
 				col.a = 1;

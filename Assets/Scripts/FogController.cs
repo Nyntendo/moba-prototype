@@ -14,15 +14,21 @@ public class FogController : MonoBehaviour
     private float updateTimer = 0f;
 
     public Texture2D fogTexture;
+    private Texture2D lastFogTexture;
 
 	void Start()
     {
         visionPixels = visionTexture.GetPixels(0, 0, 32, 32);
+        lastFogTexture = fogTexture;
+        Shader.SetGlobalTexture("_FogTex", fogTexture);
+        Shader.SetGlobalTexture("_LastFogTex", fogTexture);
+        Shader.SetGlobalFloat("_FogBlend", 0f);
 	}
 	
 	void Update()
     {
 	   updateTimer += Time.deltaTime;
+       Shader.SetGlobalFloat("_FogBlend", updateTimer / updateInterval);
 
        if (updateTimer >= updateInterval)
        {
@@ -58,6 +64,10 @@ public class FogController : MonoBehaviour
         texture.Apply();
 
         Shader.SetGlobalTexture("_FogTex", texture);
+        Shader.SetGlobalTexture("_LastFogTex", lastFogTexture);
+        Shader.SetGlobalFloat("_FogBlend", 0f);
+
+        lastFogTexture = texture;
     }
 
     private void AddPixels(Color[] bg, Color[] fg, int xOffset, int yOffset, Vector2[] visionPoly)

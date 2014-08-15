@@ -34,6 +34,8 @@ inline half4 LightingToonRamp (SurfaceOutput s, half3 lightDir, half atten)
 
 sampler2D _MainTex;
 sampler2D _FogTex;
+sampler2D _LastFogTex;
+float _FogBlend;
 float4 _Color;
 
 struct Input {
@@ -46,7 +48,7 @@ void surf (Input IN, inout SurfaceOutput o) {
 	float2 fogUV = IN.worldPos.xz;
 	fogUV += float2(1009.906, 1001.565);
 	fogUV /= 1000;
-	half4 fc = tex2D(_FogTex, fogUV);
+	half4 fc = lerp(tex2D(_LastFogTex, fogUV), tex2D(_FogTex, fogUV), _FogBlend);
 	o.Albedo = c.rgb * fc.rgb;
 	o.Alpha = c.a;
 }

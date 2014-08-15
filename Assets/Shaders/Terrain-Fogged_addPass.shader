@@ -29,6 +29,8 @@ struct Input {
 sampler2D _Control;
 sampler2D _Splat0,_Splat1,_Splat2,_Splat3;
 sampler2D _FogTex;
+sampler2D _LastFogTex;
+float _FogBlend;
 
 void surf (Input IN, inout SurfaceOutput o) {
 	fixed4 splat_control = tex2D (_Control, IN.uv_Control);
@@ -40,7 +42,7 @@ void surf (Input IN, inout SurfaceOutput o) {
 	float2 fogUV = IN.worldPos.xz;
 	fogUV += float2(1009.906, 1001.565);
 	fogUV /= 1000;
-	half4 fc = tex2D(_FogTex, fogUV);
+	half4 fc = lerp(tex2D(_LastFogTex, fogUV), tex2D(_FogTex, fogUV), _FogBlend);
 	o.Albedo = col * fc.rgb;
 	o.Alpha = 0.0;
 }

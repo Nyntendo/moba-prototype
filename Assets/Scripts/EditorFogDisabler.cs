@@ -11,6 +11,7 @@ public class EditorFogDisabler : MonoBehaviour {
         if (!Application.isPlaying)
         {
             Shader.SetGlobalTexture("_FogTex", fogTexture);
+            Shader.SetGlobalTexture("_LastFogTex", fogTexture);
         }
 	}
 }
