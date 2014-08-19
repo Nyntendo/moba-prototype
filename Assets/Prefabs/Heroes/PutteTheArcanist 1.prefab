@@ -647,6 +647,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400082}
+  - 114: {fileID: 11400014}
   m_Layer: 0
   m_Name: Vision
   m_TagString: Vision
@@ -1177,7 +1178,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -867.902344, y: 29.9945068, z: -834.51123}
+  m_LocalPosition: {x: -101.32135, y: 39.9926758, z: -117.144226}
   m_LocalScale: {x: 534.371033, y: 534.371033, z: 534.371033}
   m_Children:
   - {fileID: 400000}
@@ -1525,6 +1526,18 @@ MonoBehaviour:
     tagsChange: -1
     tagsSet: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+--- !u!114 &11400014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a1d8ffbb4fe28b4995af2a9738afc74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

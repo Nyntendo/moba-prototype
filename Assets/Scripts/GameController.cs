@@ -62,6 +62,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public PlayerData MyPlayer
+    {
+        get
+        {
+            return players[Network.player.guid];
+        }
+    }
+
     public void Start()
     {
         DontDestroyOnLoad(gameObject);

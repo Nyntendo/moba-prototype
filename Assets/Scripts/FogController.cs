@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class FogController : MonoBehaviour
 {
@@ -15,9 +17,12 @@ public class FogController : MonoBehaviour
 
     public Texture2D fogTexture;
     private Texture2D lastFogTexture;
+    public Team team;
 
 	void Start()
     {
+        var gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        team = gameController.MyPlayer.team;
         visionPixels = visionTexture.GetPixels(0, 0, 32, 32);
         lastFogTexture = fogTexture;
         Shader.SetGlobalTexture("_FogTex", fogTexture);
@@ -32,8 +37,9 @@ public class FogController : MonoBehaviour
 
        if (updateTimer >= updateInterval)
        {
-            var visions = GameObject.FindGameObjectsWithTag("Vision");
-            UpdateFogTexture(visions);
+            var visions = new List<GameObject>(GameObject.FindGameObjectsWithTag("Vision"));
+            var myVisions = visions.Where(v => v.GetComponent<VisionController>().team == team);
+            UpdateFogTexture(myVisions.ToArray<GameObject>());
             updateTimer = 0f;
        }
 	}
