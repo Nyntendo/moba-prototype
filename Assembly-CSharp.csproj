@@ -130,6 +130,7 @@
      <Compile Include="Assets\Scripts\SkillshotMarkerController.cs" />
      <Compile Include="Assets\Scripts\UnitAnimationController.cs" />
      <Compile Include="Assets\Scripts\UnitController.cs" />
+     <Compile Include="Assets\Scripts\VisionController.cs" />
      <Compile Include="Assets\TerrainV1Assets\Standard Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
      <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\FollowingCamera.cs" />
      <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\PlayerScript.cs" />

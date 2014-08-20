@@ -63,6 +63,14 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public PlayerData MyPlayer
+    {
+        get
+        {
+            return players[Network.player.guid];
+        }
+    }
+
     public void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -265,7 +273,7 @@ public class GameController : MonoBehaviour
     public void OnServerInitialized()
     {
         Debug.Log("Server initialized!");
-        MasterServer.RegisterHost(registeredGameName, gameName, "5v5 Capture the Flag");
+        // MasterServer.RegisterHost(registeredGameName, gameName, "5v5 Capture the Flag");
 
         players[Network.player.guid] = new PlayerData {
             name = playerName,

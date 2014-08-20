@@ -151,6 +151,8 @@ public class UnitController : MonoBehaviour {
     public void SetTeam(int team)
     {
         this.team = (Team)team;
+        
+        transform.Find("Vision").GetComponent<VisionController>().team = this.team;
 
         var minimap = GameObject.FindWithTag("Minimap").GetComponent<MinimapController>();
         if (this.team == Team.Red)
