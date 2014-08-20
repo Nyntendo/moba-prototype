@@ -16,7 +16,8 @@ public enum Hero
     Putte = 0,
     Harrald = 1,
 	RedRidingHood = 2,
-	BigBadWolf = 3
+	BigBadWolf = 3,
+	RumpelStiltSkin = 4
 }
 
 public enum GameState

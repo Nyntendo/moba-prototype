@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: WerewolfDiffuse
-  m_Shader: {fileID: 4800000, guid: c4b47bd37b093fb4d91e4bff68853a1d, type: 3}
+  m_Name: DudePaint
+  m_Shader: {fileID: 4800000, guid: 054a31a99d11e49d110086ba44295342, type: 3}
   m_ShaderKeywords: []
   m_CustomRenderQueue: -1
   m_SavedProperties:
@@ -17,7 +17,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: d378d6b62fcabe746bb794e51a8b24d0, type: 3}
+          m_Texture: {fileID: 2800000, guid: b1c69d5ab897a1f42bf658c1e28ede34, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -31,7 +31,7 @@ Material:
       data:
         first:
           name: _Outline
-        second: .00300000003
+        second: .00249999994
     m_Colors:
       data:
         first:
