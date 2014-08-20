@@ -1694,7 +1694,7 @@ MonoBehaviour:
   runThreshold: .200000003
   flyThreshold: .200000003
   fallThreshold: -.200000003
-  animationFadeTime: .200000003
+  animationFadeTime: .300000012
   currentState: 0
 --- !u!114 &11400006
 MonoBehaviour:
@@ -1740,7 +1740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castTime: .5
   cooldown: 1
-  damage: 10
+  damage: 20
   range: 15
 --- !u!114 &11400012
 MonoBehaviour:

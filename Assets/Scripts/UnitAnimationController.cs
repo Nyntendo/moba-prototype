@@ -40,6 +40,8 @@ public class UnitAnimationController : MonoBehaviour
 
     public float animationFadeTime = 0.2f;
 
+    public float attackAnimationTimeModifier = 1f;
+
     public UnitAnimationState currentState = UnitAnimationState.Idle;
 
     public void Start()
@@ -87,7 +89,7 @@ public class UnitAnimationController : MonoBehaviour
 
     public void SetAttackCastTime(float castTime)
     {
-        animation[attackAnimation].speed = animation[attackAnimation].length / castTime;
+        animation[attackAnimation].speed = animation[attackAnimation].length / ((castTime + animationFadeTime) * attackAnimationTimeModifier);
     }
 
     public void LateUpdate()

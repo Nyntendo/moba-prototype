@@ -1657,7 +1657,8 @@ MonoBehaviour:
   runThreshold: .200000003
   flyThreshold: .200000003
   fallThreshold: -.200000003
-  animationFadeTime: .200000003
+  animationFadeTime: .300000012
+  attackAnimationTimeModifier: 2
   currentState: 0
 --- !u!114 &11400012
 MonoBehaviour:
