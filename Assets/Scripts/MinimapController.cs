@@ -47,7 +47,7 @@ public class MinimapController : MonoBehaviour
         }
 	}
 
-    public void Track(Transform transform, MinimapIconType iconType)
+    public GameObject Track(Transform transform, MinimapIconType iconType)
     {
         Object prefab = null;
         switch (iconType)
@@ -67,5 +67,6 @@ public class MinimapController : MonoBehaviour
         }
         var icon = (GameObject)Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
         icons.Add(new MinimapIcon(transform, icon));
+        return icon;
     }
 }

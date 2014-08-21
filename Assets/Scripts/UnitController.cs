@@ -25,6 +25,7 @@ public class UnitController : MonoBehaviour {
     public float health;
     public bool dead = false;
     public bool following = false;
+    public bool visible = true;
 
     public bool jumping = false;
     public bool jumpActivated = false;
@@ -52,6 +53,8 @@ public class UnitController : MonoBehaviour {
     public int activatedAbility = -1;
     public bool isCastingAbility = false;
 
+    private GameObject minimapIcon;
+
     public Texture2D healthbarBG;
     public Texture2D healthbarFG;
 
@@ -64,6 +67,19 @@ public class UnitController : MonoBehaviour {
     public UnitAnimationController animationController;
     public Seeker seeker;
     public LayerMask pathfindingRaycastMask;
+
+    public void SetVisible(bool visible)
+    {
+        if (minimapIcon != null)
+            minimapIcon.SetActive(visible);
+
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
+        {
+            r.enabled = visible;
+        }
+
+        this.visible = visible;
+    }
 
     void Start ()
     {
@@ -82,7 +98,7 @@ public class UnitController : MonoBehaviour {
     
     public void OnGUI()
     {
-        if (!dead)
+        if (!dead && visible)
         {
             var screenPos = Camera.main.WorldToScreenPoint(transform.position + healthbarOffset);
             screenPos.y = Screen.height - screenPos.y;
@@ -151,14 +167,14 @@ public class UnitController : MonoBehaviour {
     public void SetTeam(int team)
     {
         this.team = (Team)team;
-        
+
         transform.Find("Vision").GetComponent<VisionController>().team = this.team;
 
         var minimap = GameObject.FindWithTag("Minimap").GetComponent<MinimapController>();
         if (this.team == Team.Red)
-            minimap.Track(transform, MinimapIconType.RedPlayer);
+            this.minimapIcon = minimap.Track(transform, MinimapIconType.RedPlayer);
         else if (this.team == Team.Blue)
-            minimap.Track(transform, MinimapIconType.BluePlayer);
+            this.minimapIcon = minimap.Track(transform, MinimapIconType.BluePlayer);
     }
 
     [RPC]

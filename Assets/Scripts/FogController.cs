@@ -14,10 +14,14 @@ public class FogController : MonoBehaviour
     private Color[] visionPixels;
     public float updateInterval = 1f;
     private float updateTimer = 0f;
+    public float visionRange = 100f;
 
     public Texture2D fogTexture;
     private Texture2D lastFogTexture;
     public Team team;
+
+    public LayerMask visionRaycastMask;
+    public LayerMask lineOfSightRaycastMask;
 
 	void Start()
     {
@@ -41,6 +45,7 @@ public class FogController : MonoBehaviour
             var myVisions = visions.Where(v => v.GetComponent<VisionController>().team == team);
             UpdateFogTexture(myVisions.ToArray<GameObject>());
             updateTimer = 0f;
+            UpdateUnitVision();
        }
 	}
 
@@ -117,23 +122,73 @@ public class FogController : MonoBehaviour
             var angle = i * 20f;
             var direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
             var relPos = Vector3.zero;
-            if (Physics.Raycast(pos + visionOffset, direction, out hit, 300f))
+            if (Physics.Raycast(pos + visionOffset, direction, out hit, visionRange, visionRaycastMask))
             {
+                Debug.DrawLine(pos + visionOffset, hit.point, Color.yellow);
                 relPos = hit.point + direction * visionExpand - pos;
             }
             else
             {
-                relPos = direction * (300f + visionExpand);
+                relPos = direction * (visionRange + visionExpand);
             }
 
             var texPos = new Vector2(relPos.x, relPos.z);
-            texPos /= 300f;
-            texPos *= 32;
+            texPos /= visionRange;
+            texPos *= 16;
             texPos += new Vector2(16, 16);
             poly[i] = texPos;
         }
 
         return poly;
+    }
+
+    private void UpdateUnitVision()
+    {
+        var friendlyVisions = new List<GameObject>();
+        var enemyUnits = new List<GameObject>();
+
+        var visions = GameObject.FindGameObjectsWithTag("Vision");
+
+        for (int i=0; i< visions.Length; i++)
+        {
+            var ctrl = visions[i].GetComponent<VisionController>();
+            if (ctrl.team == team)
+            {
+                friendlyVisions.Add(visions[i]);
+            }
+        }
+
+        var heroes = GameObject.FindGameObjectsWithTag("Hero");
+
+        for (int i=0; i < heroes.Length; i++)
+        {
+            enemyUnits.Add(heroes[i]);
+            heroes[i].SendMessage("SetVisible", false);
+        }
+
+        var creeps = GameObject.FindGameObjectsWithTag("Creep");
+
+        for (int i=0; i< creeps.Length; i++)
+        {
+            enemyUnits.Add(creeps[i]);
+            creeps[i].SendMessage("SetVisible", false);
+        }
+
+        RaycastHit hit;
+        foreach (GameObject vision in friendlyVisions)
+        {
+            foreach (GameObject enemy in enemyUnits)
+            {
+                var direction = enemy.transform.position - vision.transform.position;
+                if (direction.magnitude <= visionRange)
+                {
+                    if (!Physics.Raycast(vision.transform.position + visionOffset, direction, out hit, direction.magnitude, lineOfSightRaycastMask))
+                    {
+                        enemy.SendMessage("SetVisible", true);
+                    }
+                }
+            }
+        }
     }
 
 }
