@@ -63363,7 +63363,7 @@ MonoBehaviour:
   blueFlagIsMissing: 0
   respawnTime: 5
   heroPrefabs:
-  - {fileID: 100030, guid: 49b8b45ab36352447bdccb7bc9b7f0d7, type: 2}
+  - {fileID: 100110, guid: 5c7d1748950c9b248865a4b676b0e49c, type: 2}
   - {fileID: 100076, guid: 5acf77369e9159f439bf876bdb33b99e, type: 2}
   - {fileID: 100094, guid: 18e9d75cd6a5cf74899652d14b3e6a16, type: 2}
   - {fileID: 100062, guid: 8c5b9559722f4f54eb66d7b4fc00e9e0, type: 2}
