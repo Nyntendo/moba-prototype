@@ -6192,7 +6192,7 @@ Transform:
   m_GameObject: {fileID: 118502421}
   m_LocalRotation: {x: .195553571, y: .734566689, z: -.595243812, w: .260490865}
   m_LocalPosition: {x: -31.2333374, y: -109.038689, z: 345.816132}
-  m_LocalScale: {x: 2488.93262, y: 2488.93335, z: 2478.79224}
+  m_LocalScale: {x: 1924.3335, y: 2488.93335, z: 2478.79224}
   m_Children:
   - {fileID: 197053388}
   - {fileID: 352003387}
@@ -11124,6 +11124,10 @@ Prefab:
     - target: {fileID: 400000, guid: 09cdf62c83725bf46b100a11550c03e5, type: 2}
       propertyPath: m_LocalScale.z
       value: 2478.79224
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 09cdf62c83725bf46b100a11550c03e5, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1924.3335
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09cdf62c83725bf46b100a11550c03e5, type: 2}
@@ -63359,7 +63363,7 @@ MonoBehaviour:
   blueFlagIsMissing: 0
   respawnTime: 5
   heroPrefabs:
-  - {fileID: 100080, guid: 087741aac05ed9147aaa8b4ca5a0c6fb, type: 2}
+  - {fileID: 100030, guid: 49b8b45ab36352447bdccb7bc9b7f0d7, type: 2}
   - {fileID: 100076, guid: 5acf77369e9159f439bf876bdb33b99e, type: 2}
   - {fileID: 100094, guid: 18e9d75cd6a5cf74899652d14b3e6a16, type: 2}
   - {fileID: 100062, guid: 8c5b9559722f4f54eb66d7b4fc00e9e0, type: 2}

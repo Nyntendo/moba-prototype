@@ -13,8 +13,8 @@ public enum Team
 
 public enum Hero
 {
-    Putte = 0,
-    Harrald = 1,
+    Merlin = 0,
+    Harrald= 1,
 	RedRidingHood = 2,
 	BigBadWolf = 3,
 	RumpelStiltSkin = 4
@@ -278,7 +278,7 @@ public class GameController : MonoBehaviour
         players[Network.player.guid] = new PlayerData {
             name = playerName,
             player = Network.player,
-            hero = Hero.Putte,
+            hero = Hero.Merlin,
             team = Team.Red,
             ready = true,
             hasLoadedLevel = false
