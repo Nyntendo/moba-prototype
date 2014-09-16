@@ -30,6 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!23 &2300000
 Renderer:
   m_ObjectHideFlags: 1
@@ -49,9 +50,8 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 0
-  m_SortingOrder: 0
   m_SortingLayerID: 0
+  m_SortingOrder: 0
 --- !u!33 &3300000
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -61,7 +61,7 @@ MeshFilter:
   m_Mesh: {fileID: 4300000, guid: 2da590dc8a1cdb14a888361a4b57a3a7, type: 3}
 --- !u!95 &9500000
 Animator:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -69,10 +69,11 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 2da590dc8a1cdb14a888361a4b57a3a7, type: 3}
   m_Controller: {fileID: 0}
-  m_CullingMode: 0
+  m_CullingMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
   m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

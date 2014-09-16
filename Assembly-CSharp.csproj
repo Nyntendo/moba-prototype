@@ -133,6 +133,7 @@
      <Compile Include="Assets\Scripts\VisionController.cs" />
      <Compile Include="Assets\TerrainV1Assets\Standard Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
      <Compile Include="Assets\TerrainV1Assets\WaterfallFolder\AnimateTiledTexture.cs" />
+     <Compile Include="Assets\TerrainV1Assets\WaterfallFolder\ScrollingTexture.cs" />
      <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\FollowingCamera.cs" />
      <Compile Include="Assets\TerrainV1Assets\tempScriptsForTerrain\PlayerScript.cs" />
      <None Include="Assets\Shaders\SH_Vertex.cginc" />
