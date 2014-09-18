@@ -12,7 +12,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Portfolio Games
   productName: MOBA Prototype
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: eadb3577e41a356448c6d75469dabb76, type: 3}
   cursorHotspot: {x: 0, y: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
