@@ -131,6 +131,8 @@
      <Compile Include="Assets\Scripts\UnitAnimationController.cs" />
      <Compile Include="Assets\Scripts\UnitController.cs" />
      <Compile Include="Assets\Scripts\VisionController.cs" />
+     <Compile Include="Assets\TerrainV1Assets\CurserIcons\CurserHandler.cs" />
+     <Compile Include="Assets\TerrainV1Assets\CurserIcons\DestroyScript.cs" />
      <Compile Include="Assets\TerrainV1Assets\Standard Assets\Water (Basic)\Sources\Scripts\WaterSimple.cs" />
      <Compile Include="Assets\TerrainV1Assets\WaterfallFolder\AnimateTiledTexture.cs" />
      <Compile Include="Assets\TerrainV1Assets\WaterfallFolder\ScrollingTexture.cs" />
