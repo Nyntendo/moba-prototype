@@ -25,10 +25,17 @@ public class CurserHandler : MonoBehaviour {
 		{
 			OnLeftMouseUp();
 		}
+
 		if (Input.GetMouseButtonDown (0)) 
 		{
 			OnLeftMouseDown();
 		}
+
+		if (Input.GetMouseButtonUp (1)) 
+		{
+			OnLeftMouseUp();
+		}
+
 		if (Input.GetMouseButtonDown (1)) 
 		{
 			OnRightMouseDown();
@@ -50,14 +57,21 @@ public class CurserHandler : MonoBehaviour {
 		cursorSize = 24;
 	}
 
+	void onRightMouseUp()
+	{
+		currentCursor = normalCursor;
+		cursorSize = 32;
+	}
+
 	void OnRightMouseDown()
 	{
-		print ("U CLICKED");
+		cursorSize = 24;
 		ray = rayCamera.ScreenPointToRay (Input.mousePosition);
 		if (Physics.Raycast (ray, out hit)) 
 		{
 			GameObject obj = Instantiate (MoveMarker, new Vector3(hit.point.x, hit.point.y + 1, hit.point.z), Quaternion.identity) as GameObject;
 		}
 	}
+
 
 }

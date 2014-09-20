@@ -17431,7 +17431,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
 --- !u!114 &339144836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19686,7 +19686,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!1 &379123013
 GameObject:
   m_ObjectHideFlags: 0
@@ -30848,7 +30848,7 @@ Transform:
   - {fileID: 1123817615}
   - {fileID: 622505479}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
 --- !u!1 &592369891
 GameObject:
   m_ObjectHideFlags: 0
@@ -63155,7 +63155,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &1255511361
 GameObject:
   m_ObjectHideFlags: 0
@@ -64245,7 +64245,7 @@ Transform:
   m_Children:
   - {fileID: 357314425}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!136 &1280308716
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -67725,7 +67725,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!148 &1353665285
 NetworkView:
   m_ObjectHideFlags: 0
@@ -80526,7 +80526,7 @@ MonoBehaviour:
   clickedCursor: {fileID: 0}
   cursorSize: 32
   rayCamera: {fileID: 1720198234}
-  MoveMarker: {fileID: 100000, guid: 37ec95e81bdaa964d8ab8678ef382bfb, type: 2}
+  MoveMarker: {fileID: 100000, guid: 73939c0f4906a674ca11284d720c2a65, type: 2}
 --- !u!4 &1637808100
 Transform:
   m_ObjectHideFlags: 0
@@ -84384,7 +84384,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!114 &1720198236
 MonoBehaviour:
   m_ObjectHideFlags: 0

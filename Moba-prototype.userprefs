@@ -1,9 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TerrainV1Assets\CurserIcons\DestroyScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TerrainV1Assets\CurserIcons\CurserHandler.cs">
     <Files>
-      <File FileName="Assets\TerrainV1Assets\CurserIcons\DestroyScript.cs" Line="6" Column="20" />
-      <File FileName="Assets\TerrainV1Assets\CurserIcons\CurserHandler.cs" Line="7" Column="31" />
+      <File FileName="Assets\TerrainV1Assets\CurserIcons\CurserHandler.cs" Line="56" Column="3" />
+      <File FileName="Assets\TerrainV1Assets\CurserIcons\DestroyScript.cs" Line="20" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
