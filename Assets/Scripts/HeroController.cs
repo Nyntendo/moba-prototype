@@ -17,6 +17,7 @@ public class HeroController : UnitSuperController {
     private ScoreController scoreController;
     private LevelController levelController;
     private SkillshotMarkerController skillshotController;
+    private MoveMarkerController moveMarkerController;
     public UnitController unitController;
 
     public bool carryingFlag = false;
@@ -34,6 +35,8 @@ public class HeroController : UnitSuperController {
 
         var targetMarkers = GameObject.FindWithTag("TargetMarkers");
         skillshotController = targetMarkers.transform.Find("SkillshotMarker").GetComponent<SkillshotMarkerController>();
+        var moveMarker = GameObject.FindWithTag("MoveMarker");
+        moveMarkerController = moveMarker.GetComponent<MoveMarkerController>();
     }
 
     public override void OnHitServer(GameObject attacker)
@@ -98,6 +101,11 @@ public class HeroController : UnitSuperController {
             Debug.Log(hit.collider.name);
             if (hit.collider.name != transform.name)
             {
+                if (hit.collider.name == "Terrain")
+                {
+                    moveMarkerController.SetPosition(hit.point);
+                }
+
                 if (Network.isClient)
                 {
                     networkView.RPC("SetTarget", RPCMode.Server, hit.point, hit.collider.name);
