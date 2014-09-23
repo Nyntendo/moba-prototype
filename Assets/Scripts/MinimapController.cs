@@ -31,13 +31,33 @@ public class MinimapController : MonoBehaviour
 
     public float width = 200f;
     public float height = 200f;
+    public float offsetX = 0f;
+    public float offsetY = 0f;
 
     private List<MinimapIcon> icons;
+    private GameSettings gameSettings;
+
+    private float lastScreenWidth;
+    private float lastUiScale;
 
 	void Start () {
+        var gameSettingsObj = GameObject.FindWithTag("GameSettings");
+        gameSettings = gameSettingsObj.GetComponent<GameSettings>();
         icons = new List<MinimapIcon>();
-        camera.pixelRect = new Rect(Screen.width - width, 0, width, height);
+
+        UpdatePixelRect();
+
+        lastScreenWidth = Screen.width;
+        lastUiScale = gameSettings.uiScale;
 	}
+
+    private void UpdatePixelRect()
+    {
+        camera.pixelRect = new Rect(Screen.width - (width + offsetX) * gameSettings.uiScale,
+                                    0 - offsetY * gameSettings.uiScale,
+                                    width * gameSettings.uiScale,
+                                    height * gameSettings.uiScale);
+    }
 	
 	void Update () {
         foreach (MinimapIcon icon in icons)
@@ -45,6 +65,14 @@ public class MinimapController : MonoBehaviour
             var pos = camera.WorldToViewportPoint(icon.trackedTransform.position);
             icon.iconTexture.transform.position = pos;
         }
+
+        if (Screen.width != lastScreenWidth || gameSettings.uiScale != lastUiScale)
+        {
+            UpdatePixelRect();
+        }
+
+        lastScreenWidth = Screen.width;
+        lastUiScale = gameSettings.uiScale;
 	}
 
     public GameObject Track(Transform transform, MinimapIconType iconType)

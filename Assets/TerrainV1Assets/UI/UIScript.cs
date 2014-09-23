@@ -7,50 +7,27 @@ public class UIScript : MonoBehaviour {
 	public Texture2D leftSideFrame;
 
 	public bool ShowUI;
+	private GameSettings gameSettings;
 
-	private int ScreenHeight;
-	private int ScreenWidth;
-	
-	private int lSFx;
-	private int lSFy;
-	public  float uiScale;
-	private float modifiedPositionX;
-	private float modifiedPositionY;
-
-	private int lastScreenWidth;
-	private int lastScreenHeight;
-
-	// Use this for initialization
-	void Start () {
-		ScreenHeight = Screen.height;
-		ScreenWidth = Screen.width;
-		lastScreenHeight = ScreenHeight;
-		lastScreenWidth = ScreenWidth;
-
-		lSFx = 0;
-		lSFy = ScreenHeight - leftSideFrame.height;
-
-		modifiedPositionX = Screen.width - miniMapFrame.width * uiScale;
-		modifiedPositionY = Screen.height - miniMapFrame.height * uiScale;
-	}
-	void Update () 
+	void Start()
 	{
-		if (lastScreenWidth != Screen.width || lastScreenHeight != Screen.height) 
-		
-		{
-			ScreenHeight = Screen.height;
-			ScreenWidth = Screen.width;
-			lSFy = ScreenHeight - leftSideFrame.height;
-		}
+        var gameSettingsObj = GameObject.FindWithTag("GameSettings");
+        gameSettings = gameSettingsObj.GetComponent<GameSettings>();
 	}
 
 	void OnGUI()
 	{
 		if (ShowUI == true) 
 		{
-			//GUI.depth = 10;
-			GUI.DrawTexture (new Rect(modifiedPositionX, modifiedPositionY, miniMapFrame.width * uiScale, miniMapFrame.height * uiScale ), miniMapFrame);
-			GUI.DrawTexture (new Rect(lSFx, lSFy, leftSideFrame.width * uiScale, leftSideFrame.height * uiScale), leftSideFrame);
+			GUI.DrawTexture(
+				new Rect(0, Screen.height - leftSideFrame.height * gameSettings.uiScale,
+						 leftSideFrame.width * gameSettings.uiScale,
+						 leftSideFrame.height * gameSettings.uiScale), leftSideFrame);
+			GUI.DrawTexture(
+				new Rect(Screen.width - miniMapFrame.width * gameSettings.uiScale,
+						 Screen.height - miniMapFrame.height * gameSettings.uiScale,
+						 miniMapFrame.width * gameSettings.uiScale,
+						 miniMapFrame.height * gameSettings.uiScale ), miniMapFrame);
 		}
 	}
 }
