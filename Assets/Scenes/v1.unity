@@ -70222,7 +70222,7 @@ MonoBehaviour:
   heroPrefabs:
   - {fileID: 100112, guid: 1c8dad993eb69244294bf4e062cc771b, type: 2}
   - {fileID: 100076, guid: 5acf77369e9159f439bf876bdb33b99e, type: 2}
-  - {fileID: 100092, guid: 01c1e6a49e3854e4680732d6b1f3db82, type: 2}
+  - {fileID: 100030, guid: b2c74bfcfcf40d34ebe609a69ceac2ce, type: 2}
   - {fileID: 100062, guid: 8c5b9559722f4f54eb66d7b4fc00e9e0, type: 2}
   - {fileID: 100002, guid: 6c0aabfe71f6c8942be266e0bb3a671e, type: 2}
 --- !u!4 &1353665284

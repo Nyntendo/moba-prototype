@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3cb71aac25774d44b8dbfa1a401f83d1
+guid: 538ab1fa41a4d7e42b62ad7a7c2a0904
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -285,7 +285,7 @@ ModelImporter:
       name: RangedAttack1
       takeName: Take 001
       firstFrame: 40
-      lastFrame: 50
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -374,8 +374,8 @@ ModelImporter:
     - serializedVersion: 16
       name: JumpStart
       takeName: Take 001
-      firstFrame: 60
-      lastFrame: 70
+      firstFrame: 70
+      lastFrame: 80
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -464,8 +464,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Upwards
       takeName: Take 001
-      firstFrame: 70
-      lastFrame: 80
+      firstFrame: 80
+      lastFrame: 90
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -554,8 +554,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Falling
       takeName: Take 001
-      firstFrame: 90
-      lastFrame: 100
+      firstFrame: 100
+      lastFrame: 110
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -644,8 +644,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Landing
       takeName: Take 001
-      firstFrame: 100
-      lastFrame: 110
+      firstFrame: 110
+      lastFrame: 120
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -734,8 +734,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Death
       takeName: Take 001
-      firstFrame: 120
-      lastFrame: 150
+      firstFrame: 130
+      lastFrame: 160
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -824,8 +824,8 @@ ModelImporter:
     - serializedVersion: 16
       name: CombatIdle
       takeName: Take 001
-      firstFrame: 160
-      lastFrame: 190
+      firstFrame: 170
+      lastFrame: 200
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
@@ -914,8 +914,8 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle
       takeName: Take 001
-      firstFrame: 200
-      lastFrame: 300
+      firstFrame: 210
+      lastFrame: 310
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
